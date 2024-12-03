@@ -1,4 +1,4 @@
-package io.skph;
+package skph;
 
 import java.io.*;
 import java.net.*;
@@ -9,7 +9,7 @@ import java.util.Map;
 public class ChatClient {
     private ObjectInputStream in;
     private ObjectOutputStream out;
-    private Map<Long, Chat> activeChats = new HashMap<>(); // Mapowanie chatId -> Chat
+    private Map<Long, Chat> activeChats = new HashMap<>(); // Mapowanie chatId -> skph.Chat
 
     public ChatClient(String serverAddress) throws Exception {
         // Nawiązywanie połączenia z serwerem

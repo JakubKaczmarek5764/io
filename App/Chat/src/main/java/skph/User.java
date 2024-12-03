@@ -1,4 +1,4 @@
-package io.skph;
+package skph;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package io.skph;
+package skph;
 
 import java.util.ArrayList;
 import java.util.List;

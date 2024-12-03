@@ -1,4 +1,4 @@
-package io.skph;
+package skph;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -19,12 +19,12 @@ public class Notification implements Serializable {
 
 
     public String notifyUser() {
-        return ("Notification for you: " + message);
+        return ("skph.Notification for you: " + message);
     }
 
     @Override
     public String toString() {
-        return "Notification{" +
+        return "skph.Notification{" +
                 "message='" + message + '\'' +
                 ", recipientId=" + recipientId +
                 ", chatName='" + chatName + '\'' +

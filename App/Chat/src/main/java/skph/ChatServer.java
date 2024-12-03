@@ -1,11 +1,11 @@
-package io.skph;
+package skph;
 
 import java.io.*;
 import java.net.*;
 import java.util.*;
 
 public class ChatServer {
-    // Mapowanie chatId na obiekt Chat oraz zestaw strumieni klientów
+    // Mapowanie chatId na obiekt skph.Chat oraz zestaw strumieni klientów
     private static Map<Long, Chat> chats = new HashMap<>();
     private static Map<Long, Set<ObjectOutputStream>> chatClientWriters = new HashMap<>();
 
@@ -16,8 +16,8 @@ public class ChatServer {
 
     // Metoda inicjalizująca czaty
     public static void initializeChats() { ///todo zrobić pobieranie czatów z bazy
-        Chat chat1 = new Chat(1L, "Chat One", false);
-        Chat chat2 = new Chat(2L, "Chat Two", false);
+        Chat chat1 = new Chat(1L, "skph.Chat One", false);
+        Chat chat2 = new Chat(2L, "skph.Chat Two", false);
 
         chats.put(chat1.getChatId(), chat1);
         chats.put(chat2.getChatId(), chat2);
@@ -29,7 +29,7 @@ public class ChatServer {
     }
 
     public void start() throws Exception {
-        System.out.println("Chat server is running...");
+        System.out.println("skph.Chat server is running...");
         ServerSocket serverSocket = new ServerSocket(12345);
 
         while (true) {
@@ -63,10 +63,10 @@ public class ChatServer {
 
                 // Dodanie klienta do czatu
                 chatClientWriters.get(chatId).add(out);
-                User user = new User(socket.hashCode(), "User-" + socket.hashCode());
+                User user = new User(socket.hashCode(), "skph.User-" + socket.hashCode());
                 chat.addParticipant(user);
 
-                System.out.println("User added to chat: " + chatId);
+                System.out.println("skph.User added to chat: " + chatId);
 
                 Object messageObject;
                 while ((messageObject = in.readObject()) != null) {

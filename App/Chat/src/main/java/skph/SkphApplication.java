@@ -1,4 +1,4 @@
-package io.skph;
+package skph;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,7 +9,7 @@ public class SkphApplication {
     public static void main(String[] args) throws Exception {
         SpringApplication.run(SkphApplication.class, args);
 
-        System.out.println("Chat system");
+        System.out.println("skph.Chat system");
         Scanner keyboard = new Scanner(System.in);
 
         System.out.println("Wybierz tryb: ");
@@ -46,7 +46,7 @@ public class SkphApplication {
                             long chatId = keyboard.nextLong();
                             keyboard.nextLine();
 
-                            Chat chat = new Chat(chatId, "Chat" + chatId, false);
+                            Chat chat = new Chat(chatId, "skph.Chat" + chatId, false);
                             client.joinChat(chat);
                             System.out.println("Dolaczono do chatu: " + chatId);
                             break;
