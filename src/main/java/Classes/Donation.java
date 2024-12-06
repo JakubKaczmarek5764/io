@@ -1,10 +1,10 @@
 package Classes;
 
-public class Donations {
+public class Donation {
 
     private String name;
 
-    public Donations(String name) {
+    public Donation(String name) {
         this.name = name;
     }
 

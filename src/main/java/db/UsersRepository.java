@@ -6,6 +6,8 @@ import jakarta.persistence.Persistence;
 
 import java.util.List;
 
+import static java.util.List.of;
+
 public class UsersRepository implements CRUDManager<User> {
 
     private static EntityManagerFactory entityManagerFactory;
@@ -88,5 +90,6 @@ public class UsersRepository implements CRUDManager<User> {
     @Override
     public List<User> getAll(Class<User> entityClass) {
         // todo: w klasie bazowej dodac query w adnotacjach ktore tu bedzie wywolywane
+        return List.of();
     }
 }
