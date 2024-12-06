@@ -3,6 +3,7 @@ package Chat;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import Classes.User;
 
 public class ChatServer {
     // Mapowanie chatId na obiekt skph.Chat oraz zestaw strumieni klientów
@@ -52,7 +53,10 @@ public class ChatServer {
                 ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
                 // Oczekiwanie na chatId od klienta
-                Long chatId = (Long) in.readObject();
+                Map<String, Object> joinRequest = (Map<String, Object>) in.readObject();
+                Long chatId = (Long) joinRequest.get("chatId");
+                User user = (User) joinRequest.get("user");
+
                 Chat chat = chats.get(chatId);
 
                 if (chat == null) {
@@ -62,9 +66,8 @@ public class ChatServer {
                 }
 
                 // Dodanie klienta do czatu
-                chatClientWriters.get(chatId).add(out);
-                User user = new User(socket.hashCode(), "skph.User-" + socket.hashCode());
                 chat.addParticipant(user);
+                chatClientWriters.get(chatId).add(out);
 
                 System.out.println("skph.User added to chat: " + chatId);
 
