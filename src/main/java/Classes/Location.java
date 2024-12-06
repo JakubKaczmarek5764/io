@@ -1,10 +1,16 @@
-package Classes;
+package org.example;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "Locations")
 public class Location {
 
-    private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int location_id;
 
-    public Location(String name) {
-        this.name = name;
+    public int getLocation_id() {
+        return location_id;
     }
 }

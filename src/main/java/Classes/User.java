@@ -1,31 +1,21 @@
-package Classes;
+package org.example;
 
-public class User {
+import jakarta.persistence.*;
 
-    private String firstName;
-    private String lastName;
+@MappedSuperclass
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type")
+@Access(AccessType.FIELD)
+public abstract class User {
 
-    public String getFirstName() {
-        return firstName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int user_id;
+
+    public User(){
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public int getUser_id() {
+        return user_id;
     }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public User(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-
-
 }
