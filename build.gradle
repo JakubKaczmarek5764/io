@@ -25,6 +25,7 @@ dependencies {
     implementation 'jakarta.persistence:jakarta.persistence-api:3.2.0'
     implementation 'jakarta.el:jakarta.el-api:6.0.1'
     implementation 'org.hibernate:hibernate-hikaricp:7.0.0.Alpha1'
+    implementation 'com.sun.istack:istack-commons-runtime:4.2.0'
 }
 
 test {

@@ -1,4 +1,4 @@
-package org.example;
+package Classes;
 
 public enum reportStatus {
     pending,

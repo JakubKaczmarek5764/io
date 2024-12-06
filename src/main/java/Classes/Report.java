@@ -1,4 +1,4 @@
-package org.example;
+package Classes;
 
 import com.sun.istack.NotNull;
 import jakarta.persistence.Entity;

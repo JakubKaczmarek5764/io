@@ -1,4 +1,4 @@
-package skph;
+package Chat;
 
 import java.util.ArrayList;
 import java.util.List;

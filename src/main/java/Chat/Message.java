@@ -1,4 +1,4 @@
-package skph;
+package Chat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

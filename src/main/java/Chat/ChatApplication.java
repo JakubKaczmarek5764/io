@@ -1,13 +1,13 @@
-package skph;
+package Chat;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.Scanner;
 
 @SpringBootApplication
-public class SkphApplication {
+public class ChatApplication {
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(SkphApplication.class, args);
+        SpringApplication.run(ChatApplication.class, args);
 
         System.out.println("skph.Chat system");
         Scanner keyboard = new Scanner(System.in);
