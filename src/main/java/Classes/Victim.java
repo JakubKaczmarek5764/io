@@ -3,13 +3,14 @@ package Classes;
 import com.sun.istack.NotNull;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Access(AccessType.FIELD)
 @DiscriminatorValue("victim")
-public class Victim extends User{
+public class Victim extends User implements Serializable {
 
     @ManyToOne
     @NotNull

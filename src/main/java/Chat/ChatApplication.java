@@ -1,15 +1,19 @@
 package Chat;
 
+import Classes.Volunteer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.Scanner;
+import Classes.User;
+import Classes.Volunteer;
+import Classes.Victim;
 
 @SpringBootApplication
 public class ChatApplication {
     public static void main(String[] args) throws Exception {
         SpringApplication.run(ChatApplication.class, args);
 
-        System.out.println("skph.Chat system");
+        System.out.println("Chat system");
         Scanner keyboard = new Scanner(System.in);
 
         System.out.println("Wybierz tryb: ");
@@ -27,7 +31,8 @@ public class ChatApplication {
 
             case 2: // Tryb klienta
                 System.out.println("2. Tryb klienta");
-                ChatClient client = new ChatClient("localhost");
+                Volunteer user = new Volunteer();
+                ChatClient client = new ChatClient("localhost", user);
 
                 System.out.println("Dostepne opcje:");
                 System.out.println("1. Dolacz do chatu");
@@ -62,8 +67,9 @@ public class ChatApplication {
                             System.out.print("Podaj swoje imie: ");
                             String userName = keyboard.nextLine();
 
-                            User user = new User(1, userName); // Stały ID dla uproszczenia
-                            client.sendMessage(targetChatId, message, user);
+                            //User user = new User(1, userName); // Stały ID dla uproszczenia
+
+                            client.sendMessage(targetChatId, message);
                             System.out.println("Wyslano wiadomosc do chatu: " + targetChatId);
                             break;
 

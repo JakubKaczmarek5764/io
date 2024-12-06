@@ -2,6 +2,7 @@ package Chat;
 
 import java.util.ArrayList;
 import java.util.List;
+import Classes.User;
 
 public class Chat {
     private List<Message> messages = new ArrayList<>();

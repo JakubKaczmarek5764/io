@@ -5,13 +5,16 @@ import java.net.*;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import Classes.User;
 
 public class ChatClient {
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private Map<Long, Chat> activeChats = new HashMap<>(); // Mapowanie chatId -> skph.Chat
+    private User user;
 
-    public ChatClient(String serverAddress) throws Exception {
+    public ChatClient(String serverAddress, User user) throws Exception {
+        this.user = user;
         // Nawiązywanie połączenia z serwerem
         Socket socket = new Socket(serverAddress, 12345);
         out = new ObjectOutputStream(socket.getOutputStream());
@@ -26,22 +29,27 @@ public class ChatClient {
      */
     public void joinChat(Chat chat) throws IOException {
         activeChats.put(chat.getChatId(), chat);
-        out.writeObject(chat.getChatId()); // Informacja dla serwera, że klient dołącza do tego chatu
+
+        Map<String, Object> joinRequest = new HashMap<>();
+        joinRequest.put("chatId", chat.getChatId());
+        joinRequest.put("user", user);
+
+        out.writeObject(joinRequest); // Informacja dla serwera, że klient dołącza do tego chatu
         out.flush();
     }
 
     /**
      * Wysyła wiadomość do określonego chatu.
      */
-    public void sendMessage(Long chatId, String content, User sender) throws IOException {
+    public void sendMessage(Long chatId, String content) throws IOException {
         Chat chat = activeChats.get(chatId);
         if (chat == null) {
             System.out.println("Nie nalezysz do tego chatu: " + chatId);
             return;
         }
         // Tworzenie wiadomości
-        Message message = new Message(content, sender.getId(), chatId, LocalDateTime.now());
-        Notification notification = new Notification(message.getContent(), sender.getId(), chat.getName(), LocalDateTime.now());
+        Message message = new Message(content, user.getUser_id(), chatId, LocalDateTime.now());
+        Notification notification = new Notification(message.getContent(), user.getUser_id(), chat.getName(), LocalDateTime.now());
         out.writeObject(notification); // Wysyłanie wiadomości do serwera
         out.flush();
     }
@@ -63,24 +71,5 @@ public class ChatClient {
                 System.out.println("Blad podczas odbierania wiadomosci: " + e);
             }
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-        ChatClient client = new ChatClient("localhost");
-
-        // Przykładowe czaty
-        Chat chat1 = new Chat(1L, "Chat1", false);
-        Chat chat2 = new Chat(2L, "Chat2", false);
-
-        // Przykładowy użytkownik
-        User user = new User(1, "Alice");
-
-        // Dołączanie do czatów
-        client.joinChat(chat1);
-        client.joinChat(chat2);
-
-        // Wysyłanie wiadomości
-        client.sendMessage(1L, "Hello to Chat1!", user);
-        client.sendMessage(2L, "Hi Chat2!", user);
     }
 }

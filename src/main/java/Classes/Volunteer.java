@@ -2,13 +2,16 @@ package Classes;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Access(AccessType.FIELD)
 @DiscriminatorValue("volunteer")
-public class Volunteer extends User{
+public class Volunteer extends User implements Serializable {
+
     private boolean available;
+
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Task> completedTasks;
 
@@ -19,11 +22,10 @@ public class Volunteer extends User{
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<volunteerEvaluation> evaluations;
 
+    // Default constructor
     public Volunteer() {
         super();
     }
-
-    // Parameterized constructor
     public Volunteer(boolean available, List<Task> completedTasks, Task currentTask, List<volunteerEvaluation> evaluations) {
         super();
         this.available = available;
