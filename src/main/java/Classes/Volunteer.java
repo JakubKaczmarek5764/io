@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+import java.io.Serializable;
+
 @Entity
 @Access(AccessType.FIELD)
 @DiscriminatorValue("volunteer")
@@ -22,7 +24,6 @@ public class Volunteer extends User implements Serializable {
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<volunteerEvaluation> evaluations;
 
-    // Default constructor
     public Volunteer() {
         super();
     }
@@ -65,5 +66,5 @@ public class Volunteer extends User implements Serializable {
     public void setEvaluations(List<volunteerEvaluation> evaluations) {
         this.evaluations = evaluations;
     }
-
+    
 }
