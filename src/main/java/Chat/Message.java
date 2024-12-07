@@ -1,22 +1,45 @@
 package Chat;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import Classes.User;
+
+@Entity
 public class Message implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int messageId;
-    private int senderId;
+
+    @ManyToOne
+    @JoinColumn(name = "userId", nullable = false)
+    private User sender;
+
+    @Column(nullable = false)
     private String content;
+
+    @Column(nullable = false)
     private LocalDateTime timestamp;
-    private long chatId;
+
+    @ManyToOne
+    @JoinColumn(name = "chatId", nullable = false)
+    private Chat chat;
 
 
-    public Message(String content, int senderId, long chatId, LocalDateTime timestamp) {
+
+    public Message(String content, User sender, Chat chat, LocalDateTime timestamp) {
         this.content = content;
-        this.senderId = senderId;
-        this.chatId = chatId;
+        this.sender = sender;
+        this.chat = chat;
         this.timestamp = timestamp;
+    }
+
+    public Message() {
+
     }
 
     public String editMessage(String content) {
@@ -24,8 +47,8 @@ public class Message implements Serializable {
         return "Edited";
     }
 
-    public int getSender() {
-        return senderId;
+    public User getSender() {
+        return sender;
     }
 
     public String getContent() {

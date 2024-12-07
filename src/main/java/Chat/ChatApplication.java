@@ -8,10 +8,10 @@ import Classes.User;
 import Classes.Volunteer;
 import Classes.Victim;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"Chat"})
 public class ChatApplication {
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(ChatApplication.class, args);
+        //SpringApplication.run(ChatApplication.class, args);
 
         System.out.println("Chat system");
         Scanner keyboard = new Scanner(System.in);
@@ -25,14 +25,22 @@ public class ChatApplication {
             case 1: // Tryb serwera
                 System.out.println("1. Tryb serwera");
                 ChatServer server = new ChatServer();
-                server.initializeChats();
                 server.start();
                 break;
 
             case 2: // Tryb klienta
+                keyboard = new Scanner(System.in);
                 System.out.println("2. Tryb klienta");
-                Volunteer user = new Volunteer();
-                ChatClient client = new ChatClient("localhost", user);
+
+                System.out.print("Podaj swoje imie: ");
+                String userFName = keyboard.nextLine();
+
+                System.out.print("Podaj swoje nazwisko: ");
+                String userLName = keyboard.nextLine();
+
+                Volunteer user = new Volunteer(userFName, userLName);
+                ChatClient client = new ChatClient();
+                client.createConnection("localhost", user);
 
                 System.out.println("Dostepne opcje:");
                 System.out.println("1. Dolacz do chatu");
@@ -51,7 +59,7 @@ public class ChatApplication {
                             long chatId = keyboard.nextLong();
                             keyboard.nextLine();
 
-                            Chat chat = new Chat(chatId, "skph.Chat" + chatId, false);
+                            Chat chat = new Chat(chatId, "Chat" + chatId, false);
                             client.joinChat(chat);
                             System.out.println("Dolaczono do chatu: " + chatId);
                             break;
@@ -63,11 +71,6 @@ public class ChatApplication {
 
                             System.out.print("Wprowadz wiadomosc: ");
                             String message = keyboard.nextLine();
-
-                            System.out.print("Podaj swoje imie: ");
-                            String userName = keyboard.nextLine();
-
-                            //User user = new User(1, userName); // Stały ID dla uproszczenia
 
                             client.sendMessage(targetChatId, message);
                             System.out.println("Wyslano wiadomosc do chatu: " + targetChatId);

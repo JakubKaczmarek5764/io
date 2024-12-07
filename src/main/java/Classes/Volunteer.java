@@ -27,13 +27,18 @@ public class Volunteer extends User implements Serializable {
     public Volunteer() {
         super();
     }
-    public Volunteer(boolean available, List<Task> completedTasks, Task currentTask, List<volunteerEvaluation> evaluations) {
-        super();
-        this.available = available;
-        this.completedTasks = completedTasks;
-        this.currentTask = currentTask;
-        this.evaluations = evaluations;
+
+    public Volunteer(String firstName, String lastName) {
+        super(firstName, lastName);
     }
+
+//    public Volunteer(boolean available, List<Task> completedTasks, Task currentTask, List<volunteerEvaluation> evaluations) {
+//        super();
+//        this.available = available;
+//        this.completedTasks = completedTasks;
+//        this.currentTask = currentTask;
+//        this.evaluations = evaluations;
+//    }
 
     public boolean isAvailable() {
         return available;

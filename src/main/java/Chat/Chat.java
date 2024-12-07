@@ -3,19 +3,39 @@ package Chat;
 import java.util.ArrayList;
 import java.util.List;
 import Classes.User;
+import jakarta.persistence.*;
 
+@Entity
 public class Chat {
-    private List<Message> messages = new ArrayList<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long chatId;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private boolean isArchive;
+
+    @ManyToMany
+    @JoinTable(
+            name = "chat_users",
+            joinColumns = @JoinColumn(name = "chatId"),
+            inverseJoinColumns = @JoinColumn(name = "userId")
+    )
     private List<User> users = new ArrayList<>();
 
-    private Long chatId;
-    private String Name;
-    private boolean isArchive;
+    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Message> messages = new ArrayList<>();
 
     public Chat(Long chatId, String name, boolean isArchive) {
         this.chatId = chatId;
-        Name = name;
+        this.name = name;
         this.isArchive = isArchive;
+    }
+
+    public Chat() {
+        
     }
 
     public void addMessage(Message message) {
@@ -44,11 +64,11 @@ public class Chat {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public boolean isArchive() {

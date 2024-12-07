@@ -4,16 +4,14 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import Classes.User;
+import jakarta.annotation.PostConstruct;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ChatServer {
     // Mapowanie chatId na obiekt skph.Chat oraz zestaw strumieni klientów
     private static Map<Long, Chat> chats = new HashMap<>();
     private static Map<Long, Set<ObjectOutputStream>> chatClientWriters = new HashMap<>();
-
-    public static void main(String[] args) throws Exception {
-        initializeChats();
-        new ChatServer().start();
-    }
 
     // Metoda inicjalizująca czaty
     public static void initializeChats() { ///todo zrobić pobieranie czatów z bazy
@@ -29,14 +27,21 @@ public class ChatServer {
         System.out.println("Initialized chats: " + chats.keySet());
     }
 
+    @PostConstruct
     public void start() throws Exception {
-        System.out.println("skph.Chat server is running...");
-        ServerSocket serverSocket = new ServerSocket(12345);
+        initializeChats();
+        new Thread(() -> {
+            try(ServerSocket serverSocket = new ServerSocket(12345)) {
+                System.out.println("Chat server is running...");
 
-        while (true) {
-            Socket socket = serverSocket.accept();
-            new ClientHandler(socket).start();
-        }
+                while (true) {
+                    Socket socket = serverSocket.accept();
+                    new ClientHandler(socket).start();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private static class ClientHandler extends Thread {

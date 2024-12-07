@@ -19,11 +19,12 @@ public class Victim extends User implements Serializable {
     @OneToMany
     private  List<Report> reportList = new ArrayList<>();
 
-    public Victim(Charity charity) {
-        this.charity = charity;
+    public Victim() {
     }
 
-    public Victim() {
+    public Victim(String firstName, String lastName, Charity charity) {
+        super(firstName, lastName);
+        this.charity = charity;
     }
 
     public Charity getCharity() {

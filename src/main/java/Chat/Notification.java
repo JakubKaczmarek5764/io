@@ -4,29 +4,29 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class Notification implements Serializable {
-    public Notification(String message, int recipientId, String chatName, LocalDateTime date) {
+    public Notification(String message, String senderName, String chatName, LocalDateTime date) {
         this.message = message;
-        this.recipientId = recipientId;
+        this.senderName = senderName;
         this.chatName = chatName;
         this.date = date;
     }
 
     private static final long serialVersionUID = 1L;
     private String message;
-    private int recipientId;
+    private String senderName;
     private String chatName;
     private LocalDateTime date;
 
 
     public String notifyUser() {
-        return ("skph.Notification for you: " + message);
+        return ("Notification for you from " + senderName + ": " + message);
     }
 
     @Override
     public String toString() {
         return "skph.Notification{" +
                 "message='" + message + '\'' +
-                ", recipientId=" + recipientId +
+                ", senderName=" + senderName +
                 ", chatName='" + chatName + '\'' +
                 ", date=" + date +
                 '}';
@@ -36,8 +36,8 @@ public class Notification implements Serializable {
         return message;
     }
 
-    public int getRecipientId() {
-        return recipientId;
+    public String getSenderName() {
+        return senderName;
     }
 
     public String getChatName() {

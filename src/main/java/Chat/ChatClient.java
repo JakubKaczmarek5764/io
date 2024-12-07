@@ -6,14 +6,16 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import Classes.User;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ChatClient {
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private Map<Long, Chat> activeChats = new HashMap<>(); // Mapowanie chatId -> skph.Chat
     private User user;
 
-    public ChatClient(String serverAddress, User user) throws Exception {
+    public void createConnection(String serverAddress, User user) throws Exception {
         this.user = user;
         // Nawiązywanie połączenia z serwerem
         Socket socket = new Socket(serverAddress, 12345);
@@ -48,8 +50,8 @@ public class ChatClient {
             return;
         }
         // Tworzenie wiadomości
-        Message message = new Message(content, user.getUser_id(), chatId, LocalDateTime.now());
-        Notification notification = new Notification(message.getContent(), user.getUser_id(), chat.getName(), LocalDateTime.now());
+        Message message = new Message(content, user, chat, LocalDateTime.now());
+        Notification notification = new Notification(message.getContent(), user.getFirstName() + " " + user.getLastName(), chat.getName(), LocalDateTime.now());
         out.writeObject(notification); // Wysyłanie wiadomości do serwera
         out.flush();
     }
@@ -64,7 +66,7 @@ public class ChatClient {
                 while ((messageObject = in.readObject()) != null) {
                     if (messageObject instanceof Notification) {
                         Notification notification = (Notification) messageObject;
-                        System.out.println("Otrzymano wiadomosc: " + notification.notifyUser());
+                        System.out.println(notification.notifyUser());
                     }
                 }
             } catch (IOException | ClassNotFoundException e) {
