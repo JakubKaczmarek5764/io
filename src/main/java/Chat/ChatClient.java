@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import Classes.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,13 +15,15 @@ public class ChatClient {
     private ObjectOutputStream out;
     private Map<Long, Chat> activeChats = new HashMap<>(); // Mapowanie chatId -> skph.Chat
     private User user;
+    private ChatWebSocketController chatWebSocketController;
 
-    public void createConnection(String serverAddress, User user) throws Exception {
+    public void createConnection(String serverAddress, User user, ChatWebSocketController chatWebSocketController) throws Exception {
         this.user = user;
         // Nawiązywanie połączenia z serwerem
         Socket socket = new Socket(serverAddress, 12345);
         out = new ObjectOutputStream(socket.getOutputStream());
         in = new ObjectInputStream(socket.getInputStream());
+        this.chatWebSocketController = chatWebSocketController;
 
         // Uruchomienie wątku odbierającego wiadomości
         new ReaderThread().start();
@@ -67,6 +70,7 @@ public class ChatClient {
                     if (messageObject instanceof Notification) {
                         Notification notification = (Notification) messageObject;
                         System.out.println(notification.notifyUser());
+                        chatWebSocketController.sendToUser(user.getUserStringId(), notification);
                     }
                 }
             } catch (IOException | ClassNotFoundException e) {

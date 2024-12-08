@@ -57,4 +57,12 @@ public abstract class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String getUserStringId() {
+        return userId + "";
+    }
+
+    public void setUserId(int userId) { //tylko na potrzeby testów chatu, potem usunąć
+        this.userId = userId;
+    }
 }

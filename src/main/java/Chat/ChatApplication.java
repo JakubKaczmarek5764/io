@@ -40,7 +40,7 @@ public class ChatApplication {
 
                 Volunteer user = new Volunteer(userFName, userLName);
                 ChatClient client = new ChatClient();
-                client.createConnection("localhost", user);
+                client.createConnection("localhost", user, null);
 
                 System.out.println("Dostepne opcje:");
                 System.out.println("1. Dolacz do chatu");
