@@ -8,12 +8,12 @@
         <properties>
             <property name="hibernate.connection.isolation" value="8"/>
             <property name="jakarta.persistence.jdbc.url"
-                      value="jdbc:postgresql://localhost:5432/SKPH_db"/> <!--Do zmiany adres potem, jeśli nie chcemy lokalnie-->
+                      value="jdbc:postgresql://localhost:5432/io"/> <!--Do zmiany adres potem, jeśli nie chcemy lokalnie-->
 
             <property name="jakarta.persistence.jdbc.user"
-                      value="SKPH"/>
+                      value="io"/>
             <property name="jakarta.persistence.jdbc.password"
-                      value="SKPH_password"/>
+                      value="io"/>
 
             <!--<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>-->
 
@@ -26,9 +26,9 @@
 
 
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
-            <property name="hibernate.hikari.dataSource.url" value="jdbc:postgresql://localhost:5432/SKPH_db"/>
-            <property name="hibernate.hikari.dataSource.user" value="SKPH"/>
-            <property name="hibernate.hikari.dataSource.password" value="SKPH_password"/>
+            <property name="hibernate.hikari.dataSource.url" value="jdbc:postgresql://localhost:5432/io"/>
+            <property name="hibernate.hikari.dataSource.user" value="io"/>
+            <property name="hibernate.hikari.dataSource.password" value="io"/>
             <property name="hibernate.hikari.maximumPoolSize" value="5"/>
         </properties>
     </persistence-unit>

@@ -14,6 +14,7 @@ public class ChatWebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/chatSystem").setAllowedOriginPatterns("*").withSockJS();
         registry.addEndpoint("/chatSystem").setAllowedOriginPatterns("*");
+        //System.out.println("Endpoint registered");
     }
 
     @Override
@@ -21,5 +22,6 @@ public class ChatWebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.enableSimpleBroker("/queue", "/topic", "/user");
         registry.setUserDestinationPrefix("/user");
         registry.setApplicationDestinationPrefixes("/app");
+        //System.out.println("Broker registered");
     }
 }
