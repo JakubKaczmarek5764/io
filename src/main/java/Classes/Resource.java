@@ -31,24 +31,24 @@ public class Resource {
 
     public Resource(){}
 
-    public Resource(resourceType type, Volunteer volunteer, int quantity, boolean available) {
+    public Resource(resourceType type, Volunteer volunteer, int quantity) {
         this.type = type;
         this.volunteer = volunteer;
         this.quantity = quantity;
-        this.available = available;
+        this.available = true;
     }
 
-    public Resource(resourceType type,Donation donation, int quantity, boolean available) {
+    public Resource(resourceType type,Donation donation, int quantity) {
         this.type = type;
         this.donation = donation;
         this.quantity = quantity;
-        this.available = available;
+        this.available = true;
     }
 
-    public Resource(resourceType type, int quantity, boolean available) {
+    public Resource(resourceType type, int quantity) {
         this.type = type;
         this.quantity = quantity;
-        this.available = available;
+        this.available = true;
     }
 
     public Volunteer getVolunteer() {
@@ -83,6 +83,13 @@ public class Resource {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public void updateQuantity(int change) {
+        if (this.quantity + change < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative. Current: " + this.quantity + ", Change: " + change);
+        }
+        this.quantity += change;
     }
 
     public boolean isAvailable() {

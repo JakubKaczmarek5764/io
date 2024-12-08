@@ -9,6 +9,9 @@ import java.util.List;
 public class Repository {
     private static EntityManagerFactory entityManagerFactory  = Persistence.createEntityManagerFactory("default");
 
+    public static EntityManagerFactory getEntityManagerFactory() {
+        return entityManagerFactory;
+    }
 
     static <T> void add(T entity) {
         EntityManager em = entityManagerFactory.createEntityManager();

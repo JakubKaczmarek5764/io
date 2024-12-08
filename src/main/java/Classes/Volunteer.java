@@ -3,6 +3,7 @@ package Classes;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import java.io.Serializable;
@@ -29,16 +30,12 @@ public class Volunteer extends User implements Serializable {
     }
 
     public Volunteer(String firstName, String lastName) {
-        super(firstName, lastName);
+        super(firstName,lastName);
+        this.available = true;
+        this.completedTasks = new ArrayList<>();
+        this.currentTask = null;
+        this.evaluations = new ArrayList<>();
     }
-
-//    public Volunteer(boolean available, List<Task> completedTasks, Task currentTask, List<volunteerEvaluation> evaluations) {
-//        super();
-//        this.available = available;
-//        this.completedTasks = completedTasks;
-//        this.currentTask = currentTask;
-//        this.evaluations = evaluations;
-//    }
 
     public boolean isAvailable() {
         return available;
@@ -70,6 +67,10 @@ public class Volunteer extends User implements Serializable {
 
     public void setEvaluations(List<volunteerEvaluation> evaluations) {
         this.evaluations = evaluations;
+    }
+
+    public int getVolunteerId() {
+        return getUserId();
     }
     
 }
