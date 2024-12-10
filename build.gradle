@@ -25,15 +25,15 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter' // dodane
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'org.postgresql:postgresql:42.7.3'
-    implementation 'org.hibernate.orm:hibernate-core:7.0.0.Alpha2'
     implementation 'jakarta.annotation:jakarta.annotation-api:3.0.0'
     implementation 'jakarta.persistence:jakarta.persistence-api:3.2.0'
     implementation 'jakarta.el:jakarta.el-api:6.0.1'
-    implementation 'org.hibernate:hibernate-hikaricp:7.0.0.Alpha1'
+    implementation 'org.hibernate:hibernate-core:6.2.7.Final'
     implementation 'com.sun.istack:istack-commons-runtime:4.2.0'
     implementation 'org.apache.logging.log4j:log4j-core:3.0.0-beta1'
     implementation 'org.apache.logging.log4j:log4j-api:3.0.0-beta1'
     implementation 'org.apache.logging.log4j:log4j-slf4j-impl:3.0.0-beta2'
+    implementation 'com.zaxxer:HikariCP:5.0.1'
 }
 
 test {

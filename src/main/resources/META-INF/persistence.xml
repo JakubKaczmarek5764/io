@@ -5,6 +5,7 @@
              version="3.0">
     <persistence-unit name="default">
         <class>Chat.ChatRestController</class>
+        <class>Classes.Charity</class>
         <properties>
             <property name="hibernate.connection.isolation" value="8"/>
             <property name="jakarta.persistence.jdbc.url"
