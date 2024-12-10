@@ -3,7 +3,7 @@ package Classes;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Charity")
+@Table(name = "Charitys")
 public class Charity {
 
     @Id
@@ -34,5 +34,13 @@ public class Charity {
 
     public String getCharity_description() {
         return charity_description;
+    }
+
+    public void setCharity_name(String charity_name) {
+        this.charity_name = charity_name;
+    }
+
+    public void setCharity_description(String charity_description) {
+        this.charity_description = charity_description;
     }
 }

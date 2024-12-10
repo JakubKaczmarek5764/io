@@ -11,7 +11,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int task_id;
     @ManyToOne
-    @JoinColumn(name = "volunteer_id", referencedColumnName = "volunteer_id")
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private Volunteer volunteer;
     private String description;
     private String status;

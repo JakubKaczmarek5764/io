@@ -5,13 +5,13 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "volunteerEvaluation")
+@Table(name = "volunteerEvaluations")
 public class VolunteerEvaluation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int evaluationId;
     @ManyToOne
-    @JoinColumn(name = "volunteer_id", referencedColumnName = "volunteer_id")
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private Volunteer volunteer;
     @OneToOne
     @JoinColumn(name = "task_id", referencedColumnName = "task_id")
