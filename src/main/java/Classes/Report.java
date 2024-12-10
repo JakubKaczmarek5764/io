@@ -17,7 +17,6 @@ public class Report {
     private int report_id;
 
     @ManyToOne
-    @NotNull
     private Victim victim;
 
     @ManyToOne
@@ -59,6 +58,10 @@ public class Report {
 
     public Victim getVictim() {
         return victim;
+    }
+
+    public void setVictim(Victim victim) {
+        this.victim = victim;
     }
 
     public Charity getCharity() {
@@ -130,15 +133,15 @@ public class Report {
     }
 
     public void addVolunteer(Volunteer volunteer){
-        this.addVolunteer(volunteer);
+        this.volunteers.add(volunteer);
     }
 
     public void deleteResource(int id){
-        this.resources.remove(id);
+        this.resources.remove(resources.get(id));
     }
 
     public void deleteVolunteer(int id){
-        this.volunteers.remove(id);
+        this.volunteers.remove(this.volunteers.get(id));
     }
 
     public Resource getResource(int id){
@@ -147,5 +150,9 @@ public class Report {
 
     public Volunteer getVolunteer(int id){
         return this.volunteers.get(id);
+    }
+
+    public void setReport_id(int report_id) {
+        this.report_id = report_id;
     }
 }
