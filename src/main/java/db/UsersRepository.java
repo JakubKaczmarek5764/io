@@ -1,10 +1,9 @@
 package db;
 import Classes.User;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public class UsersRepository implements IRepository<User> {
@@ -33,5 +32,14 @@ public class UsersRepository implements IRepository<User> {
     @Override
     public List<User> getAll() {
         return Repository.getAll(User.class);
+    }
+
+    public Optional<User> findByLoginHash(String loginHash) {
+        try (EntityManager em = Repository.getEntityManagerFactory().createEntityManager()) {
+            return em.createQuery("SELECT u FROM User u WHERE u.loginHash = :loginHash", User.class)
+                    .setParameter("loginHash", loginHash)
+                    .getResultStream()
+                    .findFirst();
+        }
     }
 }

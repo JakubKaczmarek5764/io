@@ -12,7 +12,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type")
 @Access(AccessType.FIELD)
-public abstract class User {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,13 +33,13 @@ public abstract class User {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String loginHash;
 
     @Column(nullable = false)
     private String passwordHash;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -65,8 +65,6 @@ public abstract class User {
 
     public User() {
     }
-
-
 
     public int getUserId() {
         return userId;
