@@ -28,7 +28,12 @@ public class Donation {
     public Donation() {
 
     }
-
+    public Donation(Donator donator, donationStatus status, Date donationDate, Date acceptDate) {
+        this.donator = donator;
+        this.status = status;
+        this.donationDate = donationDate;
+        this.acceptDate = acceptDate;
+    }
     public Donation(int donation_id, Donator donator, donationStatus status, Date donationDate, Date acceptDate) {
         this.donation_id = donation_id;
         this.donator = donator;

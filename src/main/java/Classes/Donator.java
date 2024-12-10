@@ -11,13 +11,13 @@ import java.util.List;
 @DiscriminatorValue("donator")
 public class Donator extends User {
     @ManyToOne
-    @NotNull
     private Charity charity;
     @OneToMany
     private List<Donation> donationList = new ArrayList<>();
 
 
-    public Donator(Charity charity) {
+    public Donator(String firstName, String lastName, Charity charity) {
+        super(firstName, lastName);
         this.charity = charity;
     }
 
