@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "volunteerEvaluation")
-public class volunteerEvaluation {
+public class VolunteerEvaluation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int evaluationId;
@@ -20,10 +20,10 @@ public class volunteerEvaluation {
     private String description;
     private Date evaluationDate;
 
-    public volunteerEvaluation() {
+    public VolunteerEvaluation() {
     }
 
-    public volunteerEvaluation(int evaluationId, Volunteer volunteer, Task task, int rating, String description, Date evaluationDate) {
+    public VolunteerEvaluation(int evaluationId, Volunteer volunteer, Task task, int rating, String description, Date evaluationDate) {
 
         this.evaluationId = evaluationId;
         this.volunteer = volunteer;

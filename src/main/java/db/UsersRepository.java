@@ -6,90 +6,32 @@ import jakarta.persistence.Persistence;
 
 import java.util.List;
 
-import static java.util.List.of;
 
-public class UsersRepository implements CRUDManager<User> {
+public class UsersRepository implements IRepository<User> {
 
-    private static EntityManagerFactory entityManagerFactory;
-
-    private static void init() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("default");
-    }
-
-    public UsersRepository() {
-        init();
-    }
 
     @Override
     public void add(User entity) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.persist(entity);
-            em.getTransaction().commit();
-            em.close();
-        } catch (Exception e) {
-            e.printStackTrace(); //todo: zmienic to potem
-            em.getTransaction().rollback();
-        } finally {
-            em.close();
-        }
+        Repository.add(entity);
     }
 
     @Override
-    public void remove(Class<User> entityClass, long id) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            User entity = em.find(entityClass, id);
-            em.remove(entity);
-            em.getTransaction().commit();
-            em.close();
-        } catch (Exception e) {
-            e.printStackTrace();  //todo: zmienic to potem
-            em.getTransaction().rollback();
-        } finally {
-            em.close();
-        }
+    public void remove(long id) {
+        Repository.remove(User.class, id);
     }
 
     @Override
     public void update(User entity) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.merge(entity);
-            em.getTransaction().commit();
-            em.close();
-        } catch (Exception e) {
-            e.printStackTrace(); //todo: zmienic to potem
-            em.getTransaction().rollback();
-        } finally {
-            em.close();
-        }
+        Repository.update(entity);
     }
 
     @Override
-    public User get(Class<User> entityClass, long id) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        User entity = null;
-        try {
-            em.getTransaction().begin();
-            entity = em.find(entityClass, id);
-            em.getTransaction().commit();
-            em.close();
-        } catch (Exception e) {
-            e.printStackTrace(); //todo: zmienic to potem
-            em.getTransaction().rollback();
-        } finally {
-            em.close();
-        }
-        return entity;
+    public User get(long id) {
+        return Repository.get(User.class, id);
     }
 
     @Override
-    public List<User> getAll(Class<User> entityClass) {
-        // todo: w klasie bazowej dodac query w adnotacjach ktore tu bedzie wywolywane
-        return List.of();
+    public List<User> getAll() {
+        return Repository.getAll(User.class);
     }
 }

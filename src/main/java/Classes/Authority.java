@@ -1,9 +1,12 @@
+package Classes;
+
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 @Entity
 @Table(name = "Authorities")
+//todo: DO POPRAWY ADNOTACJA
 @NamedQueries({
         @NamedQuery(name = "getAllAuthorities", query = "SELECT a FROM Authorities a")
 

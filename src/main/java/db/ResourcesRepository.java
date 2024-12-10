@@ -32,6 +32,8 @@ public class ResourcesRepository implements IRepository<Resource> {
         return Repository.getAll(Resource.class);
     }
 
+    //todo: METODA DO LOGIKI..
+
     public void assignResource(int reportId, Resource resource, int quantity) {
         Report report = Repository.get(Report.class, reportId);
         if (report == null) {

@@ -6,8 +6,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.io.Serializable;
-
 @Entity
 @Access(AccessType.FIELD)
 @DiscriminatorValue("volunteer")
@@ -23,7 +21,7 @@ public class Volunteer extends User implements Serializable {
     private Task currentTask;
 
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<volunteerEvaluation> evaluations;
+    private List<VolunteerEvaluation> evaluations;
 
     public Volunteer() {
         super();
@@ -61,11 +59,11 @@ public class Volunteer extends User implements Serializable {
         this.currentTask = currentTask;
     }
 
-    public List<volunteerEvaluation> getEvaluations() {
+    public List<VolunteerEvaluation> getEvaluations() {
         return evaluations;
     }
 
-    public void setEvaluations(List<volunteerEvaluation> evaluations) {
+    public void setEvaluations(List<VolunteerEvaluation> evaluations) {
         this.evaluations = evaluations;
     }
 
