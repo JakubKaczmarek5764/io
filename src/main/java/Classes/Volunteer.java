@@ -3,6 +3,7 @@ package Classes;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +28,8 @@ public class Volunteer extends User implements Serializable {
         super();
     }
 
-    public Volunteer(String firstName, String lastName) {
-        super(firstName,lastName);
+    public Volunteer(String nickName, String firstName, String lastName, String loginHash, String passwordHash, String email, String phoneNumber, LocalDate registrationDate, LocalDate lastLogin) {
+        super(nickName, firstName, lastName, loginHash, passwordHash, email, phoneNumber, registrationDate, lastLogin);
         this.available = true;
         this.completedTasks = new ArrayList<>();
         this.currentTask = null;

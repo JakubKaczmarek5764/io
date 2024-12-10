@@ -28,21 +28,6 @@ public class SkphApplication {
         return args -> {
             Thread.sleep(30000);
 
-            ChatServer server = chatController.createNewChatServer();
-
-            Chat chat = new Chat(1L, "Chat" + 1, false);
-
-            Volunteer user = new Volunteer("userFName", "userLName");
-            user.setUserId(1);
-            ChatClient client = chatController.createNewChatSession(user);
-            client.joinChat(chat);
-
-            Volunteer user1 = new Volunteer("userFName1", "userLName1");
-            user1.setUserId(2);
-            ChatClient client1 = chatController.createNewChatSession(user1);
-            client1.joinChat(chat);
-
-            client1.sendMessage(1L, "Papaj 2137");
         };
     }
 }
