@@ -19,7 +19,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    testImplementation platform('org.junit:junit-bom:5.10.0') // dodane
+    testImplementation 'org.junit.jupiter:junit-jupiter' // dodane
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'org.postgresql:postgresql:42.7.3'
     implementation 'org.hibernate.orm:hibernate-core:7.0.0.Alpha2'
