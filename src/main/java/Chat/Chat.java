@@ -33,6 +33,10 @@ public class Chat {
         this.name = name;
         this.isArchive = isArchive;
     }
+    public Chat(String name, boolean isArchive) {
+        this.name = name;
+        this.isArchive = isArchive;
+    }
 
     public Chat() {
         

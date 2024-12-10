@@ -1,30 +1,32 @@
 package db;
 
+import Chat.Message;
+
 import java.util.List;
 
-public class MessageRepository implements IRepository<MessageRepository> {
+public class MessageRepository implements IRepository<Message> {
     @Override
-    public void add(MessageRepository entity) {
+    public void add(Message entity) {
         Repository.add(entity);
     }
 
     @Override
     public void remove(long id) {
-        Repository.remove(MessageRepository.class, id);
+        Repository.remove(Message.class, id);
     }
 
     @Override
-    public void update(MessageRepository entity) {
+    public void update(Message entity) {
         Repository.update(entity);
     }
 
     @Override
-    public MessageRepository get(long id) {
-        return Repository.get(MessageRepository.class, id);
+    public Message get(long id) {
+        return Repository.get(Message.class, id);
     }
 
     @Override
-    public List<MessageRepository> getAll() {
-        return Repository.getAll(MessageRepository.class);
+    public List<Message> getAll() {
+        return Repository.getAll(Message.class);
     }
 }

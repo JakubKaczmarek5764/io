@@ -42,6 +42,10 @@ public class Message implements Serializable {
 
     }
 
+    public int getMessageId() {
+        return messageId;
+    }
+
     public String editMessage(String content) {
         this.content = content;
         return "Edited";
