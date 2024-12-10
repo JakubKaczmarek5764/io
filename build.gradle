@@ -19,7 +19,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
-//    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 //    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
     testImplementation platform('org.junit:junit-bom:5.10.0') // dodane
     testImplementation 'org.junit.jupiter:junit-jupiter' // dodane

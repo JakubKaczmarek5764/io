@@ -2,7 +2,6 @@ package Security;
 
 import Classes.User;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -25,7 +24,7 @@ public class JwtUtils {
                 .claim("email", user.getEmail())
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret().getBytes())
+                .signWith(jwtConfig.getSecretKey())
                 .compact();
     }
 }

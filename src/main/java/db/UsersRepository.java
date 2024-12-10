@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public class UsersRepository implements IRepository<User> {
 
-
     @Override
     public void add(User entity) {
         Repository.add(entity);
