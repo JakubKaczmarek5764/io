@@ -10,24 +10,25 @@ public class Resource {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int resource_id;
 
+    @Column
     @Enumerated(EnumType.STRING)
     private resourceType type;
 
     @ManyToOne
-    @JoinColumn(name = "volunteer_id", referencedColumnName = "volunteer_id")
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private Volunteer volunteer;
 
     @ManyToOne
     @JoinColumn(name = "donation_id", referencedColumnName = "donation_id")
     private Donation donation;
 
+    @Column
     private int quantity;
 
+    @Column
     private boolean available;
 
-    public int getResource_id() {
-        return resource_id;
-    }
+
 
     public Resource(){}
 
@@ -50,7 +51,9 @@ public class Resource {
         this.quantity = quantity;
         this.available = true;
     }
-
+    public int getResource_id() {
+        return resource_id;
+    }
     public Volunteer getVolunteer() {
         return volunteer;
     }

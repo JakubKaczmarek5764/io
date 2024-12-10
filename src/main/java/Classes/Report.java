@@ -17,31 +17,42 @@ public class Report {
     private int report_id;
 
     @ManyToOne
+    @JoinColumn(name = "userId")
     @NotNull
     private Victim victim;
 
     @ManyToOne
+    @JoinColumn(name = "charityId")
     @NotNull
     private Charity charity;
 
+    @Column
     private String category;
 
+
     @ManyToOne
+    @JoinColumn(name = "locationId")
     private Location location;
 
+    @Column
     @Enumerated(EnumType.STRING)
     private reportStatus status;
 
+    @Column
     private Date report_date;
 
+    @Column
     private  Date accept_date;
 
+    @Column
     private Date completion_date;
 
     @OneToMany
+    @JoinColumn(name = "resourceId")
     private List<Resource> resources = new ArrayList<>();
 
     @OneToMany
+    @JoinColumn(name = "userId")
     private  List<Volunteer> volunteers = new ArrayList<>();
 
     public Report(Victim victim, String category, Charity charity) {

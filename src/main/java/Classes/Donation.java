@@ -15,6 +15,7 @@ public class Donation {
     private int donation_id;
 
     @ManyToOne
+    @JoinColumn(name = "userId")
     @NotNull
     private Donator donator;
     @Enumerated(EnumType.STRING)
