@@ -1,5 +1,6 @@
+package Map;
+
 import Classes.Location;
-import Map.LocationService;
 import db.LocationRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
