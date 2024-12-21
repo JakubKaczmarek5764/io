@@ -9,14 +9,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/chat")
 public class ChatRestController {
-    private final ChatRestService chatRestService;
-    //private ChatServer chatServer;
-    //private List<ChatClient> clients = new ArrayList<>();
-
-    @Autowired
-    public ChatRestController(ChatRestService chatRestService) {
-        this.chatRestService = chatRestService;
-    }
+    private ChatRestService chatRestService = new ChatRestService();
 
     @GetMapping("/hello")
     public String hello() {

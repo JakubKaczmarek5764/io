@@ -6,11 +6,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ChatRestService {
-//    private final UsersRepository usersRepository;
-//    //private final ChatsRepository chatsRepository = new ChatsRepository();
-//
-//    @Autowired
-//    public ChatRestService(UsersRepository usersRepository) {
-//        this.usersRepository = usersRepository;
-//    }
+    private ChatService chatService = new ChatService();
+
 }
