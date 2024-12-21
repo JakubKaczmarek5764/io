@@ -1,12 +1,13 @@
 package Chat;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import Classes.User;
 import jakarta.persistence.*;
 
 @Entity
-public class Chat {
+public class Chat implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chatId;
@@ -17,7 +18,7 @@ public class Chat {
     @Column(nullable = false)
     private boolean isArchive;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "chat_users",
             joinColumns = @JoinColumn(name = "chatId"),
@@ -25,7 +26,7 @@ public class Chat {
     )
     private List<User> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Message> messages = new ArrayList<>();
 
     public Chat(Long chatId, String name, boolean isArchive) {
@@ -44,7 +45,6 @@ public class Chat {
 
     public void addMessage(Message message) {
         messages.add(message);
-        ///todo Tutaj dodać logikę wysyłania powiadomień lub zapisywania wiadomości w bazie danych
     }
 
     public void addParticipant(User user) {
@@ -81,5 +81,24 @@ public class Chat {
 
     public void setArchive(boolean archive) {
         isArchive = archive;
+    }
+
+    @Override
+    public String toString() {
+        return "Chat{" +
+                "chatId=" + chatId +
+                ", name='" + name + '\'' +
+                ", isArchive=" + isArchive +
+                ", users=" + users +
+                ", messages=" + messages +
+                '}';
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void addUser(User user) {
+        users.add(user);
     }
 }

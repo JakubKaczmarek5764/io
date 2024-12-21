@@ -70,5 +70,14 @@ public class Volunteer extends User implements Serializable {
     public int getVolunteerId() {
         return getUserId();
     }
-    
+
+    @Override
+    public String toString() {
+        return "Volunteer{" +
+                "available=" + available +
+                //", completedTasks=" + completedTasks +
+                ", currentTask=" + currentTask +
+                //", evaluations=" + evaluations +
+                "} " + super.toString();
+    }
 }

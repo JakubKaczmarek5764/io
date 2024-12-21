@@ -3,7 +3,10 @@ package SKPH;
 import Chat.*;
 import Chat.ChatClient;
 import Chat.ChatServer;
+import Classes.User;
 import Classes.Volunteer;
+import db.ChatRepository;
+import db.UsersRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,21 +29,33 @@ public class SkphApplication {
     @Bean
     public CommandLineRunner run(ChatController chatController) {
         return args -> {
-            Thread.sleep(30000);
+            UsersRepository usersRepository = new UsersRepository();
+            ChatRepository chatRepository = new ChatRepository();
+
+            //Thread.sleep(30000);
 
             ChatServer server = chatController.createNewChatServer();
 
-            Chat chat = new Chat(1L, "Chat" + 1, false);
+            Chat chat = chatRepository.get(1L);
 
-            Volunteer user = new Volunteer("userFName", "userLName");
-            user.setUserId(1);
+            //Volunteer user = new Volunteer("userFName", "userLName");
+            //usersRepository.add(user);
+
+            //Volunteer user1 = new Volunteer("userFName1", "userLName1");
+            //usersRepository.add(user1);
+
+            User user = usersRepository.get(1L);
+            User user1 = usersRepository.get(2L);
+
+            System.out.println(chat);
+            System.out.println(user);
+            System.out.println(user1);
+
             ChatClient client = chatController.createNewChatSession(user);
-            client.joinChat(chat);
+            //client.joinNewChat(chat);
 
-            Volunteer user1 = new Volunteer("userFName1", "userLName1");
-            user1.setUserId(2);
             ChatClient client1 = chatController.createNewChatSession(user1);
-            client1.joinChat(chat);
+            //client1.joinNewChat(chat);
 
             client1.sendMessage(1L, "Papaj 2137");
         };

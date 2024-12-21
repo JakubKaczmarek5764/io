@@ -3,7 +3,9 @@ import Classes.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import Chat.Chat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,5 +35,16 @@ public class UsersRepository implements IRepository<User> {
     @Override
     public List<User> getAll() {
         return Repository.getAll(User.class);
+    }
+
+    public List<Long> getUserChats(int userId) {
+        List<Long> chats = new ArrayList<>();
+        User user = get(userId);
+
+        for (Chat chat : user.getChats()) {
+            chats.add(chat.getChatId());
+        }
+
+        return chats;
     }
 }

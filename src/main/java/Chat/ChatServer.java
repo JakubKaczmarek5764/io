@@ -4,25 +4,26 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import Classes.User;
+import db.ChatRepository;
+import db.MessageRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ChatServer {
-    // Mapowanie chatId na obiekt skph.Chat oraz zestaw strumieni klientów
+    // Mapowanie chatId na obiekt Chat oraz zestaw strumieni klientów
     private static Map<Long, Chat> chats = new HashMap<>();
     private static Map<Long, Set<ObjectOutputStream>> chatClientWriters = new HashMap<>();
+    private static ChatRepository chatRepository = new ChatRepository();
 
     // Metoda inicjalizująca czaty
-    public static void initializeChats() { ///todo zrobić pobieranie czatów z bazy
-        Chat chat1 = new Chat(1L, "skph.Chat One", false);
-        Chat chat2 = new Chat(2L, "skph.Chat Two", false);
+    public static void initializeChats() {
+        List<Chat> fetchedChats = chatRepository.getAll();
 
-        chats.put(chat1.getChatId(), chat1);
-        chats.put(chat2.getChatId(), chat2);
-
-        chatClientWriters.put(chat1.getChatId(), new HashSet<>());
-        chatClientWriters.put(chat2.getChatId(), new HashSet<>());
+        for (Chat chat : fetchedChats) {
+            chats.put(chat.getChatId(), chat);
+            chatClientWriters.put(chat.getChatId(), new HashSet<>());
+        }
 
         System.out.println("Initialized chats: " + chats.keySet());
     }
@@ -47,6 +48,7 @@ public class ChatServer {
     private static class ClientHandler extends Thread {
         private Socket socket;
         private ObjectOutputStream out;
+        private MessageRepository messageRepository = new MessageRepository();
 
         public ClientHandler(Socket socket) {
             this.socket = socket;
@@ -74,13 +76,18 @@ public class ChatServer {
                 chat.addParticipant(user);
                 chatClientWriters.get(chatId).add(out);
 
-                System.out.println("skph.User added to chat: " + chatId);
+                System.out.println("User added to chat: " + chatId);
 
                 Object messageObject;
                 while ((messageObject = in.readObject()) != null) {
-                    if (messageObject instanceof Notification) {
-                        Notification notification = (Notification) messageObject;
-                        sendToChat(notification, chatId, out);
+                    if (messageObject instanceof Message message) {
+                        try {
+                            messageRepository.add(message);
+                            message.getChat().addMessage(message);
+                        } catch (Exception e) {
+                            throw new RuntimeException("Cannot send the message");
+                        }
+                        sendToChat(new Notification(message.getContent(), message.getSender().getFirstName() + " " + message.getSender().getLastName(), message.getChat().getName(), message.getTimestamp()), message.getChat().getChatId(), out);
                     }
                 }
             } catch (Exception e) {

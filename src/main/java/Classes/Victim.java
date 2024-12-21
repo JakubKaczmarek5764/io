@@ -46,4 +46,12 @@ public class Victim extends User implements Serializable {
     public Report getReportById(int id){
         return this.reportList.get(id);
     }
+
+    @Override
+    public String toString() {
+        return "Victim{" +
+                "charity=" + charity +
+                //", reportList=" + reportList +
+                "} " + super.toString();
+    }
 }

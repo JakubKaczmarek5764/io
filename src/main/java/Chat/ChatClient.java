@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import Classes.User;
+import db.ChatRepository;
+import db.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ public class ChatClient {
     private Map<Long, Chat> activeChats = new HashMap<>(); // Mapowanie chatId -> skph.Chat
     private User user;
     private ChatWebSocketController chatWebSocketController;
+    private ChatRepository chatRepository = new ChatRepository();
+    private UsersRepository usersRepository = new UsersRepository();
 
     public void createConnection(String serverAddress, User user, ChatWebSocketController chatWebSocketController) throws Exception {
         this.user = user;
@@ -27,10 +31,28 @@ public class ChatClient {
 
         // Uruchomienie wątku odbierającego wiadomości
         new ReaderThread().start();
+
+        for(Long chat : usersRepository.getUserChats(user.getUserId())) {
+            this.joinChat(chatRepository.get(chat));
+        }
+    }
+
+    public void joinNewChat(Chat chat) throws Exception {
+        activeChats.put(chat.getChatId(), chat);
+        chatRepository.addUserToChat(chat.getChatId(), user.getUserId());
+
+        Map<String, Object> joinRequest = new HashMap<>();
+        joinRequest.put("chatId", chat.getChatId());
+        joinRequest.put("user", user);
+
+        out.writeObject(joinRequest); // Informacja dla serwera, że klient dołącza do nowego chatu
+        out.flush();
+
+        System.out.println("New chat joined: " + chat.getChatId());
     }
 
     /**
-     * Rejestruje nowy chat w kliencie.
+     * Rejestruje chat w kliencie.
      */
     public void joinChat(Chat chat) throws IOException {
         activeChats.put(chat.getChatId(), chat);
@@ -41,6 +63,8 @@ public class ChatClient {
 
         out.writeObject(joinRequest); // Informacja dla serwera, że klient dołącza do tego chatu
         out.flush();
+
+        System.out.println("Chat joined: " + chat.getChatId());
     }
 
     /**
@@ -54,8 +78,7 @@ public class ChatClient {
         }
         // Tworzenie wiadomości
         Message message = new Message(content, user, chat, LocalDateTime.now());
-        Notification notification = new Notification(message.getContent(), user.getFirstName() + " " + user.getLastName(), chat.getName(), LocalDateTime.now());
-        out.writeObject(notification); // Wysyłanie wiadomości do serwera
+        out.writeObject(message); // Wysyłanie wiadomości do serwera
         out.flush();
     }
 
