@@ -10,11 +10,21 @@ public class ChatService {
     @Autowired
     private ChatFactory chatClientFactory;
 
-    public ChatClient startNewChat(User user) throws Exception {
-        return chatClientFactory.createChatClient(user);
+    public ChatClient createNewChatSession(User user) {
+        try {
+            return chatClientFactory.createChatClient(user);
+        } catch (Exception e) {
+            System.out.println("Error starting new chat: " + e.getMessage());
+        }
+        return null;
     }
 
-    public ChatServer startNewChatServer() throws Exception {
-        return chatClientFactory.createChatServer();
+    public ChatServer createNewChatServer() {
+        try {
+            return chatClientFactory.createChatServer();
+        } catch (Exception e) {
+            System.out.println("Error starting new chat server: " + e.getMessage());
+        }
+        return null;
     }
 }

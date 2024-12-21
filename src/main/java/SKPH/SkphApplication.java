@@ -27,14 +27,14 @@ public class SkphApplication {
     }
 
     @Bean
-    public CommandLineRunner run(ChatController chatController) {
+    public CommandLineRunner run(ChatService chatService) {
         return args -> {
             UsersRepository usersRepository = new UsersRepository();
             ChatRepository chatRepository = new ChatRepository();
 
             //Thread.sleep(30000);
 
-            ChatServer server = chatController.createNewChatServer();
+            ChatServer server = chatService.createNewChatServer();
 
             Chat chat = chatRepository.get(1L);
 
@@ -51,10 +51,10 @@ public class SkphApplication {
             System.out.println(user);
             System.out.println(user1);
 
-            ChatClient client = chatController.createNewChatSession(user);
+            ChatClient client = chatService.createNewChatSession(user);
             //client.joinNewChat(chat);
 
-            ChatClient client1 = chatController.createNewChatSession(user1);
+            ChatClient client1 = chatService.createNewChatSession(user1);
             //client1.joinNewChat(chat);
 
             client1.sendMessage(1L, "Papaj 2137");
