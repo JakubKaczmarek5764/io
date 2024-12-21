@@ -26,7 +26,7 @@ public class SkphApplication {
         System.out.println("SKHP Server Started");
     }
 
-    @Bean
+    //@Bean
     public CommandLineRunner run(ChatService chatService) {
         return args -> {
             UsersRepository usersRepository = new UsersRepository();
