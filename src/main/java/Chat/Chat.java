@@ -26,7 +26,7 @@ public class Chat implements Serializable {
     )
     private List<User> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Message> messages = new ArrayList<>();
 
     public Chat(Long chatId, String name, boolean isArchive) {

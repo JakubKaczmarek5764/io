@@ -21,6 +21,10 @@ public class ChatClient {
     private ChatRepository chatRepository = new ChatRepository();
     private UsersRepository usersRepository = new UsersRepository();
 
+    public boolean isInChat(long chatId) {
+        return activeChats.containsKey(chatId);
+    }
+
     public void createConnection(String serverAddress, User user, ChatWebSocketController chatWebSocketController) throws Exception {
         this.user = user;
         // Nawiązywanie połączenia z serwerem
@@ -51,6 +55,15 @@ public class ChatClient {
         System.out.println("New chat joined: " + chat.getChatId());
     }
 
+    public void createNewChat(Chat chat) throws Exception {
+        chatRepository.createNewChat(chat);
+        //chatRepository.addUserToChat(chat.getChatId(), user.getUserId());
+        //activeChats.put(chat.getChatId(), chat);
+        this.joinNewChat(chat);
+
+        System.out.println("New chat created: " + chat.getChatId());
+    }
+
     /**
      * Rejestruje chat w kliencie.
      */
@@ -74,6 +87,10 @@ public class ChatClient {
         Chat chat = activeChats.get(chatId);
         if (chat == null) {
             System.out.println("Nie nalezysz do tego chatu: " + chatId);
+            return;
+        }
+        if (chat.isArchive()) {
+            System.out.println("Chat is archived");
             return;
         }
         // Tworzenie wiadomości

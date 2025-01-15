@@ -39,4 +39,8 @@ public class ChatRepository implements IRepository<Chat> {
             Repository.update(chat);
         }
     }
+
+    public void createNewChat(Chat chat) {
+        if(chat.getChatId() == null) Repository.add(chat);
+    }
 }
