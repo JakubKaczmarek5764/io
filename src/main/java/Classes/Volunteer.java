@@ -16,7 +16,7 @@ public class Volunteer extends User implements Serializable {
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Task> completedTasks;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "current_task_id")
     private Task currentTask;
 

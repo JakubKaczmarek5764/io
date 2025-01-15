@@ -18,9 +18,7 @@ public class Task {
     private Date startDate;
     private Date completedDate;
 
-    public Task(int task_id, Volunteer volunteer, String description, String status) {
-
-        this.task_id = task_id;
+    public Task(Volunteer volunteer, String description, String status) {
         this.volunteer = volunteer;
         this.description = description;
         this.status = status;

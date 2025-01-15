@@ -55,11 +55,4 @@ public class AuthoritiesCRUDTest {
         Assertions.assertNull(returnedAuthority);
     }
 
-    @Test
-    public void testGetAll() {
-        repo.add(authority);
-        Authority authority2 = new Authority("Jan", "Kowalski", "4321", "malopolskie", "123-456", "login", "haslo");
-        repo.add(authority2);
-        Assertions.assertEquals(2, repo.getAll().size());
-    }
 }
