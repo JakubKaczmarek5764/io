@@ -2,10 +2,12 @@ package db;
 
 import Chat.Message;
 import Chat.Chat;
+import Classes.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.hibernate.query.Query;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class MessageRepository implements IRepository<Message> {
@@ -41,6 +43,17 @@ public class MessageRepository implements IRepository<Message> {
         TypedQuery<Message> query = entityManager.createQuery(jpql, Message.class);
         query.setParameter("chat", chat);
 
+        List<Message> list = query.getResultList();
+        return list;
+    }
+
+    public List<Message> getOldMessagesByUserId(Long id, LocalDateTime lastActivityTime) {
+        EntityManager entityManager = Repository.getEntityManagerFactory().createEntityManager();
+        User User = Repository.get(User.class, id);
+        String jpql = "SELECT m FROM Message m WHERE m.sender = :user AND m.timestamp >= :lastActivityTime";
+        TypedQuery<Message> query = entityManager.createQuery(jpql, Message.class);
+        query.setParameter("user", User);
+        query.setParameter("lastActivityTime", lastActivityTime);
         List<Message> list = query.getResultList();
         return list;
     }
