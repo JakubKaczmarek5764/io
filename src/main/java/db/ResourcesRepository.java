@@ -1,6 +1,5 @@
 package db;
 
-import Classes.Report;
 import Classes.Resource;
 import Classes.resourceType;
 

@@ -18,7 +18,6 @@ public class TaskCRUDTest {
     private User user;
     private Task task;
     private TaskRepository taskRepo;
-    private VolunteerService volunteerService;
     private ResourcesRepository resourcesRepository;
 
 
@@ -28,7 +27,6 @@ public class TaskCRUDTest {
         repo = new UsersRepository();
         taskRepo = new TaskRepository();
         resourcesRepository = new ResourcesRepository();
-        volunteerService = new VolunteerService();
         task = new Task("Zadanie testowe",IN_PROGRESS);
 
     }
@@ -43,7 +41,8 @@ public class TaskCRUDTest {
     public void addTest() {
         repo.add(user);
         taskRepo.add(task);
-        volunteerService.assignVolunteer(task,(Volunteer) user);
+        task.setVolunteer((Volunteer) user);
+        taskRepo.update(task);
         Task returnedTask = taskRepo.get(task.getTaskId());
 
         Assertions.assertEquals(task.getTaskId(), returnedTask.getTaskId());
@@ -55,7 +54,8 @@ public class TaskCRUDTest {
     public void removeTest() {
         repo.add(user);
         taskRepo.add(task);
-        volunteerService.assignVolunteer(task,(Volunteer) user);
+        task.setVolunteer((Volunteer) user);
+        taskRepo.update(task);
         taskRepo.remove(task.getTaskId());
         Task returnedTask = taskRepo.get(task.getTaskId());
         Assertions.assertNull(returnedTask);
@@ -65,7 +65,7 @@ public class TaskCRUDTest {
     public void updateTest() {
         repo.add(user);
         taskRepo.add(task);
-        volunteerService.assignVolunteer(task,(Volunteer) user);
+        task.setVolunteer((Volunteer) user);
         task.setDescription("Nowy opis");
         taskRepo.update(task);
         Task returnedTask = taskRepo.get(task.getTaskId());
@@ -77,10 +77,12 @@ public class TaskCRUDTest {
     public void getAllTest() {
         repo.add(user);
         taskRepo.add(task);
-        volunteerService.assignVolunteer(task,(Volunteer) user);
+        task.setVolunteer((Volunteer) user);
+        taskRepo.update(task);
         Task task2 = new Task("praca domowa", IN_PROGRESS);
-        volunteerService.assignVolunteer(task2, (Volunteer) user);
         taskRepo.add(task2);
+        task2.setVolunteer((Volunteer) user);
+        taskRepo.update(task);
         Assertions.assertEquals(3, taskRepo.getAll().size());
 
     }
