@@ -6,6 +6,7 @@ import Chat.Chat;
 import Chat.Message;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,9 @@ public abstract class User implements Serializable {
 
     @Column(nullable = false)
     private String lastName;
+
+    @Column
+    private LocalDateTime lastActivityTime;
 
     public User() {
     }
@@ -85,5 +89,13 @@ public abstract class User implements Serializable {
 
     public List<Chat> getChats() {
         return chats;
+    }
+
+    public LocalDateTime getLastActivityTime() {
+        return lastActivityTime;
+    }
+
+    public void setLastActivityTime(LocalDateTime lastActivityTime) {
+        this.lastActivityTime = lastActivityTime;
     }
 }
