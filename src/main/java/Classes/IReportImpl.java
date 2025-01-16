@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/report")
 public class IReportImpl implements IReport, IVictim {
 
-    ReportRepository reportRepository = new ReportRepository();
+    private ReportRepository reportRepository = new ReportRepository();
 
     @Override
     public ResponseEntity<List<Report>> getAllReports() {
@@ -24,12 +24,22 @@ public class IReportImpl implements IReport, IVictim {
     @Override
     public ResponseEntity<Report> getReport(int id) {
         Report report = reportRepository.get(id);
+
+        if (report == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         return new ResponseEntity<>(report, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Report> updateReport(int id, Report updatedReport) {
         Report report = reportRepository.get(id);
+
+        if (report == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         if(updatedReport.getCategory() != null){
             report.setCategory(updatedReport.getCategory());
         }
@@ -54,12 +64,14 @@ public class IReportImpl implements IReport, IVictim {
         if(updatedReport.getCompletion_date() != null){
             report.setCompletion_date(updatedReport.getCompletion_date());
         }
-        if (!updatedReport.getResourcesList().isEmpty()){
+        if (updatedReport.getResourcesList() != null){
+            report.getResourcesList().clear();
             for (Resource resource : updatedReport.getResourcesList()) {
                 report.addResource(resource);
             }
         }
-        if(!updatedReport.getVolunteersList().isEmpty()){
+        if(updatedReport.getVolunteersList() != null){
+            report.getVolunteersList().clear();
             for (Volunteer volunteer : updatedReport.getVolunteersList()) {
                 report.addVolunteer(volunteer);
             }
@@ -71,6 +83,11 @@ public class IReportImpl implements IReport, IVictim {
     @Override
     public ResponseEntity<Report> deleteReport(int id) {
         Report report = reportRepository.get(id);
+
+        if (report == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         reportRepository.remove(id);
         return new ResponseEntity<>(report, HttpStatus.OK);
     }
@@ -103,6 +120,6 @@ public class IReportImpl implements IReport, IVictim {
     @Override
     public ResponseEntity<Report> addReport(Report report) {
         reportRepository.add(report);
-        return new ResponseEntity<>(report, HttpStatus.OK);
+        return new ResponseEntity<>(report, HttpStatus.CREATED);
     }
 }

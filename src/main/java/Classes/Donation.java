@@ -22,7 +22,7 @@ public class Donation {
     private donationStatus status;
     private Date donationDate;
     private Date acceptDate;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Resource> resources = new ArrayList<>();
 
     public Donation() {
@@ -34,12 +34,9 @@ public class Donation {
         this.donationDate = donationDate;
         this.acceptDate = acceptDate;
     }
-    public Donation(int donation_id, Donator donator, donationStatus status, Date donationDate, Date acceptDate) {
-        this.donation_id = donation_id;
+
+    public void setDonator(Donator donator) {
         this.donator = donator;
-        this.status = status;
-        this.donationDate = donationDate;
-        this.acceptDate = acceptDate;
     }
 
     public int getDonation_id() {
@@ -62,6 +59,10 @@ public class Donation {
         return donationDate;
     }
 
+    public void setDonationDate(Date donationDate) {
+        this.donationDate = donationDate;
+    }
+
     public Date getAcceptDate() {
         return acceptDate;
     }
@@ -75,11 +76,11 @@ public class Donation {
     }
 
     public void addResource(Resource resource) {
-
+        this.resources.add(resource);
     }
 
     public void deleteResource(int id) {
-
+        this.resources.remove(this.resources.get(id));
     }
 
     public Resource getResource(int id) {
