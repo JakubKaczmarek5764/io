@@ -47,12 +47,16 @@ public class MessageRepository implements IRepository<Message> {
         return list;
     }
 
-    public List<Message> getOldMessagesByUserId(Long id, LocalDateTime lastActivityTime) {
+    public List<Message> getOldMessagesByUserId(Long id) {
         EntityManager entityManager = Repository.getEntityManagerFactory().createEntityManager();
-        User User = Repository.get(User.class, id);
+        User user = Repository.get(User.class, id);
+        LocalDateTime lastActivityTime = user.getLastActivityTime();
+        if (lastActivityTime == null) {
+            lastActivityTime = LocalDateTime.now();
+        }
         String jpql = "SELECT m FROM Message m WHERE m.sender = :user AND m.timestamp >= :lastActivityTime";
         TypedQuery<Message> query = entityManager.createQuery(jpql, Message.class);
-        query.setParameter("user", User);
+        query.setParameter("user", user);
         query.setParameter("lastActivityTime", lastActivityTime);
         List<Message> list = query.getResultList();
         return list;
