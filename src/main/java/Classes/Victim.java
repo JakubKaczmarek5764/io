@@ -16,9 +16,6 @@ public class Victim extends User implements Serializable {
     @NotNull
     private Charity charity;
 
-    @OneToMany
-    private  List<Report> reportList = new ArrayList<>();
-
     public Victim() {
     }
 
@@ -35,17 +32,6 @@ public class Victim extends User implements Serializable {
         this.charity = charity;
     }
 
-    public List<Report> getReportList() {
-        return reportList;
-    }
-
-    public void addToReportList(Report report){
-        this.reportList.add(report);
-    }
-
-    public Report getReportById(int id){
-        return this.reportList.get(id);
-    }
 
     @Override
     public String toString() {

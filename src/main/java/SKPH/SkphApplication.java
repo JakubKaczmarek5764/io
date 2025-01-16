@@ -16,7 +16,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-@ComponentScan(basePackages = {"Chat"})
+@ComponentScan(basePackages = {"Chat", "Classes"})
 public class SkphApplication {
     public static void main(String[] args) throws Exception {
         SpringApplication.run(SkphApplication.class, args);

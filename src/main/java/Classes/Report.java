@@ -37,10 +37,10 @@ public class Report {
 
     private Date completion_date;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Resource> resources = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private  List<Volunteer> volunteers = new ArrayList<>();
 
     public Report(Victim victim, String category, Charity charity) {

@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface IVictim {
 
-    @PostMapping
+    @PostMapping()
     ResponseEntity<Report> addReport(@RequestBody Report report);
 }
