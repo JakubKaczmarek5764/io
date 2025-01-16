@@ -78,7 +78,7 @@ public class TaskCRUDTest {
         repo.add(user);
         taskRepo.add(task);
         volunteerService.assignVolunteer(task,(Volunteer) user);
-        Task task2 = new Task("praca domowa", "w trakcie realizacji");
+        Task task2 = new Task("praca domowa", IN_PROGRESS);
         volunteerService.assignVolunteer(task2, (Volunteer) user);
         taskRepo.add(task2);
         Assertions.assertEquals(3, taskRepo.getAll().size());
