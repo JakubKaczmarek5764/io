@@ -14,18 +14,27 @@ public class Task {
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private Volunteer volunteer;
     private String description;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private status status;
     private Date startDate;
     private Date completedDate;
 
-    public Task(Volunteer volunteer, String description, String status) {
-        this.volunteer = volunteer;
+    public Task(String descriptions, status status) {
+        this.volunteer = null;
         this.description = description;
         this.status = status;
 
 
     }
     public Task(){}
+
+    public status getStatus() {
+        return status;
+    }
+
+    public void setStatus(status status) {
+        this.status = status;
+    }
 
     public int getTaskId() {
         return task_id;
@@ -45,14 +54,6 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Date getStartDate() {

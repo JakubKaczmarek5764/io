@@ -2,6 +2,7 @@ package Classes;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -23,14 +24,13 @@ public class VolunteerEvaluation {
     public VolunteerEvaluation() {
     }
 
-    public VolunteerEvaluation(int evaluationId, Volunteer volunteer, Task task, int rating, String description, Date evaluationDate) {
+    public VolunteerEvaluation(Volunteer volunteer, Task task, int rating, String description) {
 
-        this.evaluationId = evaluationId;
         this.volunteer = volunteer;
         this.task = task;
         this.rating = rating;
         this.description = description;
-        this.evaluationDate = evaluationDate;
+        this.evaluationDate = new Date();
     }
 
     public int getEvaluationId() {

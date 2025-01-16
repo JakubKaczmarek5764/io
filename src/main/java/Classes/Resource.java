@@ -2,6 +2,8 @@ package Classes;
 
 import jakarta.persistence.*;
 
+import static Classes.resourceType.VOLUNTEER;
+
 @Entity
 @Table(name = "Resources")
 public class Resource {
@@ -32,17 +34,17 @@ public class Resource {
 
     public Resource(){}
 
-    public Resource(resourceType type, Volunteer volunteer, int quantity) {
-        this.type = type;
+    public Resource(Volunteer volunteer) {
+        this.type = VOLUNTEER;
         this.volunteer = volunteer;
-        this.quantity = quantity;
+        this.quantity = 1;
         this.available = true;
     }
 
-    public Resource(resourceType type,Donation donation, int quantity) {
-        this.type = type;
+    public Resource(Donation donation) {
+        this.type = VOLUNTEER;
         this.donation = donation;
-        this.quantity = quantity;
+        this.quantity = 1;
         this.available = true;
     }
 
