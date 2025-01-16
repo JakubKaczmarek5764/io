@@ -48,11 +48,15 @@ public class Chat implements Serializable {
     }
 
     public void addParticipant(User user) {
-        users.add(user);
+        if (!users.contains(user)) {
+            users.add(user);
+        }
     }
 
     public void removeParticipant(User user) {
-        users.remove(user);
+        if (users.contains(user)) {
+            users.remove(user);
+        }
     }
 
     public List<Message> getChatHistory() {
@@ -83,16 +87,16 @@ public class Chat implements Serializable {
         isArchive = archive;
     }
 
-    @Override
-    public String toString() {
-        return "Chat{" +
-                "chatId=" + chatId +
-                ", name='" + name + '\'' +
-                ", isArchive=" + isArchive +
-                ", users=" + users +
-                ", messages=" + messages +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Chat{" +
+//                "chatId=" + chatId +
+//                ", name='" + name + '\'' +
+//                ", isArchive=" + isArchive +
+//                ", users=" + users +
+//                ", messages=" + messages +
+//                '}';
+//    }
 
     public List<User> getUsers() {
         return users;

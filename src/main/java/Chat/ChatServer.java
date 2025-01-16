@@ -74,9 +74,10 @@ public class ChatServer {
 
                 // Dodanie klienta do czatu
                 chat.addParticipant(user);
-                chatClientWriters.get(chatId).add(out);
-
-                System.out.println("User added to chat: " + chatId);
+                if (!chatClientWriters.get(chatId).contains(out)) {
+                    chatClientWriters.get(chatId).add(out);
+                    System.out.println("Server added User to chat: " + chatId);
+                }
 
                 Object messageObject;
                 while ((messageObject = in.readObject()) != null) {
