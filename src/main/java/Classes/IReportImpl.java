@@ -30,6 +30,41 @@ public class IReportImpl implements IReport, IVictim {
     @Override
     public ResponseEntity<Report> updateReport(int id, Report updatedReport) {
         Report report = reportRepository.get(id);
+        if(updatedReport.getCategory() != null){
+            report.setCategory(updatedReport.getCategory());
+        }
+        if(updatedReport.getVictim() != null){
+            report.setVictim(updatedReport.getVictim());
+        }
+        if(updatedReport.getCharity() != null){
+            report.setCharity(updatedReport.getCharity());
+        }
+        if (updatedReport.getLocation() != null){
+            report.setLocation(updatedReport.getLocation());
+        }
+        if(updatedReport.getStatus() != null){
+            report.setStatus(updatedReport.getStatus());
+        }
+        if(updatedReport.getReport_date() != null){
+            report.setReport_date(updatedReport.getReport_date());
+        }
+        if (updatedReport.getAccept_date() != null){
+            report.setAccept_date(updatedReport.getAccept_date());
+        }
+        if(updatedReport.getCompletion_date() != null){
+            report.setCompletion_date(updatedReport.getCompletion_date());
+        }
+        if (!updatedReport.getResourcesList().isEmpty()){
+            for (Resource resource : updatedReport.getResourcesList()) {
+                report.addResource(resource);
+            }
+        }
+        if(!updatedReport.getVolunteersList().isEmpty()){
+            for (Volunteer volunteer : updatedReport.getVolunteersList()) {
+                report.addVolunteer(volunteer);
+            }
+        }
+        reportRepository.update(report);
         return new ResponseEntity<>(report, HttpStatus.OK);
     }
 
