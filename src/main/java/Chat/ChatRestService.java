@@ -42,4 +42,9 @@ public class ChatRestService {
     public List<ChatRestController.ChatHistoryDto> getChatHistory(Long chatId, int userId) {
         return chatService.getChatHistory(chatId, userId);
     }
+
+    public List<Chat.ChatRestController.ChatHistoryDto> getOldNotifications(int userId) {
+        return chatService.getOldNotifications(userId);
+    }
+
 }

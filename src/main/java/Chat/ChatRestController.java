@@ -77,6 +77,11 @@ public class ChatRestController {
         return chatRestService.getChatHistory(userIdChatIdDTO.getChatId(), userIdChatIdDTO.getUserId());
     }
 
+    @GetMapping("/getOldNotifications")
+    public List<ChatHistoryDto> getOldNotifications(@RequestBody UserIdDto userIdDto) {
+        return chatRestService.getOldNotifications(userIdDto.getUserId());
+    }
+
     @GetMapping("/hello")
     public String hello() {
         return "Hello World";

@@ -201,4 +201,20 @@ public class ChatService {
             return null;
         }
     }
+
+    public List<ChatRestController.ChatHistoryDto> getOldNotifications(int userId) {
+        try {
+            MessageRepository messageRepository = new MessageRepository();
+            List<Message> oldMessages = messageRepository.getOldMessagesByUserId(userId);
+
+            List<ChatRestController.ChatHistoryDto> oldNotifications = new ArrayList<>();
+            for (Message message : oldMessages) {
+                oldNotifications.add(new ChatRestController.ChatHistoryDto(message.getSender().getFirstName() + " " + message.getSender().getLastName(), message.getContent(), message.getTimestamp()));
+            }
+            return oldNotifications;
+        } catch (Exception e) {
+            System.out.println("Error fetching old notifications: " + e.getMessage());
+            return null;
+        }
+    }
 }

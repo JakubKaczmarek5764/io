@@ -47,7 +47,7 @@ public class MessageRepository implements IRepository<Message> {
         return list;
     }
 
-    public List<Message> getOldMessagesByUserId(Long id) {
+    public List<Message> getOldMessagesByUserId(int id) {
         EntityManager entityManager = Repository.getEntityManagerFactory().createEntityManager();
         User user = Repository.get(User.class, id);
         LocalDateTime lastActivityTime = user.getLastActivityTime();
