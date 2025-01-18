@@ -17,6 +17,9 @@ public class WebSocketEventListener {
 
     private final ConcurrentHashMap<String, String> sessionIdToUserIdMap = new ConcurrentHashMap<>();
 
+    @Autowired
+    ChatService chatService;
+
     @EventListener
     public void handleSessionConnected(SessionConnectedEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
@@ -32,6 +35,8 @@ public class WebSocketEventListener {
         }
 
         if (userId != null) {
+            //System.out.println("Service: " + chatService);
+            chatService.tryAddNewChatSession(Integer.parseInt(userId));
             sessionIdToUserIdMap.put(sessionId, userId);
         }
 

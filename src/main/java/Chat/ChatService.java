@@ -32,11 +32,32 @@ public class ChatService {
 
     @PostConstruct
     public void init() {
+        //System.out.println("Service: " + this);
         chatClients = new ConcurrentHashMap<>();
 
         for (User user : usersRepository.getAll()) {
             chatClients.put(user.getUserId(), this.createNewChatSession(user));
             System.out.println("Added chat client in chat service for user: " + user.getUserId());
+        }
+    }
+
+    public void tryAddNewChatSession(int userId) {
+        try {
+            if(chatClients.containsKey(userId)) {
+                return;
+            }
+
+            UsersRepository usersRepository = new UsersRepository();
+            User user = usersRepository.get(userId);
+            if (user == null) {
+                throw new BadRequestException("User not found");
+            }
+            ChatClient chatClient = this.createNewChatSession(user);
+            if (chatClient != null) {
+                this.chatClients.put(userId, chatClient);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
