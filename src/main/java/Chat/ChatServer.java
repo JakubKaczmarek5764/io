@@ -86,6 +86,7 @@ public class ChatServer {
                             messageRepository.add(message);
                             message.getChat().addMessage(message);
                         } catch (Exception e) {
+                            e.printStackTrace();
                             throw new RuntimeException("Cannot send the message");
                         }
                         sendToChat(new Notification(message.getContent(), message.getSender().getFirstName() + " " + message.getSender().getLastName(), message.getChat().getName(), message.getTimestamp()), message.getChat().getChatId(), out);
@@ -94,7 +95,11 @@ public class ChatServer {
             } catch (Exception e) {
                 System.out.println("Error: " + e);
             } finally {
-                try { socket.close(); } catch (IOException e) {}
+                try {
+                    if (socket != null) socket.close();
+                } catch (IOException e) {
+                    System.out.println("Error closing socket: " + e);
+                }
                 if (out != null) {
                     chatClientWriters.values().forEach(writers -> writers.remove(out));
                 }

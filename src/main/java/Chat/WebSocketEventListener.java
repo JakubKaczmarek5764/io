@@ -57,7 +57,13 @@ public class WebSocketEventListener {
 //        System.out.println("Message Headers: " + event.getMessage().getHeaders());
 //        System.out.println("UserId: " + userId);
 
-        LocalDateTime disconnectedTime = LocalDateTime.now();
-        connectionService.saveConnectionClosedTime(userId, disconnectedTime);
+        if (userId != null) {
+            synchronized (userId.intern()) {
+                LocalDateTime disconnectedTime = LocalDateTime.now();
+                connectionService.saveConnectionClosedTime(userId, disconnectedTime);
+            }
+        }
+
+
     }
 }

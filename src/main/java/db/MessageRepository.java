@@ -8,6 +8,7 @@ import jakarta.persistence.TypedQuery;
 import org.hibernate.query.Query;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MessageRepository implements IRepository<Message> {
@@ -54,11 +55,25 @@ public class MessageRepository implements IRepository<Message> {
         if (lastActivityTime == null) {
             lastActivityTime = LocalDateTime.now();
         }
-        String jpql = "SELECT m FROM Message m WHERE m.sender = :user AND m.timestamp >= :lastActivityTime";
-        TypedQuery<Message> query = entityManager.createQuery(jpql, Message.class);
-        query.setParameter("user", user);
-        query.setParameter("lastActivityTime", lastActivityTime);
-        List<Message> list = query.getResultList();
+
+        List<Message> list = new ArrayList<>();
+
+        for (Chat chat : user.getChats()) {
+            System.out.println("Chat id: " + chat.getChatId());
+            String jpql = "SELECT m FROM Message m WHERE m.chat = :chat AND m.timestamp >= :lastActivityTime";
+            TypedQuery<Message> query = entityManager.createQuery(jpql, Message.class);
+            query.setParameter("chat", chat);
+            query.setParameter("lastActivityTime", lastActivityTime);
+            list.addAll(query.getResultList());
+        }
+
+        System.out.println("Old messages list");
+        System.out.println("Size: " + list.size());
+        System.out.println("lastActivityTime: " + lastActivityTime);
+
+        for (Message m : list) {
+            System.out.println(m.getContent());
+        }
         return list;
     }
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import Classes.User;
+import db.MessageRepository;
 import jakarta.persistence.*;
 
 @Entity
@@ -44,7 +45,9 @@ public class Chat implements Serializable {
     }
 
     public void addMessage(Message message) {
-        messages.add(message);
+        //messages.add(message);
+        MessageRepository messageRepository = new MessageRepository();
+        messageRepository.add(message);
     }
 
     public void addParticipant(User user) {
