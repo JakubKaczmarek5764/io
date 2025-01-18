@@ -2,11 +2,15 @@ package Chat;
 
 import db.UsersRepository;
 import jakarta.annotation.PostConstruct;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
+import java.io.NotActiveException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +19,16 @@ public class ChatRestService {
     @Autowired
     private ChatService chatService;
 
-    public void sendMessage(String message, Integer senderId, long chatId) throws IOException {
-        chatService.sendMessage(message, senderId, chatId);
+    public ResponseEntity<String> sendMessage(String message, Integer senderId, long chatId) throws IOException {
+        try {
+            return new ResponseEntity<>(chatService.sendMessage(message, senderId, chatId), HttpStatus.OK);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (NotActiveException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public String createChat(int userId, String name) {
@@ -43,7 +55,7 @@ public class ChatRestService {
         return chatService.getChatHistory(chatId, userId);
     }
 
-    public List<Chat.ChatRestController.ChatHistoryDto> getOldNotifications(int userId) {
+    public List<ChatRestController.ChatHistoryDto> getOldNotifications(int userId) {
         return chatService.getOldNotifications(userId);
     }
 

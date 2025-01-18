@@ -1,6 +1,8 @@
 package Chat;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -36,15 +38,13 @@ public class ChatRestController {
      * </pre>
      */
     @PostMapping("/sendMessage")
-    public String sendMessage(@RequestBody MessageDTO messageDTO) {
+    public ResponseEntity<String> sendMessage(@RequestBody MessageDTO messageDTO) {
         try {
-            chatRestService.sendMessage(messageDTO.getMessage(), messageDTO.getSenderId(), messageDTO.getChatId());
+            return chatRestService.sendMessage(messageDTO.getMessage(), messageDTO.getSenderId(), messageDTO.getChatId());
         } catch (Exception e) {
             e.printStackTrace();
-            return "Couldn't send message";
+            return new ResponseEntity<>("Couldn't send message", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        return "Message sent";
     }
 
     @PostMapping("/createChat")

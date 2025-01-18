@@ -8,6 +8,7 @@ import java.util.Map;
 import Classes.User;
 import db.ChatRepository;
 import db.UsersRepository;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -87,11 +88,11 @@ public class ChatClient {
         Chat chat = activeChats.get(chatId);
         if (chat == null) {
             System.out.println("Nie nalezysz do tego chatu: " + chatId);
-            return;
+            throw new BadRequestException("You are not a part of the chat");
         }
         if (chat.isArchive()) {
             System.out.println("Chat is archived");
-            return;
+            throw new NotActiveException("Chat is archived");
         }
         // Tworzenie wiadomości
         Message message = new Message(content, user, chat, LocalDateTime.now());

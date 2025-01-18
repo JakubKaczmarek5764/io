@@ -5,6 +5,7 @@ import db.ChatRepository;
 import db.MessageRepository;
 import db.UsersRepository;
 import jakarta.annotation.PostConstruct;
+import org.apache.coyote.BadRequestException;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,15 +58,16 @@ public class ChatService {
         return null;
     }
 
-    public void sendMessage(String message, Integer senderId, long chatId) throws IOException {
+    public String sendMessage(String message, Integer senderId, long chatId) throws IOException {
         ChatClient client = chatClients.get(senderId);
 
         if (client == null) {
             System.out.println("ChatClient for senderId " + senderId + " is null. Available keys: " + chatClients.keySet());
-            throw new IllegalStateException("No ChatClient found for senderId: " + senderId);
+            throw new BadRequestException("No ChatClient found for senderId: " + senderId);
         }
 
         client.sendMessage(chatId, message);
+        return "Message sent";
     }
 
     public String createChat(int userId, String name) {
