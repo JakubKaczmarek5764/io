@@ -11,12 +11,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -80,10 +78,11 @@ public class IReportImplTest {
                 .andReturn();
 
         String jsonResponse = result.getResponse().getContentAsString();
-        List<Report> reports = objectMapper.readValue(jsonResponse, new TypeReference<List<Report>>() {});
+        List<Report> reports = objectMapper.readValue(jsonResponse, new TypeReference<>() {
+        });
 
         Assertions.assertEquals(2, reports.size());
-        Assertions.assertEquals(report.getCategory(), reports.get(0).getCategory());
+        Assertions.assertEquals(report.getCategory(), reports.getFirst().getCategory());
         Assertions.assertEquals("Jeremiasz", reports.get(0).getVictim().getFirstName());
         Assertions.assertEquals("Pomoc dla bezdomnych", reports.get(0).getCharity().getCharity_description());
         Assertions.assertEquals(report2.getCategory(), reports.get(1).getCategory());
@@ -103,12 +102,13 @@ public class IReportImplTest {
                 .andReturn();
 
         String jsonResponse = result.getResponse().getContentAsString();
-        Report report = objectMapper.readValue(jsonResponse, new TypeReference<Report>() {});
+        Report reportget = objectMapper.readValue(jsonResponse, new TypeReference<>() {
+        });
 
-        Assertions.assertNotNull(report);
-        Assertions.assertEquals(report.getCategory(), report.getCategory());
-        Assertions.assertEquals("Jeremiasz", report.getVictim().getFirstName());
-        Assertions.assertEquals("Pomoc dla bezdomnych", report.getCharity().getCharity_description());
+        Assertions.assertNotNull(reportget);
+        Assertions.assertEquals(report.getCategory(), reportget.getCategory());
+        Assertions.assertEquals("Jeremiasz", reportget.getVictim().getFirstName());
+        Assertions.assertEquals("Pomoc dla bezdomnych", reportget.getCharity().getCharity_description());
 
         MvcResult result2 = mockMvc.perform(MockMvcRequestBuilders.get("/report/-1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -131,12 +131,13 @@ public class IReportImplTest {
                 .andReturn();
 
         String jsonResponse = result.getResponse().getContentAsString();
-        List<Report> reports = objectMapper.readValue(jsonResponse, new TypeReference<List<Report>>() {});
+        List<Report> reports = objectMapper.readValue(jsonResponse, new TypeReference<>() {
+        });
 
         Assertions.assertEquals(1, reports.size());
-        Assertions.assertEquals(reports.get(0).getCategory(), report.getCategory());
-        Assertions.assertEquals("Jeremiasz", reports.get(0).getVictim().getFirstName());
-        Assertions.assertEquals("Pomoc dla bezdomnych", reports.get(0).getCharity().getCharity_description());
+        Assertions.assertEquals(reports.getFirst().getCategory(), report.getCategory());
+        Assertions.assertEquals("Jeremiasz", reports.getFirst().getVictim().getFirstName());
+        Assertions.assertEquals("Pomoc dla bezdomnych", reports.getFirst().getCharity().getCharity_description());
     }
 
     @Test
@@ -151,12 +152,13 @@ public class IReportImplTest {
                 .andReturn();
 
         String jsonResponse = result.getResponse().getContentAsString();
-        List<Report> reports = objectMapper.readValue(jsonResponse, new TypeReference<List<Report>>() {});
+        List<Report> reports = objectMapper.readValue(jsonResponse, new TypeReference<>() {
+        });
 
         Assertions.assertEquals(1, reports.size());
-        Assertions.assertEquals(reports.get(0).getCategory(), report2.getCategory());
-        Assertions.assertEquals("Włodzimierz", reports.get(0).getVictim().getFirstName());
-        Assertions.assertEquals("Opis", reports.get(0).getCharity().getCharity_description());
+        Assertions.assertEquals(reports.getFirst().getCategory(), report2.getCategory());
+        Assertions.assertEquals("Włodzimierz", reports.getFirst().getVictim().getFirstName());
+        Assertions.assertEquals("Opis", reports.getFirst().getCharity().getCharity_description());
     }
 
     @Test
@@ -173,9 +175,10 @@ public class IReportImplTest {
                 .andReturn();
 
         String jsonResponse = result.getResponse().getContentAsString();
-        Report report = objectMapper.readValue(jsonResponse, new TypeReference<Report>() {});
+        Report report = objectMapper.readValue(jsonResponse, new TypeReference<>() {
+        });
 
-        Report reportDB = reportRepo.getAll().get(0);
+        Report reportDB = reportRepo.getAll().getFirst();
 
         Assertions.assertNotNull(report);
         Assertions.assertEquals(reportDB.getCategory(), report.getCategory());
@@ -205,7 +208,8 @@ public class IReportImplTest {
                 .andReturn();
 
         String jsonResponse2 = result2.getResponse().getContentAsString();
-        Report report2delete = objectMapper.readValue(jsonResponse2, new TypeReference<Report>() {});
+        Report report2delete = objectMapper.readValue(jsonResponse2, new TypeReference<>() {
+        });
 
         Assertions.assertEquals(report2.getCategory(), report2delete.getCategory());
         Assertions.assertEquals("Włodzimierz", report2delete.getVictim().getFirstName());
