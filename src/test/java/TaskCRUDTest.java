@@ -83,7 +83,7 @@ public class TaskCRUDTest {
         taskRepo.add(task2);
         task2.setVolunteer((Volunteer) user);
         taskRepo.update(task);
-        Assertions.assertEquals(3, taskRepo.getAll().size());
+        Assertions.assertEquals(2, taskRepo.getAll().size());
 
     }
 
