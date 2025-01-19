@@ -1,7 +1,9 @@
 package Classes;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
+import static Classes.resourceType.DONATION;
 import static Classes.resourceType.VOLUNTEER;
 
 @Entity
@@ -16,8 +18,8 @@ public class Resource {
     @Enumerated(EnumType.STRING)
     private resourceType type;
 
-    @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "volunteer_id", referencedColumnName = "userId")
     private Volunteer volunteer;
 
     @ManyToOne
@@ -25,7 +27,7 @@ public class Resource {
     private Donation donation;
 
     @Column
-    private int quantity;
+    private Integer quantity;
 
     @Column
     private boolean available;
@@ -42,7 +44,7 @@ public class Resource {
     }
 
     public Resource(Donation donation) {
-        this.type = VOLUNTEER;
+        this.type = DONATION;
         this.donation = donation;
         this.quantity = 1;
         this.available = true;
@@ -87,7 +89,11 @@ public class Resource {
     }
 
     public void setQuantity(int quantity) {
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative.");
+        }
         this.quantity = quantity;
+        this.available = quantity > 0;
     }
 
     public void updateQuantity(int change) {

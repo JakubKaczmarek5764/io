@@ -38,11 +38,18 @@ public class ResourceService implements IResource {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        try {
+            int quantityChange = updatedResource.getQuantity() - resource.getQuantity();
+            resource.updateQuantity(quantityChange);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (updatedResource.getType() != null) {
             resource.setType(updatedResource.getType());
         }
 
-        resource.setQuantity(updatedResource.getQuantity());
+        resource.setAvailable(resource.getQuantity() > 0);
 
         resourcesRepository.update(resource);
         return new ResponseEntity<>(resource, HttpStatus.OK);
