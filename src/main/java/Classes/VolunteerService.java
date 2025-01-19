@@ -6,10 +6,7 @@ import db.VolunteerEvaluationRepository;
 import db.TaskRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 public class VolunteerService implements IVolunteer {
     private TaskRepository taskRepository = new TaskRepository();
@@ -29,6 +26,7 @@ public class VolunteerService implements IVolunteer {
         volunteer.setAvailable(false);
         task.setVolunteer(volunteer);
         taskRepository.update(task);
+        usersRepository.update(volunteer);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -45,6 +43,24 @@ public class VolunteerService implements IVolunteer {
         volunteerEvaluationRepository.add(evaluation);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/volunteer")
+    public ResponseEntity<Void> addVolunteer(@RequestBody Volunteer volunteer) {
+        usersRepository.add(volunteer);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/volunteer/{volunteerId}")
+    public ResponseEntity<Void> deleteVolunteer(@PathVariable long volunteerId) {
+        Volunteer volunteer = (Volunteer) usersRepository.get(volunteerId);
+        if (volunteer == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        usersRepository.remove(volunteerId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 

@@ -20,6 +20,9 @@ public class Volunteer extends User implements Serializable {
     @JoinColumn(name = "current_task_id")
     private Task currentTask;
 
+    @OneToOne(mappedBy = "volunteer")
+    private Resource resource;
+
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<VolunteerEvaluation> evaluations;
 
@@ -69,6 +72,14 @@ public class Volunteer extends User implements Serializable {
 
     public int getVolunteerId() {
         return getUserId();
+    }
+
+    public Resource getResource() {
+        return resource;
+    }
+
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 
     @Override

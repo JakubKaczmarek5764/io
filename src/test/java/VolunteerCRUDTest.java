@@ -1,19 +1,21 @@
-import Classes.Charity;
-import Classes.User;
-import Classes.Victim;
-import Classes.Volunteer;
-import db.CharityRepository;
+import Classes.*;
+import db.ResourcesRepository;
 import db.UsersRepository;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-//import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 //@SpringBootTest
 public class VolunteerCRUDTest {
 
     private UsersRepository repo;
+    private VolunteerService volunteerService;
+    private ResourcesRepository resourcesRepository;
     private User user;
 
 
@@ -21,6 +23,8 @@ public class VolunteerCRUDTest {
     public void setUp() {
         user = new Volunteer("Paweł", "Pietrzak");
         repo = new UsersRepository();
+        volunteerService = new VolunteerService();
+        resourcesRepository = new ResourcesRepository();
 
     }
     @AfterEach
@@ -34,9 +38,9 @@ public class VolunteerCRUDTest {
         repo.add(user);
         User returnedUser = repo.get(user.getUserId());
 
-        Assertions.assertEquals(user.getUserId(), returnedUser.getUserId());
-        Assertions.assertEquals(user.getFirstName(), returnedUser.getFirstName());
-        Assertions.assertEquals(user.getLastName(), returnedUser.getLastName());
+        assertEquals(user.getUserId(), returnedUser.getUserId());
+        assertEquals(user.getFirstName(), returnedUser.getFirstName());
+        assertEquals(user.getLastName(), returnedUser.getLastName());
     }
 
     @Test
@@ -44,7 +48,7 @@ public class VolunteerCRUDTest {
         repo.add(user);
         repo.remove(user.getUserId());
         User returnedUser = repo.get(user.getUserId());
-        Assertions.assertNull(returnedUser);
+        assertNull(returnedUser);
     }
 
     @Test
@@ -54,9 +58,9 @@ public class VolunteerCRUDTest {
         user.setLastName("Kowalski");
         repo.update(user);
         User returnedUser = repo.get(user.getUserId());
-        Assertions.assertEquals(user.getUserId(), returnedUser.getUserId());
-        Assertions.assertEquals(user.getFirstName(), returnedUser.getFirstName());
-        Assertions.assertEquals(user.getLastName(), returnedUser.getLastName());
+        assertEquals(user.getUserId(), returnedUser.getUserId());
+        assertEquals(user.getFirstName(), returnedUser.getFirstName());
+        assertEquals(user.getLastName(), returnedUser.getLastName());
     }
 
     @Test
@@ -64,7 +68,17 @@ public class VolunteerCRUDTest {
         repo.add(user);
         User user2 = new Volunteer("Jan", "Kowalski");
         repo.add(user2);
-        Assertions.assertEquals(2, repo.getAll().size());
+        assertEquals(2, repo.getAll().size());
+    }
+
+    @Test
+    public void testDeleteVolunteer() {
+        Volunteer volunteer = new Volunteer("Jane","Doe");
+        volunteerService.addVolunteer(volunteer);
+        ResponseEntity<Void> response = volunteerService.deleteVolunteer(volunteer.getVolunteerId());
+
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        assertNull(repo.get(volunteer.getVolunteerId()));
     }
 
 }

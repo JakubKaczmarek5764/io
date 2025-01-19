@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ResourcesRepositoryTest {
     private ResourcesRepository repo = new ResourcesRepository();
@@ -44,6 +43,9 @@ public class ResourcesRepositoryTest {
         assertEquals(r.getResource_id(),returnedR.getResource_id());
         r.setQuantity(2);
         repo.update(r);
+        Resource updatedR = repo.get(r.getResource_id());
+        assertNotNull(updatedR);
+        assertEquals(2, updatedR.getQuantity());
         assertEquals(2,repo.get(r.getResource_id()).getQuantity());
     }
     @Test
