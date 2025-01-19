@@ -48,37 +48,37 @@ public class ChatRestController {
     }
 
     @PostMapping("/createChat")
-    public String createChat(@RequestBody ChatDTO chatDTO) {
+    public ResponseEntity<String> createChat(@RequestBody ChatDTO chatDTO) {
         return chatRestService.createChat(chatDTO.getUserId(), chatDTO.getName());
     }
 
     @PostMapping("/addToChat")
-    public String addToChat(@RequestBody AddToChatDTO addToChatDTO) {
+    public ResponseEntity<String> addToChat(@RequestBody AddToChatDTO addToChatDTO) {
         return chatRestService.addToChat(addToChatDTO.getAdminId(), addToChatDTO.getChatId(), addToChatDTO.getUserId());
     }
 
     @PutMapping("/archiveChat")
-    public String changeChatStatus(@RequestBody UserIdChatIdDTO changeChatStatusDTO) {
+    public ResponseEntity<String> changeChatStatus(@RequestBody UserIdChatIdDTO changeChatStatusDTO) {
         return chatRestService.changeChatStatus(changeChatStatusDTO.getChatId(), changeChatStatusDTO.getUserId());
     }
 
     @GetMapping("/getUserChats")
-    public List<UserChatsDto> getUserChats(@RequestBody UserIdDto userId) {
+    public ResponseEntity<List<UserChatsDto>> getUserChats(@RequestBody UserIdDto userId) {
         return chatRestService.getUserChats(userId.getUserId());
     }
 
     @GetMapping("/getUsers")
-    public List<UserDTO> getUsers(@RequestBody ChatIdDto chatId) {
+    public ResponseEntity<List<UserDTO>> getUsers(@RequestBody ChatIdDto chatId) {
         return chatRestService.getUsers(chatId.getChatId());
     }
 
     @GetMapping("/getChatHistory")
-    public List<ChatHistoryDto> getChatHistory(@RequestBody UserIdChatIdDTO userIdChatIdDTO) {
+    public ResponseEntity<List<ChatHistoryDto>> getChatHistory(@RequestBody UserIdChatIdDTO userIdChatIdDTO) {
         return chatRestService.getChatHistory(userIdChatIdDTO.getChatId(), userIdChatIdDTO.getUserId());
     }
 
     @GetMapping("/getOldNotifications")
-    public List<ChatHistoryDto> getOldNotifications(@RequestBody UserIdDto userIdDto) {
+    public ResponseEntity<List<ChatHistoryDto>> getOldNotifications(@RequestBody UserIdDto userIdDto) {
         return chatRestService.getOldNotifications(userIdDto.getUserId());
     }
 

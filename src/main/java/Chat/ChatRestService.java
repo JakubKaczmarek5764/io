@@ -31,32 +31,60 @@ public class ChatRestService {
         }
     }
 
-    public String createChat(int userId, String name) {
-        return chatService.createChat(userId, name);
+    public ResponseEntity<String> createChat(int userId, String name) {
+        try {
+            return new ResponseEntity<>(chatService.createChat(userId, name), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public String addToChat(int adminId, Long chatId, int userId) {
-        return chatService.addToChat(adminId, chatId, userId);
+    public ResponseEntity<String> addToChat(int adminId, Long chatId, int userId) {
+        try {
+            return new ResponseEntity<>(chatService.addToChat(adminId, chatId, userId), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public String changeChatStatus(Long chatId, int userId) {
-        return chatService.changeChatStatus(chatId, userId);
+    public ResponseEntity<String> changeChatStatus(Long chatId, int userId) {
+        try {
+            return new ResponseEntity<>(chatService.changeChatStatus(chatId, userId), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<ChatRestController.UserDTO> getUsers(Long chatId) {
-        return chatService.getUsers(chatId);
+    public ResponseEntity<List<ChatRestController.UserDTO>> getUsers(Long chatId) {
+        try {
+            return new ResponseEntity<>(chatService.getUsers(chatId), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<ChatRestController.UserChatsDto> getUserChats(int userId) {
-        return chatService.getUserChats(userId);
+    public ResponseEntity<List<ChatRestController.UserChatsDto>> getUserChats(int userId) {
+        try {
+            return new ResponseEntity<>(chatService.getUserChats(userId), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<ChatRestController.ChatHistoryDto> getChatHistory(Long chatId, int userId) {
-        return chatService.getChatHistory(chatId, userId);
+    public ResponseEntity<List<ChatRestController.ChatHistoryDto>> getChatHistory(Long chatId, int userId) {
+        try {
+            return new ResponseEntity<>(chatService.getChatHistory(chatId, userId), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<ChatRestController.ChatHistoryDto> getOldNotifications(int userId) {
-        return chatService.getOldNotifications(userId);
+    public ResponseEntity<List<ChatRestController.ChatHistoryDto>> getOldNotifications(int userId) {
+        try {
+            return new ResponseEntity<>(chatService.getOldNotifications(userId), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
