@@ -87,9 +87,7 @@ public class Volunteer extends User implements Serializable {
     public String toString() {
         return "Volunteer{" +
                 "available=" + available +
-                //", completedTasks=" + completedTasks +
                 ", currentReport=" + currentReport +
-                //", evaluations=" + evaluations +
                 "} " + super.toString();
     }
 }

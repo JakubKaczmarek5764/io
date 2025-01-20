@@ -49,10 +49,10 @@ public class VolunteerEvaluation {
         this.volunteer = volunteer;
     }
 
-    public Report getTask() {
+    public Report getReport() {
         return report;
     }
-    public void setTask(Report report) {
+    public void setReport(Report report) {
         this.report = report;
     }
 

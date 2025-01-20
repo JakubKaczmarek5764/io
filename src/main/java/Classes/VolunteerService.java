@@ -63,18 +63,18 @@ public class VolunteerService implements IVolunteer {
     }
 
     public ResponseEntity<List<Report>> getReports() {
-        List<Report> tasks = reportRepository.getAll();
-        return new ResponseEntity<>(tasks, HttpStatus.OK);
+        List<Report> reports = reportRepository.getAll();
+        return new ResponseEntity<>(reports, HttpStatus.OK);
     }
 
     public ResponseEntity<List<Report>> getAvailableReports() {
-        List<Report> tasks = reportRepository.getAvailableReports();
-        return new ResponseEntity<>(tasks, HttpStatus.OK);
+        List<Report> reports = reportRepository.getAvailableReports();
+        return new ResponseEntity<>(reports, HttpStatus.OK);
     }
 
     public ResponseEntity<List<Report>> getCompletedReports() {
-        List<Report> tasks = reportRepository.getCompletedReports();
-        return new ResponseEntity<>(tasks, HttpStatus.OK);
+        List<Report> reports = reportRepository.getCompletedReports();
+        return new ResponseEntity<>(reports, HttpStatus.OK);
     }
 
     public ResponseEntity<List<Report>> getAssignedReports(@PathVariable long volunteerId) {
