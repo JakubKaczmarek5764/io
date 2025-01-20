@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface IVolunteer {
 
-    @PutMapping("/assign/{taskId}/{volunteerId}")
-    ResponseEntity<Void> assignVolunteer(@PathVariable long taskId, @PathVariable long volunteerId);
+    @PutMapping("/assign/{reportId}/{volunteerId}")
+    ResponseEntity<Void> assignVolunteer(@PathVariable long reportId, @PathVariable long volunteerId);
 
-    @PostMapping("/evaluate/{volunteerId}/{taskId}")
-    ResponseEntity<Void> evaluateVolunteer(@PathVariable long volunteerId, @PathVariable long taskId, @RequestBody VolunteerEvaluation evaluation);
+    @PostMapping("/evaluate/{volunteerId}/{reportId}")
+    ResponseEntity<Void> evaluateVolunteer(@PathVariable long volunteerId, @PathVariable long reportId, @RequestBody VolunteerEvaluation evaluation);
 
     @PostMapping()
     ResponseEntity<Void> addVolunteer(@RequestBody Volunteer volunteer);
@@ -21,14 +21,14 @@ public interface IVolunteer {
     ResponseEntity<Void> deleteVolunteer(@PathVariable long volunteerId);
 
     @GetMapping()
-    ResponseEntity<List<Task>> getTasks();
+    ResponseEntity<List<Report>> getReports();
 
     @GetMapping("/available")
-    ResponseEntity<List<Task>> getAvailableTasks();
+    ResponseEntity<List<Report>> getAvailableReports();
 
     @GetMapping("/completed")
-    ResponseEntity<List<Task>> getCompletedTasks();
+    ResponseEntity<List<Report>> getCompletedReports();
 
     @GetMapping("/{volunteerId}")
-    ResponseEntity<List<Task>> getAssignedTasks(@PathVariable long volunteerId);
+    ResponseEntity<List<Report>> getAssignedReports(@PathVariable long volunteerId);
 }

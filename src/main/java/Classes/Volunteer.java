@@ -1,5 +1,6 @@
 package Classes;
 
+import com.fasterxml.jackson.databind.deser.impl.ReadableObjectId;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -14,11 +15,11 @@ public class Volunteer extends User implements Serializable {
     private boolean available;
 
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Task> completedTasks;
+    private List<Report> completedReports;
 
-    @OneToOne
-    @JoinColumn(name = "current_task_id")
-    private Task currentTask;
+    @ManyToOne
+    @JoinColumn(name = "current_report_id")
+    private Report currentReport;
 
     @OneToOne(mappedBy = "volunteer")
     private Resource resource;
@@ -33,8 +34,8 @@ public class Volunteer extends User implements Serializable {
     public Volunteer(String firstName, String lastName) {
         super(firstName,lastName);
         this.available = true;
-        this.completedTasks = new ArrayList<>();
-        this.currentTask = null;
+        this.completedReports = new ArrayList<>();
+        this.currentReport = null;
         this.evaluations = new ArrayList<>();
     }
 
@@ -46,20 +47,20 @@ public class Volunteer extends User implements Serializable {
         this.available = available;
     }
 
-    public List<Task> getCompletedTasks() {
-        return completedTasks;
+    public List<Report> getCompletedReports() {
+        return completedReports;
     }
 
-    public void setCompletedTasks(List<Task> completedTasks) {
-        this.completedTasks = completedTasks;
+    public void setCompletedReports(List<Report> completedReports) {
+        this.completedReports = completedReports;
     }
 
-    public Task getCurrentTask() {
-        return currentTask;
+    public Report getCurrentReport() {
+        return currentReport;
     }
 
-    public void setCurrentTask(Task currentTask) {
-        this.currentTask = currentTask;
+    public void setCurrentReport(Report currentReport) {
+        this.currentReport = currentReport;
     }
 
     public List<VolunteerEvaluation> getEvaluations() {
@@ -87,7 +88,7 @@ public class Volunteer extends User implements Serializable {
         return "Volunteer{" +
                 "available=" + available +
                 //", completedTasks=" + completedTasks +
-                ", currentTask=" + currentTask +
+                ", currentReport=" + currentReport +
                 //", evaluations=" + evaluations +
                 "} " + super.toString();
     }
