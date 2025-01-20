@@ -27,7 +27,7 @@ public class Resource {
     private Donation donation;
 
     @Column
-    private Integer quantity;
+    private int quantity;
 
     @Column
     private boolean available;
