@@ -3,6 +3,8 @@ package Classes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 public interface IVolunteer {
 
@@ -17,4 +19,16 @@ public interface IVolunteer {
 
     @DeleteMapping("/{volunteerId}")
     ResponseEntity<Void> deleteVolunteer(@PathVariable long volunteerId);
+
+    @GetMapping()
+    ResponseEntity<List<Task>> getTasks();
+
+    @GetMapping("/available")
+    ResponseEntity<List<Task>> getAvailableTasks();
+
+    @GetMapping("/completed")
+    ResponseEntity<List<Task>> getCompletedTasks();
+
+    @GetMapping("/{volunteerId}")
+    ResponseEntity<List<Task>> getAssignedTasks(@PathVariable long volunteerId);
 }

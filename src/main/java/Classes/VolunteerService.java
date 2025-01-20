@@ -8,15 +8,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/volunteer")
 public class VolunteerService implements IVolunteer {
     private TaskRepository taskRepository = new TaskRepository();
-    private ResourcesRepository resourcesRepository = new ResourcesRepository();
     private VolunteerEvaluationRepository volunteerEvaluationRepository = new VolunteerEvaluationRepository();
     private UsersRepository usersRepository = new UsersRepository();
 
-//    @PutMapping("/assign/{taskId}/{volunteerId}")
     
     public ResponseEntity<Void> assignVolunteer(@PathVariable long taskId, @PathVariable long volunteerId) {
         Task task = taskRepository.get(taskId);
@@ -34,7 +34,6 @@ public class VolunteerService implements IVolunteer {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @PostMapping("/evaluate/{volunteerId}/{taskId}")
     public ResponseEntity<Void> evaluateVolunteer(@PathVariable long volunteerId, @PathVariable long taskId, @RequestBody VolunteerEvaluation evaluation) {
         Volunteer volunteer = (Volunteer) usersRepository.get(volunteerId);
         Task task = taskRepository.get(taskId);
@@ -48,14 +47,12 @@ public class VolunteerService implements IVolunteer {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-//    @PostMapping("/")
     public ResponseEntity<Void> addVolunteer(@RequestBody Volunteer volunteer) {
         usersRepository.add(volunteer);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-//    @DeleteMapping("/volunteer/{volunteerId}")
     public ResponseEntity<Void> deleteVolunteer(@PathVariable long volunteerId) {
         Volunteer volunteer = (Volunteer) usersRepository.get(volunteerId);
         if (volunteer == null) {
@@ -66,5 +63,24 @@ public class VolunteerService implements IVolunteer {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    public ResponseEntity<List<Task>> getTasks() {
+        List<Task> tasks = taskRepository.getAll();
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<Task>> getAvailableTasks() {
+        List<Task> tasks = taskRepository.getAvailableTasks();
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<Task>> getCompletedTasks() {
+        List<Task> tasks = taskRepository.getCompletedTasks();
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<Task>> getAssignedTasks(@PathVariable long volunteerId) {
+        List<Task> tasks = taskRepository.getAssignedTasks(volunteerId);
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    }
 
 }
