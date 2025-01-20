@@ -4,6 +4,7 @@ import Classes.Donator;
 import db.CharityRepository;
 import db.DonationsRepository;
 import db.UsersRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +21,7 @@ public class DonationsRepositoryTest {
     private Charity charity;
     private Donator donator;
     @BeforeEach
-    void cleanUp() {
+    void setUp() {
         donationsRepository.getAll().forEach(donation -> donationsRepository.remove(donation.getDonation_id()));
         usersRepository.getAll().forEach(user -> usersRepository.remove(user.getUserId()));
         charityRepository.getAll().forEach(charity -> charityRepository.remove(charity.getCharity_id()));
@@ -28,6 +29,13 @@ public class DonationsRepositoryTest {
         donator = new Donator("firstName", "lastName", charity);
         charityRepository.add(charity);
         usersRepository.add(donator);
+    }
+
+    @AfterEach
+    void cleanUp() {
+        donationsRepository.getAll().forEach(donation -> donationsRepository.remove(donation.getDonation_id()));
+        usersRepository.getAll().forEach(user -> usersRepository.remove(user.getUserId()));
+        charityRepository.getAll().forEach(charity -> charityRepository.remove(charity.getCharity_id()));
     }
     @Test
     public void addTest() {
