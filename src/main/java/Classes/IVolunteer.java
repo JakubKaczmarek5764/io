@@ -12,9 +12,9 @@ public interface IVolunteer {
     @PostMapping("/evaluate/{volunteerId}/{taskId}")
     ResponseEntity<Void> evaluateVolunteer(@PathVariable long volunteerId, @PathVariable long taskId, @RequestBody VolunteerEvaluation evaluation);
 
-    @PostMapping("/volunteer")
+    @PostMapping()
     ResponseEntity<Void> addVolunteer(@RequestBody Volunteer volunteer);
 
-    @DeleteMapping("/volunteer/{volunteerId}")
+    @DeleteMapping("/{volunteerId}")
     ResponseEntity<Void> deleteVolunteer(@PathVariable long volunteerId);
 }

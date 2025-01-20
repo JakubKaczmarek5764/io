@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 public interface IResource {
-    @GetMapping("/all")
+    @GetMapping()
     ResponseEntity<List<Resource>> getAllResources();
 
     @GetMapping("/{id}")
@@ -18,7 +18,7 @@ public interface IResource {
     @DeleteMapping("/{id}")
     ResponseEntity<Resource> deleteResource(@PathVariable long id);
 
-    @PostMapping("/")
+    @PostMapping()
     ResponseEntity<Resource> addResource(@RequestBody Resource resource);
 
     @GetMapping("/volunteers")
