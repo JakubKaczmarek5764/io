@@ -26,6 +26,9 @@ public interface IVolunteer {
     @GetMapping("/available")
     ResponseEntity<List<Task>> getAvailableTasks();
 
-    @GetMapping("/{volunteerId}/completed")
-    ResponseEntity<List<Task>> getCompletedTasks(@PathVariable long volunteerId);
+    @GetMapping("/completed")
+    ResponseEntity<List<Task>> getCompletedTasks();
+
+    @GetMapping("/{volunteerId}")
+    ResponseEntity<List<Task>> getAssignedTasks(@PathVariable long volunteerId);
 }

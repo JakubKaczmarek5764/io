@@ -73,8 +73,13 @@ public class VolunteerService implements IVolunteer {
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Task>> getCompletedTasks(@PathVariable long volunteerId) {
+    public ResponseEntity<List<Task>> getCompletedTasks() {
         List<Task> tasks = taskRepository.getCompletedTasks();
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<Task>> getAssignedTasks(@PathVariable long volunteerId) {
+        List<Task> tasks = taskRepository.getAssignedTasks(volunteerId);
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
