@@ -6,7 +6,6 @@ import Classes.status;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@org.springframework.stereotype.Repository
 public class TaskRepository implements IRepository<Task> {
     @Override
     public void add(Task entity) {
@@ -45,7 +44,7 @@ public class TaskRepository implements IRepository<Task> {
                 .collect(Collectors.toList());
     }
 
-    public List<Task> getAssignedTasks(int volunteerId) {
+    public List<Task> getAssignedTasks(long volunteerId) {
         return getAll().stream()
                 .filter(task -> task.getVolunteer() != null && task.getVolunteer().getUserId() == volunteerId)
                 .collect(Collectors.toList());
