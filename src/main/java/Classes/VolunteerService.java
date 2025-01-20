@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -80,6 +81,29 @@ public class VolunteerService implements IVolunteer {
     public ResponseEntity<List<Report>> getAssignedReports(@PathVariable long volunteerId) {
         List<Report> reports = reportRepository.getAssignedReports(volunteerId);
         return new ResponseEntity<>(reports, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Void> finishReport(long reportId) {
+        Report report = reportRepository.get(reportId);
+
+        if (report == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        report.setCompletion_date(new Date(System.currentTimeMillis()));
+        report.setStatus(reportStatus.completed);
+
+        for (Volunteer volunteer : report.getVolunteersList()) {
+            volunteer.setAvailable(true);
+
+            volunteer.addCompletedReport(report);
+            usersRepository.update(volunteer);
+        }
+
+        reportRepository.update(report);
+
+        return ResponseEntity.noContent().build();
     }
 
 }

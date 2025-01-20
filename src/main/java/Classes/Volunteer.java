@@ -23,6 +23,9 @@ public class Volunteer extends User implements Serializable {
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<VolunteerEvaluation> evaluations;
 
+    @Transient
+    private List<Report> completedReports;
+
     public Volunteer() {
         super();
     }
@@ -32,6 +35,7 @@ public class Volunteer extends User implements Serializable {
         this.available = true;
         this.currentReport = null;
         this.evaluations = new ArrayList<>();
+        this.completedReports = new ArrayList<>();
     }
 
     public boolean isAvailable() {
@@ -48,6 +52,14 @@ public class Volunteer extends User implements Serializable {
 
     public void setCurrentReport(Report currentReport) {
         this.currentReport = currentReport;
+    }
+
+    public void addCompletedReport(Report report) {
+        this.completedReports.add(report);
+    }
+
+    public void removeCompletedReport(Report report) {
+        this.completedReports.remove(report);
     }
 
     public List<VolunteerEvaluation> getEvaluations() {

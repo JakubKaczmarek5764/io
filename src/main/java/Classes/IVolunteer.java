@@ -31,4 +31,7 @@ public interface IVolunteer {
 
     @GetMapping("/{volunteerId}")
     ResponseEntity<List<Report>> getAssignedReports(@PathVariable long volunteerId);
+
+    @PutMapping("/finish/{reportId}")
+    ResponseEntity<Void> finishReport(@PathVariable long reportId);
 }
