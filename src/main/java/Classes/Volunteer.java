@@ -13,10 +13,6 @@ import java.util.List;
 public class Volunteer extends User implements Serializable {
 
     private boolean available;
-
-    @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Report> completedReports;
-
     @ManyToOne
     @JoinColumn(name = "current_report_id")
     private Report currentReport;
@@ -34,7 +30,6 @@ public class Volunteer extends User implements Serializable {
     public Volunteer(String firstName, String lastName) {
         super(firstName,lastName);
         this.available = true;
-        this.completedReports = new ArrayList<>();
         this.currentReport = null;
         this.evaluations = new ArrayList<>();
     }
@@ -45,14 +40,6 @@ public class Volunteer extends User implements Serializable {
 
     public void setAvailable(boolean available) {
         this.available = available;
-    }
-
-    public List<Report> getCompletedReports() {
-        return completedReports;
-    }
-
-    public void setCompletedReports(List<Report> completedReports) {
-        this.completedReports = completedReports;
     }
 
     public Report getCurrentReport() {
