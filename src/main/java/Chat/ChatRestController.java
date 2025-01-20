@@ -47,36 +47,146 @@ public class ChatRestController {
         }
     }
 
+    /**
+     Handles HTTP POST requests to create a new chat.
+     @param chatDTO The {@link ChatRestController.ChatDTO} object containing the user ID of the creator and the name of the chat.
+     @return A {@link String} indicating the result of the chat creation operation.
+
+     Example usage:
+     {@code
+         POST /chat/createChat HTTP/1.1
+         Host: server
+         Content-Type: application/json 
+         {
+            "userId": 123,
+            "name": "Study Group"
+         }
+     }
+     */
     @PostMapping("/createChat")
     public ResponseEntity<String> createChat(@RequestBody ChatDTO chatDTO) {
         return chatRestService.createChat(chatDTO.getUserId(), chatDTO.getName());
     }
 
+    /**
+     Handles HTTP POST requests to add a user to a chat.
+     @param addToChatDTO The {@link ChatRestController.AddToChatDTO} object containing the admin ID, chat ID, and user ID to be added.
+     @return A {@link String} indicating the result of the add operation.
+
+     Example usage:
+     {@code
+        POST /chat/addToChat HTTP/1.1
+        Host: server
+        Content-Type: application/json
+        {
+            "adminId": 1,
+            "chatId": 456,
+            "userId": 789
+        }
+     }
+     */
     @PostMapping("/addToChat")
     public ResponseEntity<String> addToChat(@RequestBody AddToChatDTO addToChatDTO) {
         return chatRestService.addToChat(addToChatDTO.getAdminId(), addToChatDTO.getChatId(), addToChatDTO.getUserId());
     }
 
-    @PutMapping("/archiveChat")
+    /**
+     Handles HTTP PUT requests to archive a chat.
+     @param changeChatStatusDTO The {@link ChatRestController.UserIdChatIdDTO} object containing the chat ID and user ID initiating the change.
+     @return A {@link String} indicating the result of the operation.
+
+     Example usage:
+     {@code
+         PUT /chat/archiveChat HTTP/1.1
+         Host: server
+         Content-Type: application/json 
+         {
+            "chatId": 123,
+            "userId": 456
+         }
+     }
+     */
+    @PutMapping("/changeChatStatus")
     public ResponseEntity<String> changeChatStatus(@RequestBody UserIdChatIdDTO changeChatStatusDTO) {
         return chatRestService.changeChatStatus(changeChatStatusDTO.getChatId(), changeChatStatusDTO.getUserId());
     }
 
+    /**
+     Handles HTTP GET requests to retrieve the list of chats a user is part of.
+     @param userId The {@link ChatRestController.UserIdDto} object containing the user ID.
+     @return A list of {@link ChatRestController.UserChatsDto} objects representing the user's chats.
+
+     Example usage:
+     {@code
+         GET /chat/getUserChats HTTP/1.1 
+         Host: server
+         Content-Type: application/json
+         {
+            "userId": 123
+         }
+     }
+     */
     @GetMapping("/getUserChats")
     public ResponseEntity<List<UserChatsDto>> getUserChats(@RequestBody UserIdDto userId) {
         return chatRestService.getUserChats(userId.getUserId());
     }
 
+    /**
+     Handles HTTP GET requests to retrieve the list of users in a chat.
+     @param chatId The {@link ChatRestController.ChatIdDto} object containing the chat ID.
+     @return A list of {@link ChatRestController.UserDTO} objects representing the users that you can to the chat.
+
+     Example usage:
+     {@code
+         GET /chat/getUsers HTTP/1.1
+         Host: server
+         Content-Type: application/json
+         {
+            "chatId": 456
+         }
+     }
+     */
     @GetMapping("/getUsers")
     public ResponseEntity<List<UserDTO>> getUsers(@RequestBody ChatIdDto chatId) {
         return chatRestService.getUsers(chatId.getChatId());
     }
 
+    /**
+     Handles HTTP GET requests to retrieve the chat history for a specific chat.
+     @param userIdChatIdDTO The {@link ChatRestController.UserIdChatIdDTO} object containing the chat ID and user ID.
+     @return A list of {@link ChatRestController.ChatHistoryDto} objects representing the chat history.
+
+     Example usage:
+     {@code
+         GET /chat/getChatHistory HTTP/1.1
+         Host: server
+         Content-Type: application/json
+         {
+            "chatId": 456,
+            "userId": 123
+         }
+     }
+     */
     @GetMapping("/getChatHistory")
     public ResponseEntity<List<ChatHistoryDto>> getChatHistory(@RequestBody UserIdChatIdDTO userIdChatIdDTO) {
         return chatRestService.getChatHistory(userIdChatIdDTO.getChatId(), userIdChatIdDTO.getUserId());
     }
 
+    /**
+     Handles HTTP GET requests to retrieve old notifications for a user.
+     @param userIdDto The {@link ChatRestController.UserIdDto} object containing the user ID.
+     @return A list of {@link ChatRestController.ChatHistoryDto} objects representing old notifications.
+
+     Example usage:
+     {@code
+         GET /chat/getOldNotifications HTTP/1.1
+         Host: server
+         Content-Type: application/json
+         {
+            "userId": 123
+         }
+     }
+     */
     @GetMapping("/getOldNotifications")
     public ResponseEntity<List<ChatHistoryDto>> getOldNotifications(@RequestBody UserIdDto userIdDto) {
         return chatRestService.getOldNotifications(userIdDto.getUserId());
