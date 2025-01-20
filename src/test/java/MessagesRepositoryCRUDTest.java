@@ -63,34 +63,30 @@ public class MessagesRepositoryCRUDTest {
         Assertions.assertEquals(message.getContent(), returnedMessage.getContent());
 
     }
+
+    @Test
+    public void testUpdate() {
+        chatRepo.add(chat);
+        usersRepo.add(user);
+        message = new Message("Hello world", user, chat, LocalDateTime.now());
+        messRepo.add(message);
+        Message returnedMessage = messRepo.get(message.getMessageId());
+        returnedMessage.setContent("Hello world 2");
+        messRepo.update(returnedMessage);
+        Message updatedMessage = messRepo.get(returnedMessage.getMessageId());
+        Assertions.assertTrue(updatedMessage.getContent().equals("Hello world 2"));
+        Assertions.assertFalse(updatedMessage.getContent().equals(message.getContent()));
+    }
+
+    @Test
+    public void testGetAll() {
+        chatRepo.add(chat);
+        usersRepo.add(user);
+        message = new Message("Hello world", user, chat, LocalDateTime.now());
+        messRepo.add(message);
+        Message message2 = new Message("Hello world 2", user, chat, LocalDateTime.now());
+        messRepo.add(message2);
+        Assertions.assertEquals(2, messRepo.getAll().size());
+    }
+
 }
-//    @Test
-//    public void testUpdate() {
-//        messRepo.add(message);
-//        Message returnedMessage = messRepo.get(message.getMessageId());
-//        returnedMessage.editMessage("Hello world, I'm here");
-//        messRepo.update(returnedMessage);
-//        Message updatedMessage = messRepo.get(returnedMessage.getMessageId());
-//        Assertions.assertTrue(updatedMessage.getContent().equals("Hello world, I'm here"));
-//        Assertions.assertFalse(updatedMessage.getContent().equals(message.getContent()));
-//    }
-//
-//    @Test
-//    public void testRemove() {
-//        messRepo.add(message);
-//        messRepo.remove(message.getMessageId());
-//        Message returnedMessage = messRepo.get(message.getMessageId());
-//        Assertions.assertNull(returnedMessage);
-//    }
-//
-//    @Test
-//    public void testGetAll() {
-//        messRepo.add(message);
-//        Message message2 = new Message("Hello world", null, null, LocalDateTime.now());
-//        messRepo.add(message2);
-//
-//        assertTrue(messRepo.getAll().size() > 0);
-//        assertTrue(messRepo.getAll().contains(message));
-//    }
-//
-//}
