@@ -29,34 +29,17 @@ public class SkphApplication {
     public CommandLineRunner run(ChatService chatService) {
         return args -> {
             UsersRepository usersRepository = new UsersRepository();
-            ChatRepository chatRepository = new ChatRepository();
 
-            //Thread.sleep(30000);
+            Thread.sleep(10000);
 
-            ChatServer server = chatService.createNewChatServer();
+            Volunteer user = new Volunteer("userFName", "userLName");
+            usersRepository.add(user);
 
-            Chat chat = chatRepository.get(1L);
+            Volunteer user1 = new Volunteer("userFName1", "userLName1");
+            usersRepository.add(user1);
 
-            //Volunteer user = new Volunteer("userFName", "userLName");
-            //usersRepository.add(user);
-
-            //Volunteer user1 = new Volunteer("userFName1", "userLName1");
-            //usersRepository.add(user1);
-
-            User user = usersRepository.get(1L);
-            User user1 = usersRepository.get(2L);
-
-            System.out.println(chat);
             System.out.println(user);
             System.out.println(user1);
-
-            ChatClient client = chatService.createNewChatSession(user);
-            //client.joinNewChat(chat);
-
-            ChatClient client1 = chatService.createNewChatSession(user1);
-            //client1.joinNewChat(chat);
-
-            client1.sendMessage(1L, "Papaj 2137");
         };
     }
 }

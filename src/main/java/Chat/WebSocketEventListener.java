@@ -35,9 +35,13 @@ public class WebSocketEventListener {
         }
 
         if (userId != null) {
-            //System.out.println("Service: " + chatService);
-            chatService.tryAddNewChatSession(Integer.parseInt(userId));
-            sessionIdToUserIdMap.put(sessionId, userId);
+            synchronized (userId.intern()) {
+                //System.out.println("Service: " + chatService);
+                if (!sessionIdToUserIdMap.containsValue(userId)) {
+                    chatService.tryAddNewChatSession(Integer.parseInt(userId));
+                    sessionIdToUserIdMap.put(sessionId, userId);
+                }
+            }
         }
 
 //        System.out.println("Native Headers: " + headerAccessor.toNativeHeaderMap());

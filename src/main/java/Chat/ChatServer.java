@@ -67,14 +67,23 @@ public class ChatServer {
                 Chat chat = chats.get(chatId);
 
                 if (chat == null) {
-                    System.out.println("Invalid chat ID: " + chatId);
-                    socket.close();
-                    return;
+                    ChatRepository chatRepository = new ChatRepository();
+                    Chat chat1 = chatRepository.get(chatId);
+                    if (chat1 == null) {
+                        System.out.println("Invalid chat ID: " + chatId);
+                        socket.close();
+                        return;
+                    }
+                    chats.put(chatId, chat1);
+                    chatClientWriters.put(chatId, new HashSet<>());
+                    chat1.addParticipant(user);
+                    System.out.println("New chat added in server: " + chatId);
+                } else {
+                    // Dodanie klienta do czatu
+                    chat.addParticipant(user);
                 }
 
-                // Dodanie klienta do czatu
-                chat.addParticipant(user);
-                if (!chatClientWriters.get(chatId).contains(out)) {
+                if (chatClientWriters.isEmpty() || !chatClientWriters.get(chatId).contains(out)) {
                     chatClientWriters.get(chatId).add(out);
                     System.out.println("Server added User to chat: " + chatId);
                 }
@@ -94,6 +103,7 @@ public class ChatServer {
                 }
             } catch (Exception e) {
                 System.out.println("Error: " + e);
+                e.printStackTrace();
             } finally {
                 try {
                     if (socket != null) socket.close();
