@@ -153,7 +153,8 @@ public class ChatRestController {
 
     /**
      Handles HTTP GET requests to retrieve the chat history for a specific chat.
-     @param userIdChatIdDTO The {@link ChatRestController.UserIdChatIdDTO} object containing the chat ID and user ID.
+     @param chatId The long type variable containing the chat ID.
+     @param userId The int type variable containing the user ID.
      @return A list of {@link ChatRestController.ChatHistoryDto} objects representing the chat history.
 
      Example usage:
@@ -168,8 +169,8 @@ public class ChatRestController {
      }
      */
     @GetMapping("/getChatHistory")
-    public ResponseEntity<List<ChatHistoryDto>> getChatHistory(@RequestBody UserIdChatIdDTO userIdChatIdDTO) {
-        return chatRestService.getChatHistory(userIdChatIdDTO.getChatId(), userIdChatIdDTO.getUserId());
+    public ResponseEntity<List<ChatHistoryDto>> getChatHistory(@RequestParam Long chatId, @RequestParam int userId) {
+        return chatRestService.getChatHistory(chatId, userId);
     }
 
     /**
