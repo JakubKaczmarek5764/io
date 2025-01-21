@@ -18,7 +18,7 @@ public class ResourcesRepositoryTest {
     }
     @Test
     public void addTest() {
-        Resource r = new Resource(resourceType.DONATION, 1);
+        Resource r = new Resource(resourceType.DONATION, 1, "name");
         repo.add(r);
         Resource returnedR = repo.get(r.getResource_id());
         assert r.getResource_id() == returnedR.getResource_id();
@@ -27,7 +27,7 @@ public class ResourcesRepositoryTest {
     }
     @Test
     public void removeTest() {
-        Resource r = new Resource(resourceType.DONATION, 1);
+        Resource r = new Resource(resourceType.DONATION, 1, "name");
         repo.add(r);
         Resource returnedR = repo.get(r.getResource_id());
         assertEquals(r.getResource_id(),returnedR.getResource_id());
@@ -37,7 +37,7 @@ public class ResourcesRepositoryTest {
     }
     @Test
     public void updateTest() {
-        Resource r = new Resource(resourceType.DONATION, 1);
+        Resource r = new Resource(resourceType.DONATION, 1, "name");
         repo.add(r);
         Resource returnedR = repo.get(r.getResource_id());
         assertEquals(r.getResource_id(),returnedR.getResource_id());
@@ -51,7 +51,7 @@ public class ResourcesRepositoryTest {
     @Test
     public void getTest() {
 
-        Resource r = new Resource(resourceType.DONATION, 1);
+        Resource r = new Resource(resourceType.DONATION, 1,"name");
         repo.add(r);
         Resource returnedR = repo.get(r.getResource_id());
         assertEquals(r.getResource_id(),returnedR.getResource_id());
@@ -60,8 +60,8 @@ public class ResourcesRepositoryTest {
     }
     @Test
     public void getAllTest() {
-        Resource r = new Resource(resourceType.DONATION, 1);
-        Resource r2 = new Resource(resourceType.DONATION, 2);
+        Resource r = new Resource(resourceType.DONATION, 1, "name");
+        Resource r2 = new Resource(resourceType.DONATION, 2, "name2");
         repo.add(r);
         repo.add(r2);
         Resource returnedR = repo.get(r.getResource_id());

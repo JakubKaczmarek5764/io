@@ -13,7 +13,6 @@
         <class>Classes.Location</class>
         <class>Classes.Report</class>
         <class>Classes.Resource</class>
-        <class>Classes.Task</class>
         <class>Classes.Volunteer</class>
         <class>Classes.VolunteerEvaluation</class>
         <class>Classes.Victim</class>

@@ -29,6 +29,13 @@ public class Resource {
     @Column
     private int quantity;
 
+    public void setResource_id(int resource_id) {
+        this.resource_id = resource_id;
+    }
+
+    @Column
+    private String name;
+
     @Column
     private boolean available;
 
@@ -50,16 +57,25 @@ public class Resource {
         this.available = true;
     }
 
-    public Resource(resourceType type, int quantity) {
+    public Resource(resourceType type, int quantity, String name) {
         this.type = type;
         this.quantity = quantity;
         this.available = true;
+        this.name = name;
     }
     public int getResource_id() {
         return resource_id;
     }
     public Volunteer getVolunteer() {
         return volunteer;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setVolunteer(Volunteer volunteer) {
