@@ -192,9 +192,29 @@ public class ChatRestController {
         return chatRestService.getOldNotifications(userIdDto.getUserId());
     }
 
+    @PostMapping("/createChatForReport")
+    public ResponseEntity<String> createChatForReport(@RequestBody ChatForReport chatForReport) {
+        return chatRestService.createChatForReport(chatForReport.getVolunteerId(), chatForReport.getVictimId(), chatForReport.getReportId());
+    }
+
+    @GetMapping("/getChatUsers")
+    public ResponseEntity<List<UserDTO>> getChatUsers(@RequestBody ChatIdDto chatIdDto) {
+        return chatRestService.getChatUsers(chatIdDto.getChatId());
+    }
+
     @GetMapping("/hello")
     public String hello() {
         return "Hello World";
+    }
+
+    public static class ChatForReport {
+        private int volunteerId;
+        private int victimId;
+        private int reportId;
+
+        public int getVolunteerId() { return volunteerId; }
+        public int getVictimId() { return victimId; }
+        public int getReportId() { return reportId; }
     }
 
     public static class UserIdDto {

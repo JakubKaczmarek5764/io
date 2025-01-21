@@ -87,4 +87,20 @@ public class ChatRestService {
         }
     }
 
+    public ResponseEntity<String> createChatForReport(int volunteerId, int victimId, int reportId) {
+        try {
+            return new ResponseEntity<>(chatService.createChatForReport(volunteerId, victimId, reportId), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<List<ChatRestController.UserDTO>> getChatUsers(Long chatId) {
+        try {
+            return new ResponseEntity<>(chatService.getChatUsers(chatId), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

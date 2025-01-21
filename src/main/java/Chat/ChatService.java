@@ -1,13 +1,16 @@
 package Chat;
 
+import Classes.Report;
 import Classes.User;
 import db.ChatRepository;
 import db.MessageRepository;
+import db.ReportRepository;
 import db.UsersRepository;
 import jakarta.annotation.PostConstruct;
 import org.apache.coyote.BadRequestException;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -238,6 +241,57 @@ public class ChatService {
         } catch (Exception e) {
             System.out.println("Error fetching old notifications: " + e.getMessage());
             return null;
+        }
+    }
+
+    public String createChatForReport(int volunteerId, int victimId, int reportId) {
+        try {
+            UsersRepository usersRepository = new UsersRepository();
+            ReportRepository reportRepository = new ReportRepository();
+            ChatRepository chatRepository = new ChatRepository();
+            User user = usersRepository.get(volunteerId);
+            User user2 = usersRepository.get(victimId);
+            Report report = reportRepository.get(reportId);
+            Chat newChat = new Chat(user2.getFirstName() + " " + user2.getLastName() + " - " + reportId, false);
+            chatRepository.add(newChat);
+
+            ChatClient client = chatClients.get(volunteerId);
+            ChatClient client2 = chatClients.get(victimId);
+            if (client == null || client2 == null) {
+                throw new RuntimeException( "Given user does not exist");
+            }
+            client.joinNewChat(newChat);
+            client2.joinNewChat(newChat);
+
+            client2.sendMessage(newChat.getChatId(), "Submition date: " + report.getCompletion_date() + " Victim: " + user.getFirstName() + " " + user.getLastName() + ".");
+            client.sendMessage(newChat.getChatId(), "Volunteer: " + user.getFirstName() + " " + user.getLastName() + " was appended to this report.");
+
+
+            return "Chat created";
+        } catch (Exception e) {
+            System.out.println("Error creating chat: " + e.getMessage());
+            throw new RuntimeException("Error creating chat: " + e.getMessage());
+        }
+    }
+
+    public List<ChatRestController.UserDTO> getChatUsers(Long chatId) {
+        try {
+            ChatRepository chatRepository = new ChatRepository();
+            Chat chat = chatRepository.get(chatId);
+
+            if (chat == null) {
+                throw new RuntimeException( "Given chat does not exist");
+            }
+
+            List<ChatRestController.UserDTO> users = new ArrayList<>();
+            for (User user : chat.getUsers()) {
+                users.add(new ChatRestController.UserDTO(user.getUserId(), user.getFirstName() + " " + user.getLastName()));
+            }
+
+            return users;
+        } catch (Exception e) {
+            System.out.println("Error fetching users: " + e.getMessage());
+            throw new RuntimeException("Error fetching users: " + e.getMessage());
         }
     }
 }
