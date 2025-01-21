@@ -1,80 +1,56 @@
 package Classes;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "Locations")
 public class Location {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "location_id")
-    private int locationId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int location_id;
 
-    @DecimalMin(value = "-90.0", message = "Latitude must be greater than or equal to -90.0")
-    @DecimalMax(value = "90.0", message = "Latitude must be less than or equal to 90.0")
-    @Column(name = "latitude", precision = 8, nullable = false)
-    private double latitude;
+    @Column
+    private String region;
 
-    @DecimalMin(value = "-180.0", message = "Longitude must be greater than or equal to -180.0")
-    @DecimalMax(value = "180.0", message = "Longitude must be less than or equal to 180.0")
-    @Column(name = "longitude", precision = 9, nullable = false)
-    private double longitude;
+    @Column
+    private Double latitude;
 
-    @NotBlank(message = "City is required")
-    @Column(name = "city", nullable = false)
+    @Column
+    private Double longitude;
+    @Column
     private String city;
-
-    @NotBlank(message = "Street is required")
-    @Column(name = "street", nullable = false)
+    @Column
     private String street;
-
-    @NotBlank(message = "Building number is required")
-    @Column(name = "number", nullable = false)
+    @Column
     private String number;
 
-    @Pattern(regexp = "^\\d{2}-\\d{3}$", message = "Zip code must be in format XX-XXX")
-    @Column(name = "zip_code", nullable = false)
+    @Column
     private String zipCode;
 
-    // Konstruktor domyślny wymagany przez JPA
-    public Location() {
-    }
-
-    // Konstruktor pełny
-    public Location(double latitude, double longitude, String city, String street, String number, String zipCode) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public Location(String region, String city, String street, String number, String zipCode, Double latitude, Double longitude) {
+        this.region = region;
         this.city = city;
         this.street = street;
         this.number = number;
         this.zipCode = zipCode;
-    }
-
-    // Gettery i settery
-    public int getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(int locationId) {
-        this.locationId = locationId;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
         this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public Location() {
+    }
+
+    public int getLocation_id() {
+        return location_id;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 
     public String getCity() {
@@ -83,6 +59,26 @@ public class Location {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public void setLocation_id(int location_id) {
+        this.location_id = location_id;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     public String getStreet() {

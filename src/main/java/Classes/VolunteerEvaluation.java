@@ -2,20 +2,21 @@ package Classes;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-@Table(name = "volunteerEvaluation")
+@Table(name = "volunteerEvaluations")
 public class VolunteerEvaluation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int evaluationId;
     @ManyToOne
-    @JoinColumn(name = "volunteer_id", referencedColumnName = "volunteer_id")
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
     private Volunteer volunteer;
     @OneToOne
-    @JoinColumn(name = "task_id", referencedColumnName = "task_id")
-    private Task task;
+    @JoinColumn(name = "report_id", referencedColumnName = "report_id")
+    private Report report;
     private int rating;
     private String description;
     private Date evaluationDate;
@@ -23,14 +24,13 @@ public class VolunteerEvaluation {
     public VolunteerEvaluation() {
     }
 
-    public VolunteerEvaluation(int evaluationId, Volunteer volunteer, Task task, int rating, String description, Date evaluationDate) {
+    public VolunteerEvaluation(Volunteer volunteer, Report report, int rating, String description) {
 
-        this.evaluationId = evaluationId;
         this.volunteer = volunteer;
-        this.task = task;
+        this.report = report;
         this.rating = rating;
         this.description = description;
-        this.evaluationDate = evaluationDate;
+        this.evaluationDate = new Date();
     }
 
     public int getEvaluationId() {
@@ -49,12 +49,11 @@ public class VolunteerEvaluation {
         this.volunteer = volunteer;
     }
 
-    public Task getTask() {
-        return task;
+    public Report getReport() {
+        return report;
     }
-
-    public void setTask(Task task) {
-        this.task = task;
+    public void setReport(Report report) {
+        this.report = report;
     }
 
     public int getRating() {
@@ -82,7 +81,7 @@ public class VolunteerEvaluation {
     }
 
     public String getEvaluation() {
-        return "Task ID: " + (task != null ? task.getTaskId() : "N/A") + ", Rating: " + rating + ", Description: " + description;
+        return "Task ID: " + (report != null ? report.getReport_id() : "N/A") + ", Rating: " + rating + ", Description: " + description;
     }
 
 }

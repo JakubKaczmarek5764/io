@@ -42,8 +42,13 @@ public class Message implements Serializable {
 
     }
 
+    public int getMessageId() {
+        return messageId;
+    }
+
     public String editMessage(String content) {
-        this.content = content;
+        setContent(content);
+        setTimestamp(LocalDateTime.now());
         return "Edited";
     }
 
@@ -53,5 +58,21 @@ public class Message implements Serializable {
 
     public String getContent() {
         return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public Chat getChat() {
+        return chat;
     }
 }

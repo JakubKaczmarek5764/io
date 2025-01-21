@@ -1,9 +1,9 @@
 package Classes;
 
+import com.fasterxml.jackson.databind.deser.impl.ReadableObjectId;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,28 +12,29 @@ import java.util.List;
 @DiscriminatorValue("volunteer")
 public class Volunteer extends User implements Serializable {
 
-    private boolean available;
-
-    @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Task> completedTasks;
-
+    private boolean available = true;
     @ManyToOne
-    @JoinColumn(name = "current_task_id")
-    private Task currentTask;
+    @JoinColumn(name = "current_report_id")
+    private Report currentReport;
+
+    @OneToOne(mappedBy = "volunteer")
+    private Resource resource;
 
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<VolunteerEvaluation> evaluations;
+
+    @Transient
+    private List<Report> completedReports;
 
     public Volunteer() {
         super();
     }
 
-    public Volunteer(String nickName, String firstName, String lastName, String loginHash, String passwordHash, String email, String phoneNumber, LocalDate registrationDate, LocalDate lastLogin) {
-        super(nickName, firstName, lastName, loginHash, passwordHash, email, phoneNumber, registrationDate, lastLogin);
-        this.available = true;
-        this.completedTasks = new ArrayList<>();
-        this.currentTask = null;
+    public Volunteer(String firstName, String lastName) {
+        super(firstName,lastName);
+        this.currentReport = null;
         this.evaluations = new ArrayList<>();
+        this.completedReports = new ArrayList<>();
     }
 
     public boolean isAvailable() {
@@ -44,20 +45,20 @@ public class Volunteer extends User implements Serializable {
         this.available = available;
     }
 
-    public List<Task> getCompletedTasks() {
-        return completedTasks;
+    public Report getCurrentReport() {
+        return currentReport;
     }
 
-    public void setCompletedTasks(List<Task> completedTasks) {
-        this.completedTasks = completedTasks;
+    public void setCurrentReport(Report currentReport) {
+        this.currentReport = currentReport;
     }
 
-    public Task getCurrentTask() {
-        return currentTask;
+    public void addCompletedReport(Report report) {
+        this.completedReports.add(report);
     }
 
-    public void setCurrentTask(Task currentTask) {
-        this.currentTask = currentTask;
+    public void removeCompletedReport(Report report) {
+        this.completedReports.remove(report);
     }
 
     public List<VolunteerEvaluation> getEvaluations() {
@@ -71,5 +72,20 @@ public class Volunteer extends User implements Serializable {
     public int getVolunteerId() {
         return getUserId();
     }
-    
+
+    public Resource getResource() {
+        return resource;
+    }
+
+    public void setResource(Resource resource) {
+        this.resource = resource;
+    }
+
+    @Override
+    public String toString() {
+        return "Volunteer{" +
+                "available=" + available +
+                ", currentReport=" + currentReport +
+                "} " + super.toString();
+    }
 }

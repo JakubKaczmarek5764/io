@@ -1,7 +1,11 @@
 package db;
 import Classes.User;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import Chat.Chat;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,5 +44,16 @@ public class UsersRepository implements IRepository<User> {
                     .getResultStream()
                     .findFirst();
         }
+    }
+
+    public List<Long> getUserChats(int userId) {
+        List<Long> chats = new ArrayList<>();
+        User user = get(userId);
+
+        for (Chat chat : user.getChats()) {
+            chats.add(chat.getChatId());
+        }
+
+        return chats;
     }
 }

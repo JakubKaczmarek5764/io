@@ -6,8 +6,18 @@
     <persistence-unit name="default">
         <class>Chat.ChatRestController</class>
         <class>Classes.Charity</class>
+        <class>Classes.Authority</class>
         <class>Classes.User</class>
+        <class>Classes.Donation</class>
+        <class>Classes.Donator</class>
         <class>Classes.Location</class>
+        <class>Classes.Report</class>
+        <class>Classes.Resource</class>
+        <class>Classes.Volunteer</class>
+        <class>Classes.VolunteerEvaluation</class>
+        <class>Classes.Victim</class>
+        <class>Chat.Chat</class>
+        <class>Chat.Message</class>
         <properties>
             <property name="hibernate.connection.isolation" value="8"/>
             <property name="jakarta.persistence.jdbc.url"
