@@ -15,7 +15,7 @@ public class LocationsCRUDTest {
 
     @BeforeEach
     public void setUp() {
-        location = new Location("mazowieckie", "Warszawa");
+        location = new Location("warszawski", "Warszawa", "Długa", "35A", "09-900", 52.2296756, 21.0122287);
         repo = new LocationRepository();
     }
 
@@ -58,7 +58,7 @@ public class LocationsCRUDTest {
     @Test
     public void testGetAll() {
         repo.add(location);
-        Location location2 = new Location("kujawsko-pomorski", "Bydgoszcz");
+        Location location2 = new Location("warszawski", "Warszawa", "Długa", "35A", "09-900", 53.2296756, 23.0122287);
         repo.add(location2);
         Assertions.assertEquals(2, repo.getAll().size());
         Assertions.assertEquals(location.getRegion(), repo.get(location.getLocation_id()).getRegion());
