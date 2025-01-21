@@ -12,7 +12,7 @@ import java.util.List;
 @DiscriminatorValue("volunteer")
 public class Volunteer extends User implements Serializable {
 
-    private boolean available;
+    private boolean available = true;
     @ManyToOne
     @JoinColumn(name = "current_report_id")
     private Report currentReport;
@@ -32,7 +32,6 @@ public class Volunteer extends User implements Serializable {
 
     public Volunteer(String firstName, String lastName) {
         super(firstName,lastName);
-        this.available = true;
         this.currentReport = null;
         this.evaluations = new ArrayList<>();
         this.completedReports = new ArrayList<>();
