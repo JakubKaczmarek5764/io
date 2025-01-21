@@ -35,6 +35,13 @@ public class ChatService {
 
     @PostConstruct
     public void init() {
+        ChatRepository chatRepository = new ChatRepository();
+        int numOfChats = chatRepository.getAll().size();
+        if (numOfChats == 0) {
+            Chat globalChat = new Chat("Global Chat", false);
+            chatRepository.add(globalChat);
+        }
+
         //System.out.println("Service: " + this);
         chatClients = new ConcurrentHashMap<>();
 
@@ -58,6 +65,9 @@ public class ChatService {
             ChatClient chatClient = this.createNewChatSession(user);
             if (chatClient != null) {
                 this.chatClients.put(userId, chatClient);
+
+                ChatRepository chatRepository = new ChatRepository();
+                chatClient.joinNewChat(chatRepository.get(1));
             }
         } catch (Exception e) {
             e.printStackTrace();
