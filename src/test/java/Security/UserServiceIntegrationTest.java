@@ -67,13 +67,11 @@ class UserServiceIntegrationTest {
 
         // Rejestracja użytkownika
         RegisterRequest registerRequest = new RegisterRequest();
-        registerRequest.setNickName("Tester");
         registerRequest.setFirstName("Test");
-        registerRequest.setLastName("User");
-        registerRequest.setLogin("testLogin");
+        registerRequest.setSurname("User");
         registerRequest.setPassword("testPassword");
         registerRequest.setEmail("test@example.com");
-        registerRequest.setPhoneNumber("123456789");
+        registerRequest.setPhone("123456789");
 
         boolean registerSuccess = userService.register(registerRequest);
         assertTrue(registerSuccess);
@@ -111,13 +109,11 @@ class UserServiceIntegrationTest {
     void testLoginInvalidPassword() {
         // Rejestracja użytkownika
         RegisterRequest registerRequest = new RegisterRequest();
-        registerRequest.setNickName("Tester");
         registerRequest.setFirstName("Test");
-        registerRequest.setLastName("User");
-        registerRequest.setLogin("testLogin");
+        registerRequest.setSurname("User");
         registerRequest.setPassword("testPassword");
         registerRequest.setEmail("test@example.com");
-        registerRequest.setPhoneNumber("123456789");
+        registerRequest.setPhone("123456789");
 
         userService.register(registerRequest);
 

@@ -26,8 +26,6 @@ public abstract class User implements Serializable {
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Message> messages;
 
-    @Column(nullable = false)
-    private String nickName;
 
     @Column(nullable = false)
     private String firstName;
@@ -53,8 +51,7 @@ public abstract class User implements Serializable {
     @Column(nullable = false)
     private LocalDate lastLogin;
 
-    public User(String nickName, String firstName, String lastName, String loginHash, String passwordHash, String email, String phoneNumber, LocalDate registrationDate, LocalDate lastLogin) {
-        this.nickName = nickName;
+    public User(String firstName, String lastName, String loginHash, String passwordHash, String email, String phoneNumber, LocalDate registrationDate, LocalDate lastLogin) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.loginHash = loginHash;

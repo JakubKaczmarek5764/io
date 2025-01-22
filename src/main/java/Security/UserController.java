@@ -1,10 +1,13 @@
 package Security;
 
+import db.UsersRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 public class UserController {
     private final UserService userService;
 
@@ -12,22 +15,23 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
         boolean success = userService.register(request);
         if (success) {
-            return ResponseEntity.ok("Rejestracja zakończona sukcesem.");
+            return ResponseEntity.ok("{\"status\":\"success\"}");
         }
-        return ResponseEntity.badRequest().body("Rejestracja nie powiodła się. Login może być zajęty.");
+        return ResponseEntity.badRequest().body("{\"status\":\"error\"}");
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
         try {
-            String token = userService.login(request);
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok((userService.login(request)));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(401).body(e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body(new LoginResponse(null, null, "error"));
         }
     }
 }

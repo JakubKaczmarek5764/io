@@ -1,15 +1,15 @@
 package Security;
 
 public class LoginRequest {
-    private String login;
+    private String email;
     private String password;
 
     public String getLogin() {
-        return login;
+        return email;
     }
 
     public void setLogin(String login) {
-        this.login = login;
+        this.email = login;
     }
 
     public String getPassword() {

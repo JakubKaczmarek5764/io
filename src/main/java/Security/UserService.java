@@ -1,7 +1,11 @@
 package Security;
 
+import Classes.Donator;
 import Classes.User;
+import Classes.Victim;
+import Classes.Volunteer;
 import db.UsersRepository;
+import db.VictimRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +25,7 @@ public class UserService {
     }
 
     public boolean register(RegisterRequest request) {
-        String loginHash = hash(request.getLogin());
+        String loginHash = hash(request.getEmail());
         Optional<User> existingUser = usersRepository.findByLoginHash(loginHash);
 
         if (existingUser.isPresent()) {
@@ -30,23 +34,26 @@ public class UserService {
 
         String hashedPassword = passwordEncoder.encode(request.getPassword());
 
-        User user = new User(
-                request.getNickName(),
-                request.getFirstName(),
-                request.getLastName(),
-                loginHash,
-                hashedPassword,
-                request.getEmail(),
-                request.getPhoneNumber(),
-                LocalDate.now(),
-                LocalDate.now()
-        );
-
-        usersRepository.add(user);
+        switch(request.getRole()) {
+            case "victim":
+                Victim victim = new Victim(request.getFirstName(), request.getSurname(), loginHash, hashedPassword, request.getEmail(), request.getPhone(), LocalDate.now(), LocalDate.now(), null);
+                new VictimRepository().add(victim);
+                break;
+            case "volunteer":
+                Volunteer volunteer = new Volunteer(request.getFirstName(), request.getSurname(), loginHash, hashedPassword, request.getEmail(), request.getPhone(), LocalDate.now(), LocalDate.now());
+                new UsersRepository().add(volunteer);
+                break;
+            case "donator":
+                Donator donator = new Donator(request.getFirstName(), request.getSurname(), loginHash, hashedPassword, request.getEmail(), request.getPhone(), LocalDate.now(), LocalDate.now(), null);
+                new UsersRepository().add(donator);
+                break;
+            default:
+                return false;
+        }
         return true;
     }
 
-    public String login(LoginRequest request) {
+    public LoginResponse login(LoginRequest request) {
         String loginHash = hash(request.getLogin());
         Optional<User> user = usersRepository.findByLoginHash(loginHash);
 
@@ -54,7 +61,7 @@ public class UserService {
             User loggedInUser = user.get();
             loggedInUser.setLastLogin(LocalDate.now());
             usersRepository.update(loggedInUser);
-            return jwtUtils.generateToken(loggedInUser);
+            return new LoginResponse(Integer.toString(loggedInUser.getUserId()), jwtUtils.generateToken(loggedInUser), "success");
         }
 
         throw new IllegalArgumentException("Niepoprawny login lub hasło.");

@@ -1,8 +1,7 @@
 package db;
 import Classes.User;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+
 import Chat.Chat;
 
 import java.util.ArrayList;
@@ -50,9 +49,9 @@ public class UsersRepository implements IRepository<User> {
         List<Long> chats = new ArrayList<>();
         User user = get(userId);
 
-        for (Chat chat : user.getChats()) {
-            chats.add(chat.getChatId());
-        }
+//        for (Chat chat : user.getChats()) {
+//            chats.add(chat.getChatId());
+//        }
 
         return chats;
     }
