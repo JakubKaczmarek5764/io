@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -36,15 +37,15 @@ public class UserService {
 
         switch(request.getRole()) {
             case "victim":
-                Victim victim = new Victim(request.getFirstName(), request.getSurname(), loginHash, hashedPassword, request.getEmail(), request.getPhone(), LocalDate.now(), LocalDate.now(), null);
+                Victim victim = new Victim(request.getFirstName(), request.getSurname(), loginHash, hashedPassword, request.getEmail(), request.getPhone(), LocalDate.now(), LocalDateTime.now(), null);
                 new VictimRepository().add(victim);
                 break;
             case "volunteer":
-                Volunteer volunteer = new Volunteer(request.getFirstName(), request.getSurname(), loginHash, hashedPassword, request.getEmail(), request.getPhone(), LocalDate.now(), LocalDate.now());
+                Volunteer volunteer = new Volunteer(request.getFirstName(), request.getSurname(), loginHash, hashedPassword, request.getEmail(), request.getPhone(), LocalDate.now(), LocalDateTime.now());
                 new UsersRepository().add(volunteer);
                 break;
             case "donator":
-                Donator donator = new Donator(request.getFirstName(), request.getSurname(), loginHash, hashedPassword, request.getEmail(), request.getPhone(), LocalDate.now(), LocalDate.now(), null);
+                Donator donator = new Donator(request.getFirstName(), request.getSurname(), loginHash, hashedPassword, request.getEmail(), request.getPhone(), LocalDate.now(), LocalDateTime.now(), null);
                 new UsersRepository().add(donator);
                 break;
             default:
@@ -59,10 +60,11 @@ public class UserService {
 
         if (user.isPresent() && passwordEncoder.matches(request.getPassword(), user.get().getPasswordHash())) {
             User loggedInUser = user.get();
-            loggedInUser.setLastLogin(LocalDate.now());
+            loggedInUser.setLastActivityTime(LocalDateTime.now());
             usersRepository.update(loggedInUser);
             return new LoginResponse(Integer.toString(loggedInUser.getUserId()), jwtUtils.generateToken(loggedInUser), "success");
         }
+
 
         throw new IllegalArgumentException("Niepoprawny login lub hasło.");
     }

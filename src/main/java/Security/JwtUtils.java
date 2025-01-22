@@ -20,7 +20,6 @@ public class JwtUtils {
 
         return Jwts.builder()
                 .setSubject(user.getLoginHash())
-                .claim("nickName", user.getNickName())
                 .claim("email", user.getEmail())
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
