@@ -1,16 +1,15 @@
 package db;
 import Classes.User;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+
 import Chat.Chat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public class UsersRepository implements IRepository<User> {
-
 
     @Override
     public void add(User entity) {
@@ -37,13 +36,22 @@ public class UsersRepository implements IRepository<User> {
         return Repository.getAll(User.class);
     }
 
+    public Optional<User> findByLoginHash(String loginHash) {
+        try (EntityManager em = Repository.getEntityManagerFactory().createEntityManager()) {
+            return em.createQuery("SELECT u FROM User u WHERE u.loginHash = :loginHash", User.class)
+                    .setParameter("loginHash", loginHash)
+                    .getResultStream()
+                    .findFirst();
+        }
+    }
+
     public List<Long> getUserChats(int userId) {
         List<Long> chats = new ArrayList<>();
         User user = get(userId);
 
-        for (Chat chat : user.getChats()) {
-            chats.add(chat.getChatId());
-        }
+//        for (Chat chat : user.getChats()) {
+//            chats.add(chat.getChatId());
+//        }
 
         return chats;
     }

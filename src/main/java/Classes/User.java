@@ -6,8 +6,7 @@ import Chat.Chat;
 import Chat.Message;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -27,21 +26,43 @@ public abstract class User implements Serializable {
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Message> messages;
 
+
     @Column(nullable = false)
     private String firstName;
 
     @Column(nullable = false)
     private String lastName;
 
-    @Column
-    private LocalDateTime lastActivityTime;
+    @Column(nullable = false, unique = true)
+    private String loginHash;
 
-    public User() {
-    }
+    @Column(nullable = false)
+    private String passwordHash;
 
-    public User(String firstName, String lastName) {
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String phoneNumber;
+
+    @Column(nullable = false)
+    private LocalDate registrationDate;
+
+    @Column(nullable = false)
+    private LocalDate lastLogin;
+
+    public User(String firstName, String lastName, String loginHash, String passwordHash, String email, String phoneNumber, LocalDate registrationDate, LocalDate lastLogin) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.loginHash = loginHash;
+        this.passwordHash = passwordHash;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.registrationDate = registrationDate;
+        this.lastLogin = lastLogin;
+    }
+
+    public User() {
     }
 
     public int getUserId() {
@@ -72,30 +93,52 @@ public abstract class User implements Serializable {
         this.userId = userId;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                //", chats=" + chats +
-                //", messages=" + messages +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+    public String getNickName() {
+        return nickName;
     }
 
-    public List<Message> getMessages() {
-        return messages;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
-    public List<Chat> getChats() {
-        return chats;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
-    public LocalDateTime getLastActivityTime() {
-        return lastActivityTime;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
-    public void setLastActivityTime(LocalDateTime lastActivityTime) {
-        this.lastActivityTime = lastActivityTime;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public LocalDate getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(LocalDate lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    //loginHash oraz data rejstracji są niezmienne
+    public String getLoginHash() {
+        return loginHash;
+    }
+
+    public LocalDate getRegistrationDate() {
+        return registrationDate;
     }
 }
