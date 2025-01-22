@@ -5,7 +5,6 @@ import Classes.User;
 import Classes.Victim;
 import Classes.Volunteer;
 import db.UsersRepository;
-import db.VictimRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +37,7 @@ public class UserService {
         switch(request.getRole()) {
             case "victim":
                 Victim victim = new Victim(request.getFirstName(), request.getSurname(), loginHash, hashedPassword, request.getEmail(), request.getPhone(), LocalDate.now(), LocalDateTime.now(), null);
-                new VictimRepository().add(victim);
+                new UsersRepository().add(victim);
                 break;
             case "volunteer":
                 Volunteer volunteer = new Volunteer(request.getFirstName(), request.getSurname(), loginHash, hashedPassword, request.getEmail(), request.getPhone(), LocalDate.now(), LocalDateTime.now());
