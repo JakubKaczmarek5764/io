@@ -48,6 +48,7 @@ public class Resource {
         this.volunteer = volunteer;
         this.quantity = 1;
         this.available = true;
+        this.name = volunteer.getFirstName() + " " + volunteer.getLastName();
     }
 
     public Resource(Donation donation) {

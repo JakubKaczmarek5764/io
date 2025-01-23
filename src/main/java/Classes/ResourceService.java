@@ -20,7 +20,7 @@ public class ResourceService implements IResource {
     }
 
 
-    public ResponseEntity<Resource> getResourceById(long id) {
+    public ResponseEntity<Resource> getResourceById(@PathVariable long id) {
         Resource resource = resourcesRepository.get(id);
 
         if (resource == null) {
@@ -30,7 +30,7 @@ public class ResourceService implements IResource {
         return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
-    public ResponseEntity<Resource> updateResource(long id, Resource updatedResource) {
+    public ResponseEntity<Resource> updateResource(@PathVariable long id, @RequestBody Resource updatedResource) {
         Resource resource = resourcesRepository.get(id);
 
         if (resource == null) {
@@ -54,7 +54,7 @@ public class ResourceService implements IResource {
         return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
-    public ResponseEntity<Resource> deleteResource(long id) {
+    public ResponseEntity<Resource> deleteResource(@PathVariable long id) {
         Resource resource = resourcesRepository.get(id);
 
         if (resource == null) {
@@ -65,7 +65,7 @@ public class ResourceService implements IResource {
         return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
-    public ResponseEntity<Resource> addResource(Resource resource) {
+    public ResponseEntity<Resource> addResource(@RequestBody Resource resource) {
         resourcesRepository.add(resource);
         return new ResponseEntity<>(resource, HttpStatus.CREATED);
     }

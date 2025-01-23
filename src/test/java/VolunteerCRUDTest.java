@@ -1,14 +1,23 @@
 import Classes.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.internal.filter.ValueNodes;
 import db.ResourcesRepository;
 import db.UsersRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 //@SpringBootTest
 public class VolunteerCRUDTest {
@@ -17,14 +26,20 @@ public class VolunteerCRUDTest {
     private VolunteerService volunteerService;
     private ResourcesRepository resourcesRepository;
     private User user;
+    private MockMvc mockMvc;
+
+    private Volunteer volunteer;
 
 
     @BeforeEach
     public void setUp() {
         user = new Volunteer("Paweł", "Pietrzak");
         repo = new UsersRepository();
+        volunteer = new Volunteer("Jakub", "Pietrzak");
+        repo.add(volunteer);
         volunteerService = new VolunteerService();
         resourcesRepository = new ResourcesRepository();
+        mockMvc = MockMvcBuilders.standaloneSetup(volunteerService).build();
 
     }
     @AfterEach
@@ -68,7 +83,27 @@ public class VolunteerCRUDTest {
         repo.add(user);
         User user2 = new Volunteer("Jan", "Kowalski");
         repo.add(user2);
-        assertEquals(2, repo.getAll().size());
+        assertEquals(3, repo.getAll().size());
+    }
+
+    @Test
+    public void addVolunteerTest() throws Exception {
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/volunteer")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"firstName\": \"Janusz\", \"lastName\": \"Kowalski\"}"))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode responseJson = objectMapper.readTree(response);
+        Long volunteerId = responseJson.get("userId").asLong();;
+
+        Volunteer updatedVolunteer = (Volunteer) repo.get(volunteerId);
+
+        assertNotNull(updatedVolunteer, "Volunteer should be found in repository after saving");
+        assertEquals("Janusz", updatedVolunteer.getFirstName());
+        assertEquals("Kowalski", updatedVolunteer.getLastName());
     }
 
     @Test
@@ -79,6 +114,21 @@ public class VolunteerCRUDTest {
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         assertNull(repo.get(volunteer.getVolunteerId()));
+    }
+
+    @Test
+    public void updateVolunteerTest() throws Exception {
+        volunteer.setFirstName("Jan");
+        volunteer.setLastName("Kowalski");
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/volunteer/update/{volunteerId}", volunteer.getUserId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"firstName\": \"Jan\", \"lastName\": \"Kowalski\"}"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        Volunteer updatedVolunteer = (Volunteer) repo.get(volunteer.getUserId());
+        assertEquals("Jan", updatedVolunteer.getFirstName());
+        assertEquals("Kowalski", updatedVolunteer.getLastName());
     }
 
 }

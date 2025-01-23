@@ -15,7 +15,7 @@ public interface IVolunteer {
     ResponseEntity<Void> evaluateVolunteer(@PathVariable long volunteerId, @PathVariable long reportId, @RequestBody VolunteerEvaluation evaluation);
 
     @PostMapping()
-    ResponseEntity<Void> addVolunteer(@RequestBody Volunteer volunteer);
+    ResponseEntity<Volunteer> addVolunteer(@RequestBody Volunteer volunteer);
 
     @DeleteMapping("/{volunteerId}")
     ResponseEntity<Void> deleteVolunteer(@PathVariable long volunteerId);
@@ -34,4 +34,10 @@ public interface IVolunteer {
 
     @PutMapping("/finish/{reportId}")
     ResponseEntity<Void> finishReport(@PathVariable long reportId);
+
+    @GetMapping("{volunteerId}/evaluations")
+    ResponseEntity<List<VolunteerEvaluation>> getVolunteerEvaluations(@PathVariable long volunteerId);
+
+    @PutMapping("/update/{volunteerId}")
+    ResponseEntity<Void> updateVolunteer(@PathVariable long volunteerId, @RequestBody Volunteer updatedVolunteer);
 }

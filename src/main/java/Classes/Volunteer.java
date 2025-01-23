@@ -1,5 +1,6 @@
 package Classes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.deser.impl.ReadableObjectId;
 import jakarta.persistence.*;
 
@@ -17,14 +18,16 @@ public class Volunteer extends User implements Serializable {
     @JoinColumn(name = "current_report_id")
     private Report currentReport;
 
-    @OneToOne(mappedBy = "volunteer")
+    @Transient
+    @OneToOne(mappedBy = "volunteer", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private Resource resource;
 
     @OneToMany(mappedBy = "volunteer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<VolunteerEvaluation> evaluations;
+    private List<VolunteerEvaluation> evaluations = new ArrayList<>();
 
     @Transient
-    private List<Report> completedReports;
+    private List<Report> completedReports = new ArrayList<>();
 
     public Volunteer() {
         super();
@@ -33,8 +36,7 @@ public class Volunteer extends User implements Serializable {
     public Volunteer(String firstName, String lastName) {
         super(firstName,lastName);
         this.currentReport = null;
-        this.evaluations = new ArrayList<>();
-        this.completedReports = new ArrayList<>();
+
     }
 
     public boolean isAvailable() {

@@ -30,4 +30,5 @@ public class VolunteerEvaluationRepository implements IRepository<VolunteerEvalu
     public List<VolunteerEvaluation> getAll() {
         return Repository.getAll(VolunteerEvaluation.class);
     }
+
 }
