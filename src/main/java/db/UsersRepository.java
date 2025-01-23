@@ -36,14 +36,14 @@ public class UsersRepository implements IRepository<User> {
         return Repository.getAll(User.class);
     }
 
-//    public Optional<User> findByLoginHash(String loginHash) {
-//        try (EntityManager em = Repository.getEntityManagerFactory().createEntityManager()) {
-//            return em.createQuery("SELECT u FROM User u WHERE u.loginHash = :loginHash", User.class)
-//                    .setParameter("loginHash", loginHash)
-//                    .getResultStream()
-//                    .findFirst();
-//        }
-//    }
+    public Optional<User> findByEmail(String email) {
+        try (EntityManager em = Repository.getEntityManagerFactory().createEntityManager()) {
+            return em.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
+                    .setParameter("email", email)
+                    .getResultStream()
+                    .findFirst();
+        }
+    }
 
     public List<Long> getUserChats(int userId) {
         List<Long> chats = new ArrayList<>();

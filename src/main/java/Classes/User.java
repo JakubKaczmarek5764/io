@@ -6,6 +6,7 @@ import Chat.Chat;
 import Chat.Message;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,20 @@ public abstract class User implements Serializable {
 
     @Column
     private LocalDateTime lastActivityTime;
+
+    @Column(nullable = false)
+    private String passwordHash;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String phoneNumber;
+
+    @Column(nullable = false)
+    private LocalDate registrationDate;
+
+
 
     public User() {
     }
@@ -98,4 +113,38 @@ public abstract class User implements Serializable {
     public void setLastActivityTime(LocalDateTime lastActivityTime) {
         this.lastActivityTime = lastActivityTime;
     }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public LocalDate getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(LocalDate registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+
 }

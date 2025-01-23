@@ -4,7 +4,7 @@ public class LoginRequest {
     private String email;
     private String password;
 
-    public String getLogin() {
+    public String getEmail() {
         return email;
     }
 
