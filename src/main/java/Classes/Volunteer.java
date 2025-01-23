@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,21 +31,17 @@ public class Volunteer extends User implements Serializable {
         super();
     }
 
-    public Volunteer(String firstName, String lastName, String loginHash, String passwordHash, String email, String phoneNumber, LocalDate registrationDate, LocalDateTime lastLogin) {
+    public Volunteer(String firstName, String lastName, String loginHash, String passwordHash, String email, String phoneNumber, LocalDate registrationDate, LocalDate lastLogin) {
         super(firstName, lastName, loginHash, passwordHash, email, phoneNumber, registrationDate, lastLogin);
     }
 
-    public Volunteer(String firstName, String lastName, String loginHash, String passwordHash, String email, String phoneNumber, LocalDate registrationDate, LocalDateTime lastLogin, boolean available, Report currentReport, Resource resource, List<VolunteerEvaluation> evaluations, List<Report> completedReports) {
+    public Volunteer(String firstName, String lastName, String loginHash, String passwordHash, String email, String phoneNumber, LocalDate registrationDate, LocalDate lastLogin, boolean available, Report currentReport, Resource resource, List<VolunteerEvaluation> evaluations, List<Report> completedReports) {
         super(firstName, lastName, loginHash, passwordHash, email, phoneNumber, registrationDate, lastLogin);
         this.available = available;
         this.currentReport = currentReport;
         this.resource = resource;
         this.evaluations = evaluations;
         this.completedReports = completedReports;
-    }
-
-    public Volunteer(String firstName, String lastName) {
-        super(firstName, lastName);
     }
 
     public boolean isAvailable() {

@@ -7,7 +7,6 @@ import Chat.Message;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -50,9 +49,9 @@ public abstract class User implements Serializable {
     private LocalDate registrationDate;
 
     @Column(nullable = false)
-    private LocalDateTime lastLogin;
+    private LocalDate lastLogin;
 
-    public User(String firstName, String lastName, String loginHash, String passwordHash, String email, String phoneNumber, LocalDate registrationDate, LocalDateTime lastLogin) {
+    public User(String firstName, String lastName, String loginHash, String passwordHash, String email, String phoneNumber, LocalDate registrationDate, LocalDate lastLogin) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.loginHash = loginHash;
@@ -61,11 +60,6 @@ public abstract class User implements Serializable {
         this.phoneNumber = phoneNumber;
         this.registrationDate = registrationDate;
         this.lastLogin = lastLogin;
-    }
-
-    public User(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
     }
 
     public User() {
@@ -99,6 +93,13 @@ public abstract class User implements Serializable {
         this.userId = userId;
     }
 
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
     public String getPasswordHash() {
         return passwordHash;
@@ -124,20 +125,12 @@ public abstract class User implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public LocalDateTime getLastActivityTime() {
+    public LocalDate getLastLogin() {
         return lastLogin;
     }
 
-    public void setLastActivityTime(LocalDateTime lastLogin) {
+    public void setLastLogin(LocalDate lastLogin) {
         this.lastLogin = lastLogin;
-    }
-
-    public List<Chat> getChats() {
-        return chats;
-    }
-
-    public LocalDateTime getLastLogin() {
-        return lastLogin;
     }
 
     //loginHash oraz data rejstracji są niezmienne

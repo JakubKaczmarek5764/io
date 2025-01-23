@@ -45,10 +45,6 @@ public class Location {
         return location_id;
     }
 
-    public int getLocationId() {
-        return location_id;
-    }
-
     public String getRegion() {
         return region;
     }

@@ -32,10 +32,8 @@ public class LocationControllerTest {
 
     @Test
     void testAddLocation() {
-        Location location = new Location("test", "Łódź", "Piotrkowska", "12", "90-001", 51.747169, 19.453329);
+        Location location = new Location(51.747169, 19.453329, "Łódź", "Piotrkowska", "12", "90-001");
         ResponseEntity<Location> response = locationController.addLocation(location);
-
-        //String region, String city, String street, String number, String zipCode, Double latitude, Double longitude
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue()); // Sprawdzenie kodu statusu HTTP
@@ -46,7 +44,7 @@ public class LocationControllerTest {
 
     @Test
     void testGetLocationById() {
-        Location location = new Location("test", "Łódź", "Piotrkowska", "12", "90-001", 51.747169, 19.453329);
+        Location location = new Location(51.747169, 19.453329, "Łódź", "Piotrkowska", "12", "90-001");
         locationController.addLocation(location);
 
         ResponseEntity<Location> response = locationController.getLocationById(location.getLocationId());
@@ -60,8 +58,8 @@ public class LocationControllerTest {
 
     @Test
     void testGetAllLocations() {
-        Location location1 = new Location("test", "Łódź", "Piotrkowska", "12", "90-001", 51.747169, 19.453329);
-        Location location2 = new Location("test", "Łódź", "Piotrkowska", "12", "90-001", 51.747169, 19.453329);
+        Location location1 = new Location(51.747169, 19.453329, "Łódź", "Piotrkowska", "12", "90-001");
+        Location location2 = new Location(52.229676, 21.012229, "Warszawa", "Marszałkowska", "3", "00-001");
 
         locationController.addLocation(location1);
         locationController.addLocation(location2);
@@ -76,7 +74,7 @@ public class LocationControllerTest {
 
     @Test
     void testDeleteLocation() {
-        Location location = new Location("test", "Łódź", "Piotrkowska", "12", "90-001", 51.747169, 19.453329);
+        Location location = new Location(51.747169, 19.453329, "Łódź", "Piotrkowska", "12", "90-001");
         locationController.addLocation(location);
 
         ResponseEntity<Void> response = locationController.deleteLocation(location.getLocationId());

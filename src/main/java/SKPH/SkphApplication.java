@@ -32,14 +32,14 @@ public class SkphApplication {
 
             Thread.sleep(10000);
 
-//            Volunteer user = new Volunteer("userFName", "userLName");
-//            usersRepository.add(user);
-//
-//            Volunteer user1 = new Volunteer("userFName1", "userLName1");
-//            usersRepository.add(user1);
+            Volunteer user = new Volunteer("userFName", "userLName");
+            usersRepository.add(user);
 
-//            System.out.println(user);
-//            System.out.println(user1);
+            Volunteer user1 = new Volunteer("userFName1", "userLName1");
+            usersRepository.add(user1);
+
+            System.out.println(user);
+            System.out.println(user1);
         };
     }
 }
