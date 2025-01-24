@@ -17,9 +17,8 @@ public class Volunteer extends User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "current_report_id")
     private Report currentReport;
-
-    @Transient
-    @OneToOne(mappedBy = "volunteer", cascade = CascadeType.PERSIST)
+    
+    @OneToOne(mappedBy = "volunteer", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Resource resource;
 
