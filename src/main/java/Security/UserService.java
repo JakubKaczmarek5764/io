@@ -1,9 +1,6 @@
 package Security;
 
-import Classes.Donator;
-import Classes.User;
-import Classes.Victim;
-import Classes.Volunteer;
+import Classes.*;
 import db.UsersRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -44,12 +41,11 @@ public class UserService {
                 new UsersRepository().add(victim);
                 break;
             case "volunteer":
-                Volunteer volunteer = new Volunteer(request.getFirstName(), request.getSurname());
+                Volunteer volunteer = new Volunteer(request.getFirstName(), request.getSurname(), request.getPassword(),
+                        request.getEmail(), request.getPhone(), LocalDate.now());
                 volunteer.setLastActivityTime(LocalDateTime.now());
                 volunteer.setPasswordHash(hashedPassword);
-                volunteer.setEmail(request.getEmail());
-                volunteer.setPhoneNumber(request.getPhone());
-                volunteer.setRegistrationDate(LocalDate.now());
+                volunteer.setResource(new Resource(volunteer));
                 new UsersRepository().add(volunteer);
                 break;
             case "donator":

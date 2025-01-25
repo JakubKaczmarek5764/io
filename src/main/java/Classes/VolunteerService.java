@@ -146,6 +146,15 @@ public class VolunteerService implements IVolunteer {
         if (updatedVolunteer.getResource() != null) {
             existingVolunteer.setResource(updatedVolunteer.getResource());
         }
+        if (updatedVolunteer.getEmail() != null) {
+            existingVolunteer.setEmail(updatedVolunteer.getEmail());
+        }
+        if (updatedVolunteer.getPhoneNumber() != null) {
+            existingVolunteer.setPhoneNumber(updatedVolunteer.getPhoneNumber());
+        }
+        if (updatedVolunteer.getRegistrationDate() != null) {
+            existingVolunteer.setRegistrationDate(updatedVolunteer.getRegistrationDate());
+        }
 
         existingVolunteer.setAvailable(updatedVolunteer.isAvailable());
 

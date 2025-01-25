@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 //@SpringBootTest
@@ -24,8 +26,6 @@ public class VolunteerCRUDTest {
 
     private UsersRepository repo;
     private VolunteerService volunteerService;
-    private ResourcesRepository resourcesRepository;
-    private User user;
     private MockMvc mockMvc;
 
     private Volunteer volunteer;
@@ -33,12 +33,10 @@ public class VolunteerCRUDTest {
 
     @BeforeEach
     public void setUp() {
-        user = new Volunteer("Paweł", "Pietrzak");
+        volunteer = new Volunteer("Jakub", "Pietrzak", "hashedPassword", "jakub@example.com", "123456789", LocalDate.now());
         repo = new UsersRepository();
-        volunteer = new Volunteer("Jakub", "Pietrzak");
         repo.add(volunteer);
         volunteerService = new VolunteerService();
-        resourcesRepository = new ResourcesRepository();
         mockMvc = MockMvcBuilders.standaloneSetup(volunteerService).build();
 
     }
@@ -50,6 +48,7 @@ public class VolunteerCRUDTest {
 
     @Test
     public void addTest() {
+        Volunteer user = new Volunteer("Paweł", "Pietrzak", "hashedPassword", "pawel@example.com", "987654321", LocalDate.now());
         repo.add(user);
         User returnedUser = repo.get(user.getUserId());
 
@@ -60,6 +59,7 @@ public class VolunteerCRUDTest {
 
     @Test
     public void removeTest() {
+        Volunteer user = new Volunteer("Paweł", "Pietrzak", "hashedPassword", "pawel@example.com", "987654321", LocalDate.now());
         repo.add(user);
         repo.remove(user.getUserId());
         User returnedUser = repo.get(user.getUserId());
@@ -68,6 +68,7 @@ public class VolunteerCRUDTest {
 
     @Test
     public void updateTest() {
+        Volunteer user = new Volunteer("Paweł", "Pietrzak", "hashedPassword", "pawel@example.com", "987654321", LocalDate.now());
         repo.add(user);
         user.setFirstName("Jan");
         user.setLastName("Kowalski");
@@ -80,8 +81,9 @@ public class VolunteerCRUDTest {
 
     @Test
     public void getAllTest() {
+        Volunteer user = new Volunteer("Paweł", "Pietrzak", "hashedPassword", "pawel@example.com", "987654321", LocalDate.now());
         repo.add(user);
-        User user2 = new Volunteer("Jan", "Kowalski");
+        Volunteer user2 = new Volunteer("Jan", "Kowalski", "hashedPassword", "jan@example.com", "111222333", LocalDate.now());
         repo.add(user2);
         assertEquals(3, repo.getAll().size());
     }
@@ -90,7 +92,10 @@ public class VolunteerCRUDTest {
     public void addVolunteerTest() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/volunteer")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"firstName\": \"Janusz\", \"lastName\": \"Kowalski\"}"))
+                        .content("{\"firstName\": \"Janusz\", \"lastName\": \"Kowalski\", \"passwordHash\": " +
+                                "\"hashedpassword123\", " +
+                                "\"email\": " + "\"jan.kowalski@example.com\", \"phoneNumber\": \"123-456-789\", " +
+                                "\"registrationDate\": \"2023-01-01\"}"))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andReturn();
 
@@ -108,7 +113,8 @@ public class VolunteerCRUDTest {
 
     @Test
     public void testDeleteVolunteer() {
-        Volunteer volunteer = new Volunteer("Jane","Doe");
+        Volunteer volunteer = new Volunteer("Jane", "Doe", "hashedPassword",
+                "jane@example.com", "123123123", LocalDate.now());
         volunteerService.addVolunteer(volunteer);
         ResponseEntity<Void> response = volunteerService.deleteVolunteer(volunteer.getVolunteerId());
 
@@ -123,7 +129,9 @@ public class VolunteerCRUDTest {
 
         mockMvc.perform(MockMvcRequestBuilders.put("/volunteer/update/{volunteerId}", volunteer.getUserId())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"firstName\": \"Jan\", \"lastName\": \"Kowalski\"}"))
+                        .content("{\"firstName\": \"Jan\", \"lastName\": \"Kowalski\", \"email\": " +
+                                "\"jan.kowalski@example.com\", \"phoneNumber\": \"123-456-789\", " +
+                                "\"registrationDate\": \"2023-01-01\"}"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
         Volunteer updatedVolunteer = (Volunteer) repo.get(volunteer.getUserId());

@@ -49,7 +49,15 @@ public abstract class User implements Serializable {
     @Column(nullable = false)
     private LocalDate registrationDate;
 
-
+    public User(String firstName, String lastName, String passwordHash, String email, String phoneNumber,
+                LocalDate registrationDate) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.passwordHash = passwordHash;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.registrationDate = registrationDate;
+    }
 
     public User() {
     }

@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.deser.impl.ReadableObjectId;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -33,7 +35,12 @@ public class Volunteer extends User implements Serializable {
     }
 
     public Volunteer(String firstName, String lastName) {
-        super(firstName,lastName);
+        super(firstName, lastName);
+        this.currentReport = null;
+    }
+
+    public Volunteer(String firstName, String lastName, String passwordHash, String email, String phoneNumber, LocalDate registrationDate) {
+        super(firstName,lastName ,passwordHash , email, phoneNumber, registrationDate);
         this.currentReport = null;
 
     }
@@ -63,9 +70,8 @@ public class Volunteer extends User implements Serializable {
     }
 
     public List<VolunteerEvaluation> getEvaluations() {
-        return evaluations;
+        return Collections.unmodifiableList(evaluations);
     }
-
     public void setEvaluations(List<VolunteerEvaluation> evaluations) {
         this.evaluations = evaluations;
     }
