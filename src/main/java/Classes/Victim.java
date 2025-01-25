@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,11 @@ public class Victim extends User implements Serializable {
 
     public Victim(String firstName, String lastName, Charity charity) {
         super(firstName, lastName);
+        this.charity = charity;
+    }
+
+    public Victim(String firstName, String lastName, String passwordHash, String email, String phoneNumber, LocalDate registrationDate, Charity charity) {
+        super(firstName, lastName, passwordHash, email, phoneNumber, registrationDate);
         this.charity = charity;
     }
 

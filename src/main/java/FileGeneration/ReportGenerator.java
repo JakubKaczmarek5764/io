@@ -19,9 +19,7 @@ import com.itextpdf.layout.properties.UnitValue;
 import db.*;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ReportGenerator {
@@ -78,24 +76,41 @@ public class ReportGenerator {
         switch (type.toLowerCase()) {
             case "volunteers" -> {
                 List<Volunteer> volunteers = fetchDataFromDatabase(Volunteer.class);
-                reportContent.append("Id,Name,LastName,Availability,CurrentReport\n");
+                reportContent.append("Id,Name,LastName,Availability,Email,Phone,CurrentReport\n");
                 for (Volunteer v : volunteers) {
                     reportContent.append(v.getVolunteerId()).append(",")
                             .append(v.getFirstName()).append(",")
                             .append(v.getLastName()).append(",")
                             .append(v.isAvailable()).append(",")
+                            .append(v.getEmail()).append(",")
+                            .append(v.getPhoneNumber()).append(",")
                             .append(v.getCurrentReport() != null ? v.getCurrentReport().getReport_id() : "None")
                             .append("\n");
                 }
             }
             case "victims" -> {
                 List<Victim> victims = fetchDataFromDatabase(Victim.class);
-                reportContent.append("Id,Name,LastName,Charity\n");
+                reportContent.append("Id,Name,LastName,Email,Phone,Charity\n");
                 for (Victim v : victims) {
                     reportContent.append(v.getUserId()).append(",")
                             .append(v.getFirstName()).append(",")
                             .append(v.getLastName()).append(",")
+                            .append(v.getEmail()).append(",")
+                            .append(v.getPhoneNumber()).append(",")
                             .append(v.getCharity() != null ? v.getCharity().getCharity_name() : "None")
+                            .append("\n");
+                }
+            }
+            case "donators" -> {
+                List<Donator> donators = fetchDataFromDatabase(Donator.class);
+                reportContent.append("Id,Name,LastName,Email,Phone,Charity\n");
+                for (Donator donor : donators) {
+                    reportContent.append(donor.getUserId()).append(",")
+                            .append(donor.getFirstName()).append(",")
+                            .append(donor.getLastName()).append(",")
+                            .append(donor.getEmail()).append(",")
+                            .append(donor.getPhoneNumber()).append(",")
+                            .append(donor.getCharity() != null ? donor.getCharity().getCharity_name() : "None")
                             .append("\n");
                 }
             }
@@ -127,17 +142,6 @@ public class ReportGenerator {
                             .append(d.getAcceptDate() != null ? d.getAcceptDate() : "Pending").append(",")
                             .append(charityName).append(",")
                             .append(resources)
-                            .append("\n");
-                }
-            }
-            case "donators" -> {
-                List<Donator> donators = fetchDataFromDatabase(Donator.class);
-                reportContent.append("Id,Name,LastName,Charity\n");
-                for (Donator donor : donators) {
-                    reportContent.append(donor.getUserId()).append(",")
-                            .append(donor.getFirstName()).append(",")
-                            .append(donor.getLastName()).append(",")
-                            .append(donor.getCharity().getCharity_name())
                             .append("\n");
                 }
             }
@@ -230,7 +234,7 @@ public class ReportGenerator {
 
         switch (type.toLowerCase()) {
             case "volunteers" -> reportMap.put("volunteers", fetchDataFromDatabase(Volunteer.class).stream().map(v -> {
-                v.setEvaluations(null);
+                v.setEvaluations(v.getEvaluations() == null ? new ArrayList<>() : Collections.emptyList());
                 return v;
             }).collect(Collectors.toList()));
             case "victims" -> reportMap.put("victims", fetchDataFromDatabase(Victim.class));
@@ -273,7 +277,7 @@ public class ReportGenerator {
                     document.add(new Paragraph(title)
                             .setFont(font)
                             .setBold()
-                            .setFontSize(16) 
+                            .setFontSize(16)
                             .setTextAlignment(TextAlignment.CENTER)
                             .setMarginBottom(20));
 
@@ -284,17 +288,17 @@ public class ReportGenerator {
                     if (!rows.isEmpty()) {
                         float[] columnWidths = new float[rows.get(0).length];
                         for (int i = 0; i < columnWidths.length; i++) {
-                            columnWidths[i] = 1; 
+                            columnWidths[i] = 1;
                         }
 
                         Table table = new Table(UnitValue.createPercentArray(columnWidths));
-                        table.setWidth(UnitValue.createPercentValue(100)); 
-                        
+                        table.setWidth(UnitValue.createPercentValue(100));
+
                         for (String header : rows.get(0)) {
                             table.addHeaderCell(new Cell()
                                     .add(new Paragraph(header.trim())
                                             .setFont(font)
-                                            .setFontSize(10)) 
+                                            .setFontSize(10))
                                     .setFont(font)
                                     .setBold()
                                     .setBackgroundColor(ColorConstants.LIGHT_GRAY)
@@ -308,14 +312,14 @@ public class ReportGenerator {
                                 table.addCell(new Cell()
                                         .add(new Paragraph(cell.trim())
                                                 .setFont(font)
-                                                .setFontSize(8)) 
+                                                .setFontSize(8))
                                         .setTextAlignment(TextAlignment.LEFT)
                                         .setPadding(5)
                                         .setVerticalAlignment(com.itextpdf.layout.properties.VerticalAlignment.TOP));
                             }
                         }
 
-                        document.add(table); 
+                        document.add(table);
                     }
 
                     document.close();

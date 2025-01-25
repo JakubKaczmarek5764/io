@@ -2,6 +2,8 @@ package Classes;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 
 @Entity
 @Access(AccessType.FIELD)
@@ -13,6 +15,11 @@ public class Donator extends User {
 
     public Donator(String firstName, String lastName, Charity charity) {
         super(firstName, lastName);
+        this.charity = charity;
+    }
+
+    public Donator(String firstName, String lastName, String passwordHash, String email, String phoneNumber, LocalDate registrationDate, Charity charity) {
+        super(firstName, lastName, passwordHash, email, phoneNumber, registrationDate);
         this.charity = charity;
     }
 
