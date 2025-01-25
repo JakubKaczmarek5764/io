@@ -139,7 +139,7 @@ public class ReportGenerator {
                             .append(donatorName).append(",")
                             .append(d.getStatus()).append(",")
                             .append(d.getDonationDate()).append(",")
-                            .append(d.getAcceptDate() != null ? d.getAcceptDate() : "Pending").append(",")
+                            .append(d.getAcceptDate() != null ? d.getAcceptDate() : "None").append(",")
                             .append(charityName).append(",")
                             .append(resources)
                             .append("\n");
