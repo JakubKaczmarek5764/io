@@ -1,6 +1,7 @@
 //package Map;
 //
 //import Classes.Location;
+//import Classes.LocationController;
 //import db.LocationRepository;
 //import org.junit.jupiter.api.AfterEach;
 //import org.junit.jupiter.api.BeforeEach;
@@ -26,8 +27,9 @@
 //        // Usuwanie wszystkich rekordów z tabeli Location
 //        List<Location> allLocations = repo.getAll();
 //        for (Location location : allLocations) {
-//            repo.remove(location.getLocationId());
+//            repo.remove(location.getLocation_id());
 //        }
+//
 //    }
 //
 //    @Test
@@ -49,7 +51,7 @@
 //        Location location = new Location("test", "Łódź", "Piotrkowska", "12", "90-001", 51.747169, 19.453329);
 //        locationController.addLocation(location);
 //
-//        ResponseEntity<Location> response = locationController.getLocationById(location.getLocationId());
+//        ResponseEntity<Location> response = locationController.getLocationById(location.getLocation_id());
 //
 //        assertNotNull(response);
 //        assertEquals(200, response.getStatusCodeValue()); // Sprawdzenie kodu statusu HTTP
@@ -79,10 +81,10 @@
 //        Location location = new Location("test", "Łódź", "Piotrkowska", "12", "90-001", 51.747169, 19.453329);
 //        locationController.addLocation(location);
 //
-//        ResponseEntity<Void> response = locationController.deleteLocation(location.getLocationId());
+//        ResponseEntity<Void> response = locationController.deleteLocation(location.getLocation_id());
 //        assertEquals(204, response.getStatusCodeValue()); // Sprawdzenie kodu statusu HTTP
 //
-//        ResponseEntity<Location> fetchedResponse = locationController.getLocationById(location.getLocationId());
+//        ResponseEntity<Location> fetchedResponse = locationController.getLocationById(location.getLocation_id());
 //        //assertEquals(404, fetchedResponse.getStatusCodeValue()); // Sprawdzenie, czy lokalizacja została usunięta
 //    }
 //

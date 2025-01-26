@@ -4,6 +4,7 @@ import Classes.Location;
 
 import java.util.List;
 
+
 public class LocationRepository implements IRepository<Location> {
     @Override
     public void add(Location entity) {
