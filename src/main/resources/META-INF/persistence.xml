@@ -19,7 +19,6 @@
         <class>Chat.Chat</class>
         <class>Chat.Message</class>
         <class>Classes.LocationController</class>
-        <class>Map.LocationService</class>
         <properties>
             <property name="hibernate.connection.isolation" value="8"/>
             <property name="jakarta.persistence.jdbc.url"

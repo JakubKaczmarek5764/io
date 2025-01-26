@@ -40,6 +40,9 @@ dependencies {
     implementation 'com.itextpdf:itext7-core:8.0.4'
     implementation 'com.itextpdf:layout:8.0.4'
     implementation 'org.apache.commons:commons-csv:1.9.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    compileOnly 'javax.servlet:servlet-api:2.3'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework:spring-test'

@@ -20,18 +20,21 @@ public class LocationController implements ILocation{
         return ResponseEntity.ok(location);
     }
 
+    @Override
     public ResponseEntity<Location> getLocationById(@PathVariable int id) {
         Location location = locationRepository.get(id);
         if (location == null) {return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
 
+    @Override
     public ResponseEntity<List<Location>> getAllLocations() {
         List<Location> locations = locationRepository.getAll();
         if (locations == null) {return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
         return new ResponseEntity<>(locations, HttpStatus.OK);
     }
 
+    @Override
     public ResponseEntity<Void> deleteLocation(@PathVariable int id) {
         if (locationRepository.get(id) == null) {return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
         locationRepository.remove(id);

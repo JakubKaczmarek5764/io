@@ -14,7 +14,7 @@ import java.util.List;
 public class Victim extends User implements Serializable {
 
     @ManyToOne
-    @NotNull
+
     private Charity charity;
 
     public Victim() {
