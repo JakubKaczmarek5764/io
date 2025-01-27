@@ -48,6 +48,13 @@ public class ChatService {
         for (User user : usersRepository.getAll()) {
             chatClients.put(user.getUserId(), this.createNewChatSession(user));
             System.out.println("Added chat client in chat service for user: " + user.getUserId());
+            if (!chatClients.get(user.getUserId()).isInChat(1L)) {
+                try {
+                    chatClients.get(user.getUserId()).joinNewChat(chatRepository.get(1L));
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 

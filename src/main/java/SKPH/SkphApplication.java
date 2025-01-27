@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import java.time.LocalDate;
+
 @SpringBootApplication
 @ComponentScan(basePackages = {"Chat", "Classes","FileGeneration", "Security", "db"})
 public class SkphApplication {
@@ -32,10 +34,10 @@ public class SkphApplication {
 
             Thread.sleep(10000);
 
-            Volunteer user = new Volunteer("userFName", "userLName");
+            Volunteer user = new Volunteer("userFName", "userLName", "hgfhfg", "lol@wp.pl", "123456789", LocalDate.now());
             usersRepository.add(user);
 
-            Volunteer user1 = new Volunteer("userFName1", "userLName1");
+            Volunteer user1 = new Volunteer("userFName1", "userLName1", "hgfhfg", "lol2@wp.pl", "123456788", LocalDate.now());
             usersRepository.add(user1);
 
             System.out.println(user);
