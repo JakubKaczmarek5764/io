@@ -31,6 +31,8 @@ public class VolunteerService implements IVolunteer {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        volunteer.setCurrentReport(report);
+
         volunteer.setAvailable(false);
         report.addVolunteer(volunteer);
         reportRepository.update(report);
@@ -101,6 +103,7 @@ public class VolunteerService implements IVolunteer {
         report.setStatus(reportStatus.completed);
 
         for (Volunteer volunteer : report.getVolunteersList()) {
+            volunteer.setCurrentReport(null);
             volunteer.setAvailable(true);
 
             volunteer.addCompletedReport(report);
