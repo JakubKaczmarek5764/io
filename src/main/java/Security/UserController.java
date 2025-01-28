@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-public class UserController {
+public class UserController implements ISecurity{
 
     private final UserService userService;
 
@@ -15,6 +15,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @Override
     public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
         try {
             boolean flag = userService.register(request);
@@ -27,6 +28,7 @@ public class UserController {
         }
     }
 
+    @Override
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
         try {
             return ResponseEntity.ok((userService.login(request)));
