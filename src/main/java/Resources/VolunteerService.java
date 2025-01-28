@@ -1,10 +1,11 @@
-package Classes;
+package Resources;
 
+import Classes.Report;
+import Classes.reportStatus;
 import db.ReportRepository;
 import db.ResourcesRepository;
 import db.UsersRepository;
 import db.VolunteerEvaluationRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

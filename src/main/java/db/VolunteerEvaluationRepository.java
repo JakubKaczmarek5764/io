@@ -1,6 +1,6 @@
 package db;
 
-import Classes.VolunteerEvaluation;
+import Resources.VolunteerEvaluation;
 
 import java.util.List;
 

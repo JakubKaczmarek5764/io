@@ -1,7 +1,8 @@
-package Classes;
+package Resources;
 
+import Classes.Report;
+import Classes.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.deser.impl.ReadableObjectId;
 import jakarta.persistence.*;
 
 import java.io.Serializable;

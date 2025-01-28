@@ -1,5 +1,7 @@
 package Classes;
 
+import Resources.Resource;
+import Resources.Volunteer;
 import com.sun.istack.NotNull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

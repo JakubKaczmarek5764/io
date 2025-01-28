@@ -1,6 +1,9 @@
 package FileGeneration;
 
 import Classes.*;
+import Resources.Resource;
+import Resources.Volunteer;
+import Resources.VolunteerEvaluation;
 import db.*;
 
 import java.time.LocalDate;

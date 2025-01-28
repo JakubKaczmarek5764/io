@@ -1,5 +1,7 @@
 package Classes;
 
+import Resources.Resource;
+import Resources.Volunteer;
 import db.ReportRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

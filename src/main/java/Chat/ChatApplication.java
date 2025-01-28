@@ -1,11 +1,11 @@
 //package Chat;
 //
-//import Classes.Volunteer;
+//import Resources.Volunteer;
 //import org.springframework.boot.SpringApplication;
 //import org.springframework.boot.autoconfigure.SpringBootApplication;
 //import java.util.Scanner;
 //import Classes.User;
-//import Classes.Volunteer;
+//import Resources.Volunteer;
 //import Classes.Victim;
 //
 //@SpringBootApplication(scanBasePackages = {"Chat"})

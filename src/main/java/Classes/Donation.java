@@ -1,5 +1,6 @@
 package Classes;
 
+import Resources.Resource;
 import com.sun.istack.NotNull;
 import jakarta.persistence.*;
 

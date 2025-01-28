@@ -1,18 +1,12 @@
 package SKPH;
 
 import Chat.*;
-import Chat.ChatClient;
-import Chat.ChatServer;
-import Classes.User;
-import Classes.Volunteer;
-import db.ChatRepository;
+import Resources.Volunteer;
 import db.UsersRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.time.LocalDate;
 

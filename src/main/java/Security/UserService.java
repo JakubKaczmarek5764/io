@@ -1,6 +1,8 @@
 package Security;
 
 import Classes.*;
+import Resources.Resource;
+import Resources.Volunteer;
 import db.UsersRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

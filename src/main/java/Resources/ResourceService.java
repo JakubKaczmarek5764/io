@@ -1,4 +1,4 @@
-package Classes;
+package Resources;
 
 import db.ResourcesRepository;
 import org.springframework.http.HttpStatus;

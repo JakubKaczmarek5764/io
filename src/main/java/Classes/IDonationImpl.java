@@ -1,5 +1,6 @@
 package Classes;
 
+import Resources.Resource;
 import db.DonationsRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

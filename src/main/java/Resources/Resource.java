@@ -1,7 +1,8 @@
-package Classes;
+package Resources;
 
+import Classes.Donation;
+import Classes.resourceType;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Cascade;
 
 import static Classes.resourceType.DONATION;
 import static Classes.resourceType.VOLUNTEER;

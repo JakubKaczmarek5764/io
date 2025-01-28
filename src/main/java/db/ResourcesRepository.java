@@ -1,6 +1,6 @@
 package db;
 
-import Classes.Resource;
+import Resources.Resource;
 import Classes.resourceType;
 
 import java.util.List;

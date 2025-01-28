@@ -1,11 +1,8 @@
 
 import Chat.Chat;
 import Chat.Message;
-import Classes.Charity;
 import Classes.User;
-import Classes.Victim;
-import Classes.Volunteer;
-import db.CharityRepository;
+import Resources.Volunteer;
 import db.ChatRepository;
 import db.MessageRepository;
 import db.UsersRepository;
