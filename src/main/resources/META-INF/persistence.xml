@@ -15,6 +15,12 @@
         <class>Classes.Resource</class>
         <class>Classes.Volunteer</class>
         <class>Classes.VolunteerEvaluation</class>
+        <class>Resources.Resource</class>
+        <class>Resources.Volunteer</class>
+        <class>Resources.VolunteerEvaluation</class>
+<!--        <class>Classes.Resource</class>-->
+<!--        <class>Classes.Volunteer</class>-->
+<!--        <class>Classes.VolunteerEvaluation</class>-->
         <class>Classes.Victim</class>
         <class>Chat.Chat</class>
         <class>Chat.Message</class>
